@@ -3,6 +3,8 @@ import cors from "cors";
 import { pool } from "./db.js";
 import { errorHandler } from "./middleware/errors.js";
 import { authRouter } from "./routes/auth.js";
+import { istirahasRouter } from "./routes/istirahas.js";
+import { bookingsRouter } from "./routes/bookings.js";
 
 export function createApp() {
   const app = express();
@@ -15,6 +17,8 @@ export function createApp() {
   });
 
   app.use("/api/auth", authRouter);
+  app.use("/api/istirahas", istirahasRouter);
+  app.use("/api/bookings", bookingsRouter);
 
   app.use(errorHandler);
   return app;
