@@ -9,10 +9,10 @@ pg.types.setTypeParser(pg.types.builtins.DATE, (value) => value);
 // whole riyals, so converting to number is safe.
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value) => Number(value));
 
-export const pool = new pg.Pool({
-  connectionString: config.databaseUrl,
-  ssl: config.databaseUrl.includes("sslmode=require") ? { rejectUnauthorized: false } : undefined,
-});
+// SSL comes from the connection string: Neon's URL ends in ?sslmode=require,
+// which node-postgres treats as "encrypt and verify the server's certificate".
+// Local Docker URLs have no sslmode, so no SSL.
+export const pool = new pg.Pool({ connectionString: config.databaseUrl });
 
 // Runs fn inside a transaction on one dedicated connection.
 // Everything in fn either commits together or rolls back together.

@@ -31,5 +31,6 @@ COPY --from=client /app/client/dist /app/client/dist
 # Don't run as root inside the container.
 USER node
 EXPOSE 4000
-HEALTHCHECK --interval=30s --timeout=5s CMD wget -qO- http://localhost:4000/api/health || exit 1
+# Hosts like Render pick their own port and pass it in $PORT, so don't hard-code 4000.
+HEALTHCHECK --interval=30s --timeout=5s CMD wget -qO- "http://localhost:${PORT}/api/health" || exit 1
 CMD ["node", "dist/scripts/start.js"]
