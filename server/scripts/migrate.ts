@@ -5,7 +5,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { pool } from "../src/db.js";
 
-const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "db", "migrations");
+// Relative to the server folder (npm scripts, tests and the Docker image all run from
+// there), so it works both from scripts/ with tsx and from the compiled dist/scripts/.
+const dir = path.resolve(process.cwd(), "db", "migrations");
 
 export async function migrate() {
   await pool.query(
