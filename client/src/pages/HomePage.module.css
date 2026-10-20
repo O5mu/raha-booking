@@ -93,15 +93,22 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--gutter);
-  padding: var(--section-gap) var(--margin);
+  padding-inline: var(--margin);
 }
 
+/* The fort stays on screen while the long sheet scrolls past it: the photo
+   and the sheet share one grid row, and the photo sticks to the top. */
 .ratesPhoto {
-  position: absolute;
-  inset: 0;
+  position: sticky;
+  top: 0;
   z-index: -1;
-  width: 100%;
-  height: 100%;
+  grid-row: 1;
+  grid-column: 1 / -1;
+  align-self: start;
+  width: calc(100% + 2 * var(--margin));
+  max-width: none; /* bleed past the page margin on both sides */
+  height: 100svh;
+  margin-inline: calc(-1 * var(--margin));
   object-fit: cover;
   object-position: 30% 50%;
 }
@@ -111,8 +118,10 @@
   --paper-ink: #2b170a;
   --paper-muted: #5e4a38;
   position: relative;
+  grid-row: 1;
   grid-column: 7 / 13;
   justify-self: end;
+  margin-block: var(--section-gap);
   width: min(640px, 100%);
   padding: 64px;
   background: var(--paper);
@@ -255,8 +264,16 @@ html[lang="ar"] .groupName {
     display: block;
     padding: 96px 10px;
   }
+  .ratesPhoto {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
   .sheet {
     width: 100%;
+    margin-block: 0;
     padding: 40px 28px;
   }
 }

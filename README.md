@@ -3,7 +3,7 @@
 **Book istirahas and chalets across Saudi Arabia, in Arabic or English.**
 
 [![CI](https://github.com/O5mu/raha-booking/actions/workflows/ci.yml/badge.svg)](https://github.com/O5mu/raha-booking/actions/workflows/ci.yml)
-[![Live demo](https://img.shields.io/badge/live%20demo-raha--booking.onrender.com-0f5c4d)](https://raha-booking.onrender.com)
+[![Live demo](https://img.shields.io/badge/live%20demo-raha--booking.onrender.com-525e1b)](https://raha-booking.onrender.com)
 
 Raha is a full-stack booking platform for istirahas (private rest houses), farms and chalets. Guests search by city and dates and book, owners manage their listings and calendars, and an admin approves new listings. The whole app works in Arabic (right-to-left) and English.
 
@@ -15,11 +15,11 @@ The core engineering problem is the one every booking system has: **two people m
 
 <table>
   <tr>
-    <td><img src="docs/screenshots/home.jpg" alt="Home page with search bar"></td>
+    <td><img src="docs/screenshots/home.jpg" alt="Home page: an istiraha at night under the Raha name"></td>
     <td><img src="docs/screenshots/search-ar.jpg" alt="Search results in Arabic, right-to-left"></td>
   </tr>
   <tr>
-    <td align="center">Home and search</td>
+    <td align="center">Home</td>
     <td align="center">Search results in Arabic (RTL)</td>
   </tr>
 </table>
@@ -40,13 +40,14 @@ The core engineering problem is the one every booking system has: **two people m
 
 **Guests**
 - Search by city, dates, number of guests, maximum price and amenities (pool, majlis, firepit and more), sorted by price or recommended
-- Listing page with a swipeable photo gallery and an availability calendar where booked nights are crossed out
+- Home page with tonight's rates for every place, pulled live from the API, with booked places struck out
+- Listing page with full-screen photos and an availability calendar where booked nights are crossed out
 - Book with the total calculated by the server, then see a confirmation page
 - My bookings: upcoming, past and cancelled, with cancellation that frees the dates for others
 
 **Owners**
-- Dashboard with live listings, upcoming bookings and upcoming revenue
-- Add and edit listings in both languages (new listings wait for admin approval)
+- Overview with a 14-night timeline of every istiraha, upcoming revenue and the next arrivals
+- Add and edit listings in both languages, with a live preview of the search card (new listings wait for admin approval)
 - Block dates for maintenance or private use, and hide or show a listing
 
 **Admin**
@@ -54,7 +55,7 @@ The core engineering problem is the one every booking system has: **two people m
 
 **Everywhere**
 - Full Arabic and English support with a one-click switch; Arabic flips the entire layout to right-to-left
-- Works on phones, follows the system light or dark mode, and respects "reduce motion"
+- Works on phones and respects "reduce motion"
 - Role-based access: guest, owner and admin, enforced on the server
 
 ## Preventing double bookings
@@ -190,6 +191,10 @@ erDiagram
 | Owner and admin dashboards lazy-loaded | Guests never download dashboard code, which keeps the first load smaller. |
 | Migrations as numbered SQL files with a small runner | Each file runs once inside a transaction and is recorded in `schema_migrations`, so the database history lives in Git. |
 | Multi-stage Docker image, running as a non-root user | The final image has only production dependencies and compiled code (no TypeScript, Vite or test tools). |
+| Two surfaces: dark "page" screens for guests, light "app" screens for work | Browsing a place should feel like the place (big photos, a condensed display face, tobacco and olive colours). Managing bookings needs calm, dense screens: a stone ground, white panels, near-black buttons and one data colour. Both share one typeface and one set of CSS tokens, switched by a `data-surface` attribute. |
+| Tonight's rates on the home page come from the live API | The home page shows the real availability for a chosen night, with booked places struck out, so the double-booking work is visible before anyone logs in. |
+| A nights timeline on the owner overview | An owner's question is "which nights are still free?". One row per istiraha and one column per night answers it at a glance; owner blocks are hatched so they never read as bookings. A phone draws one week instead of two. |
+| Motion only where it explains something | Sections rise in once as they scroll into view, timeline bars grow from their check-in night, and tabs slide their underline. Everything respects `prefers-reduced-motion`. |
 | Tests run against a real PostgreSQL in CI | The double-booking guarantee depends on PostgreSQL itself, so it can't be mocked. |
 
 ## Run it locally
@@ -270,7 +275,7 @@ raha-booking/
     <td colspan="2"><img src="docs/screenshots/details-calendar.jpg" alt="Availability calendar with a selected stay and the booking card"></td>
   </tr>
   <tr>
-    <td colspan="2" align="center">Availability calendar: the stay ends on the 17th because the next guest arrives on the 18th</td>
+    <td colspan="2" align="center">Availability calendar: booked nights are struck out, and a stay can end on the morning the next guest arrives</td>
   </tr>
   <tr>
     <td colspan="2"><img src="docs/screenshots/details-calendar-ar.jpg" alt="The same calendar in Arabic, mirrored right-to-left"></td>
@@ -291,15 +296,15 @@ raha-booking/
     <td><img src="docs/screenshots/admin-dashboard-ar.jpg" alt="Admin dashboard in Arabic"></td>
   </tr>
   <tr>
-    <td align="center">Owner dashboard</td>
-    <td align="center">Admin dashboard (Arabic)</td>
+    <td align="center">Owner overview: the next 14 nights of every istiraha</td>
+    <td align="center">Admin moderation (Arabic)</td>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/home-dark.jpg" alt="Home page in dark mode"></td>
+    <td><img src="docs/screenshots/home-rates.jpg" alt="Tonight's rates printed on a card over Mihayris Fort"></td>
     <td><img src="docs/screenshots/login.jpg" alt="Login page with demo buttons"></td>
   </tr>
   <tr>
-    <td align="center">Dark mode</td>
+    <td align="center">Tonight's rates, live from the API: booked places are struck out</td>
     <td align="center">Login with one-click demo accounts</td>
   </tr>
 </table>
@@ -308,11 +313,13 @@ raha-booking/
   <img src="docs/screenshots/mobile-details.jpg" alt="Listing page on a phone" width="280">
   &nbsp;&nbsp;
   <img src="docs/screenshots/mobile-search-ar.jpg" alt="Arabic search results on a phone" width="280">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/mobile-owner.jpg" alt="Owner overview on a phone, showing one week" width="280">
 </p>
 
 ## Credits
 
-Listing photos are from [Unsplash](https://unsplash.com) and used under the [Unsplash License](https://unsplash.com/license). All listings, owners, guests and bookings are fictional.
+Listing photos are from [Unsplash](https://unsplash.com) and used under the [Unsplash License](https://unsplash.com/license). The page photos come from Wikimedia Commons: Mihayris Fort by Richard Mortel (CC BY 2.0), the palms of Diriyah by Matti&Keti (CC0), the dallah by Bluehillies (CC0) and the fire by Mostafameraji (CC0). All listings, owners, guests and bookings are fictional.
 
 ## Author
 

@@ -152,7 +152,11 @@ export function IstirahaPage() {
             </h2>
           </Reveal>
           <Reveal order={1}>
-            <p className={styles.hint}>{range.checkIn && !range.checkOut ? t("details.pickCheckOut") : t("details.pickCheckIn")}</p>
+            <p className={styles.hint}>{range.checkIn && range.checkOut
+                ? `${fmt.range(range.checkIn, range.checkOut)}, ${t("details.nights", { count: nightsBetween(range.checkIn, range.checkOut) })}`
+                : range.checkIn
+                  ? t("details.pickCheckOut")
+                  : t("details.pickCheckIn")}</p>
           </Reveal>
           <Reveal order={2} className={styles.calendar}>
             <div data-ui>
