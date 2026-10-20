@@ -2,13 +2,21 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
-import { Check } from "lucide-react";
 import { api } from "../api/client";
 import type { Booking } from "../api/types";
 import { useFormat } from "../lib/format";
 import { nightsBetween } from "../lib/dates";
 import { ErrorState, PageLoader } from "../components/States";
+import { SplitPage } from "../components/SplitPage";
+import split from "../components/SplitPage.module.css";
 import styles from "./BookingConfirmedPage.module.css";
+
+// Each part of the panel rises in after the one before it, 80ms apart.
+const rise = (order: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { type: "spring" as const, bounce: 0, duration: 0.7, delay: 0.1 + order * 0.08 },
+});
 
 export function BookingConfirmedPage() {
   const { id } = useParams();
@@ -23,62 +31,59 @@ export function BookingConfirmedPage() {
   const booking = data?.bookings.find((b) => b.id === Number(id));
   if (!booking) return <ErrorState />;
   const name = fmt.pick(booking, "name");
+  const nights = nightsBetween(booking.check_in, booking.check_out);
 
   return (
-    <div className={`container page ${styles.page}`}>
-      <motion.div
-        className={styles.check}
-        initial={{ scale: 0.4, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", bounce: 0.35, duration: 0.6 }}
-      >
-        <Check size={40} strokeWidth={3} />
-      </motion.div>
-      <h1>{t("confirmed.title")}</h1>
-      <p className="muted">{t("confirmed.subtitle", { name })}</p>
+    <SplitPage photo={booking.cover_photo} alt={name}>
+      <motion.h1 className={split.title} {...rise(0)}>
+        {t("confirmed.title", { day: fmt.weekdayLong(booking.check_in) })}
+      </motion.h1>
+      <motion.p className={split.lead} {...rise(1)}>
+        {t("confirmed.subtitle", { name })}
+      </motion.p>
 
-      <motion.div
-        className={`card ${styles.summary}`}
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.15 }}
-      >
-        <img src={booking.cover_photo} alt="" />
-        <div className={styles.details}>
-          <span className="badge badge-success">{t("confirmed.reference", { id: booking.id })}</span>
-          <h3>{name}</h3>
-          <p className="muted">{t(`cities.${booking.city}`)}</p>
-          <dl>
-            <div>
-              <dt>{t("details.checkIn")}</dt>
-              <dd>{fmt.longDate(booking.check_in)}</dd>
-            </div>
-            <div>
-              <dt>{t("details.checkOut")}</dt>
-              <dd>{fmt.longDate(booking.check_out)}</dd>
-            </div>
-            <div>
-              <dt>{t("search.guests")}</dt>
-              <dd>{booking.guests}</dd>
-            </div>
-            <div className={styles.total}>
-              <dt>
-                {t("details.total")} ({t("details.nights", { count: nightsBetween(booking.check_in, booking.check_out) })})
-              </dt>
-              <dd>{fmt.money(booking.total_price)}</dd>
-            </div>
-          </dl>
+      {/* The ticket: one line per fact, the total last. */}
+      <motion.dl className={styles.ticket} {...rise(2)}>
+        <div>
+          <dt>{t("confirmed.refLabel")}</dt>
+          <dd>#{booking.id}</dd>
         </div>
-      </motion.div>
+        <div>
+          <dt>{t("confirmed.place")}</dt>
+          <dd>{fmt.place(booking)}</dd>
+        </div>
+        <div>
+          <dt>{t("details.checkIn")}</dt>
+          <dd>{fmt.longDate(booking.check_in)}</dd>
+        </div>
+        <div>
+          <dt>{t("details.checkOut")}</dt>
+          <dd>{fmt.longDate(booking.check_out)}</dd>
+        </div>
+        <div>
+          <dt>{t("search.guests")}</dt>
+          <dd>{booking.guests}</dd>
+        </div>
+        <div className={styles.total}>
+          <dt>
+            {t("details.total")}, {t("details.nights", { count: nights })}
+          </dt>
+          <dd>{fmt.money(booking.total_price)}</dd>
+        </div>
+      </motion.dl>
 
-      <div className={styles.actions}>
-        <Link to="/bookings" className="btn btn-primary">
+      <motion.p className={styles.hours} {...rise(3)}>
+        {t("home.checkIn")}. {t("home.checkOut")}.
+      </motion.p>
+
+      <motion.div className={split.actions} {...rise(4)}>
+        <Link to="/bookings" className="btn btn-primary btn-lg">
           {t("confirmed.viewBookings")}
         </Link>
-        <Link to="/search" className="btn btn-secondary">
+        <Link to="/search" className="btn btn-secondary btn-lg">
           {t("confirmed.keepExploring")}
         </Link>
-      </div>
-    </div>
+      </motion.div>
+    </SplitPage>
   );
 }

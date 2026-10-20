@@ -19,6 +19,7 @@ export function useFormat() {
   const monthTitle = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" });
   const weekday = new Intl.DateTimeFormat(locale, { weekday: "narrow", timeZone: "UTC" });
   const weekdayShort = new Intl.DateTimeFormat(locale, { weekday: "short", timeZone: "UTC" });
+  const weekdayLong = new Intl.DateTimeFormat(locale, { weekday: "long", timeZone: "UTC" });
 
   return {
     lang,
@@ -29,6 +30,7 @@ export function useFormat() {
     monthTitle: (date: Date) => monthTitle.format(date),
     weekday: (date: Date) => weekday.format(date),
     weekdayShort: (date: string) => weekdayShort.format(parseDate(date)),
+    weekdayLong: (date: string) => weekdayLong.format(parseDate(date)),
     range: (from: string, to: string) => `${shortDate.format(parseDate(from))} – ${shortDate.format(parseDate(to))}`,
     // Picks name_ar or name_en (or description_*, district_*) for the current
     // language, falling back to English when the Arabic one is empty.

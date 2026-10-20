@@ -1,30 +1,7 @@
-/* Photograph half, form half. */
-.page {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--gutter);
-  min-height: calc(100svh - 72px);
-}
-
-.photo {
-  grid-column: 1 / 7;
-  overflow: hidden;
-}
-
 /* Only the palm crowns: the lower part of this photo is an excavation. */
-.photo img {
-  width: 100%;
+.palms {
   height: 215%;
-  object-fit: cover;
   object-position: 50% 0;
-}
-
-.panel {
-  grid-column: 8 / 12;
-  align-self: center;
-  display: grid;
-  gap: 8px;
-  padding-block: 64px;
 }
 
 .title {
@@ -114,16 +91,4 @@
 .roleActive {
   background: var(--accent) !important;
   color: var(--accent-ink);
-}
-
-@media (max-width: 860px) {
-  .page {
-    display: block;
-  }
-  .photo {
-    height: 34svh;
-  }
-  .panel {
-    padding: 40px var(--margin) 64px;
-  }
 }

@@ -123,11 +123,12 @@
     "what": "A private istiraha in {{place}}, for up to {{count}} guests"
   },
   "confirmed": {
-    "title": "Booking confirmed",
-    "subtitle": "Your stay at {{name}} is booked.",
-    "reference": "Booking #{{id}}",
+    "title": "{{day}} night is yours",
+    "subtitle": "{{name}} is booked for you, and nobody else can take these nights.",
     "viewBookings": "View my bookings",
-    "keepExploring": "Keep exploring"
+    "keepExploring": "Keep exploring",
+    "place": "Place",
+    "refLabel": "Booking"
   },
   "auth": {
     "loginTitle": "Welcome back",
@@ -266,7 +267,9 @@
     "error": "Something went wrong. Please try again.",
     "retry": "Try again",
     "notFound": "Page not found",
-    "goHome": "Go home"
+    "goHome": "Go home",
+    "notFoundNote": "The link may be old, or the place has closed its gate.",
+    "fireAlt": "A wood fire burning at night"
   },
   "footer": {
     "menu": "Footer",

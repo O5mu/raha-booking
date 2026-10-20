@@ -1,71 +1,42 @@
-.page {
+/* The ticket: a panel one tone up, facts on the start side, values on the end. */
+.ticket {
   display: grid;
-  justify-items: center;
-  gap: 12px;
-  max-width: 640px;
-  text-align: center;
+  margin: 32px 0 0;
+  padding: 8px 24px;
+  background: var(--surface);
 }
 
-.check {
-  display: grid;
-  place-items: center;
-  width: 80px;
-  height: 80px;
-  margin-bottom: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--on-accent);
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 35%, transparent);
-}
-
-.summary {
-  display: grid;
-  width: 100%;
-  margin-top: 20px;
-  overflow: hidden;
-  text-align: start;
-}
-
-.summary img {
-  width: 100%;
-  aspect-ratio: 16 / 7;
-  object-fit: cover;
-}
-
-.details {
-  display: grid;
-  gap: 6px;
-  justify-items: start;
-  padding: 20px 24px 24px;
-}
-
-.details dl {
-  display: grid;
-  gap: 10px;
-  width: 100%;
-  margin: 12px 0 0;
-}
-
-.details dl div {
+.ticket div {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  padding-block: 12px;
 }
 
-.details dd {
+.ticket dt {
+  color: var(--muted);
+}
+
+.ticket dd {
   margin: 0;
   font-weight: 600;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 
+/* The total sits on the darker ground, so it reads as the last line. */
 .total {
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
+  margin: 8px -24px -8px;
+  padding: 16px 24px !important;
+  background: var(--raised);
+  font-size: var(--step-lead);
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
+.total dt {
+  color: var(--ink);
+}
+
+.hours {
   margin-top: 16px;
+  color: var(--muted);
 }
