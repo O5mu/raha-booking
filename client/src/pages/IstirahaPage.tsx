@@ -96,7 +96,7 @@ export function IstirahaPage() {
       <header className={styles.header}>
         <h1>{name}</h1>
         <p className="muted">
-          <MapPin size={16} /> {t(`cities.${istiraha.city}`)}, {istiraha.district}
+          <MapPin size={16} /> {fmt.place(istiraha)}
           <span aria-hidden="true"> · </span>
           <Users size={16} /> {t("search.upToGuests", { count: istiraha.capacity })}
         </p>

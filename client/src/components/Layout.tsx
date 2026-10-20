@@ -1,7 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Header } from "./Header";
+import { PageLoader } from "./States";
 import styles from "./Layout.module.css";
 
 export function Layout() {
@@ -17,7 +18,10 @@ export function Layout() {
     <div className={styles.shell}>
       <Header />
       <main className={styles.main}>
-        <Outlet />
+        {/* Lazy pages show a spinner here while the header stays in place */}
+        <Suspense fallback={<PageLoader />}>
+          <Outlet />
+        </Suspense>
       </main>
       <footer className={styles.footer}>
         <div className="container">

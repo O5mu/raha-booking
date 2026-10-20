@@ -12,6 +12,8 @@ export function useFormat() {
   const locale = LOCALES[lang];
 
   const money = new Intl.NumberFormat(locale, { style: "currency", currency: "SAR", maximumFractionDigits: 0 });
+  // Stat tiles: 845,650 -> "845.7K" so big numbers fit (the currency goes in the label).
+  const compact = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 });
   const shortDate = new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" });
   const longDate = new Intl.DateTimeFormat(locale, { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
   const monthTitle = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" });
@@ -20,13 +22,21 @@ export function useFormat() {
   return {
     lang,
     money: (amount: number) => money.format(amount),
+    compact: (value: number) => compact.format(value),
     shortDate: (date: string) => shortDate.format(parseDate(date)),
     longDate: (date: string) => longDate.format(parseDate(date)),
     monthTitle: (date: Date) => monthTitle.format(date),
     weekday: (date: Date) => weekday.format(date),
     range: (from: string, to: string) => `${shortDate.format(parseDate(from))} – ${shortDate.format(parseDate(to))}`,
-    // Picks name_ar or name_en (or description_*) for the current language.
-    pick: <T extends Record<string, unknown>>(item: T, field: "name" | "description") =>
-      String(item[`${field}_${lang}`] ?? item[`${field}_en`] ?? ""),
+    // Picks name_ar or name_en (or description_*, district_*) for the current
+    // language, falling back to English when the Arabic one is empty.
+    pick,
+    // "Riyadh, Al Malqa", or just "Riyadh" when there's no district.
+    place: (item: { city: string } & Record<string, unknown>) =>
+      [i18n.t(`cities.${item.city}`), pick(item, "district")].filter(Boolean).join(lang === "ar" ? "، " : ", "),
   };
+
+  function pick<T extends Record<string, unknown>>(item: T, field: "name" | "description" | "district") {
+    return String(item[`${field}_${lang}`] || item[`${field}_en`] || "");
+  }
 }

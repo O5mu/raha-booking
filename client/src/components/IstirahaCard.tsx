@@ -21,7 +21,7 @@ export function IstirahaCard({ istiraha, query = "" }: { istiraha: Card; query?:
       <div className={styles.body}>
         <h3 className={styles.name}>{name}</h3>
         <p className={`muted ${styles.meta}`}>
-          <span>{istiraha.district}</span>
+          <span>{fmt.pick(istiraha, "district")}</span>
           <span className={styles.capacity}>
             <Users size={14} /> {istiraha.capacity}
           </span>

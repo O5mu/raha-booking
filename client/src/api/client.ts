@@ -10,7 +10,11 @@ export const tokenStore = {
 };
 
 export class ApiError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(
+    public status: number,
+    message: string,
+    public details?: Record<string, string[]> // per-field validation errors (400)
+  ) {
     super(message);
   }
 }
@@ -28,6 +32,6 @@ export async function api<T>(path: string, options: { method?: string; body?: un
 
   if (res.status === 204) return undefined as T;
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new ApiError(res.status, data.error ?? "Something went wrong");
+  if (!res.ok) throw new ApiError(res.status, data.error ?? "Something went wrong", data.details);
   return data as T;
 }
