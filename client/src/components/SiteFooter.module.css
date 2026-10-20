@@ -4,8 +4,8 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--gutter);
   min-height: 92svh;
-  background: var(--field-2);
-  color: var(--field-2-ink);
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .photo {

@@ -92,7 +92,7 @@
     "fact": "From {{price}} a night, in {{cities}} cities."
   },
   "details": {
-    "back": "Back to results",
+    "back": "See all places",
     "hostedBy": "Hosted by {{name}}",
     "about": "About this place",
     "amenities": "What this place offers",
@@ -115,7 +115,11 @@
     "photo": "Photo {{n}} of {{total}}",
     "prevMonth": "Previous month",
     "nextMonth": "Next month",
-    "notFound": "This istiraha doesn't exist or isn't available."
+    "notFound": "This istiraha doesn't exist or isn't available.",
+    "notChosen": "Not chosen yet",
+    "fewerGuests": "One guest fewer",
+    "moreGuests": "One guest more",
+    "what": "A private istiraha in {{place}}, for up to {{count}} guests"
   },
   "confirmed": {
     "title": "Booking confirmed",

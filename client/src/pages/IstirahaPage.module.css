@@ -1,62 +1,116 @@
-.back {
-  margin-inline-start: -12px;
-  margin-bottom: 8px;
-}
-
-[dir="rtl"] .flip {
-  transform: scaleX(-1);
-}
-
-.header {
-  margin-bottom: 20px;
-}
-
-.header h1 {
-  font-size: clamp(1.7rem, 4vw, 2.5rem);
-}
-
-.header p {
+/* ============ The place, full screen ============ */
+.hero {
+  position: relative;
+  isolation: isolate;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
+  align-items: flex-end;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  color: #f1f0ec;
 }
 
-.layout {
-  display: grid;
-  gap: 32px;
-  margin-top: 32px;
+.heroImage {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: settle 12s ease-out both;
 }
 
-@media (min-width: 960px) {
-  .layout {
-    grid-template-columns: minmax(0, 1fr) 380px;
-    gap: 56px;
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
   }
 }
 
-.section {
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0;
+  z-index: -1;
+  background: linear-gradient(transparent, rgb(20 10 4 / 0.75)); /* taste-skill-ignore: neutral scrim under text on a photo */
+}
+
+.heroText {
+  width: 100%;
+  padding: 0 var(--margin) 32px;
+}
+
+.facts {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin-bottom: 20px;
+  font-size: var(--step-lead);
+  line-height: 1.3;
+}
+
+.factEnd {
+  text-align: end;
+}
+
+.name {
+  max-width: 18ch;
+  font-size: clamp(3.25rem, 1.5rem + 7vw, 8.5rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .facts {
+    display: block;
+  }
+  .factEnd {
+    margin-top: 8px;
+    text-align: start;
+  }
+}
+
+/* ============ About: words on one side, pictures on the other ============ */
+.about {
   display: grid;
-  gap: 12px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--border);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding: var(--section-gap) var(--margin);
 }
 
-.section + .section {
-  padding-top: 32px;
+.aboutText {
+  grid-column: 1 / 6;
 }
 
-.section:last-child {
-  border-bottom: 0;
+.heading {
+  font-size: var(--step-head);
+}
+
+.lead {
+  max-width: 34ch;
+  margin-top: 32px;
+  font-size: var(--step-lead);
+  line-height: 1.35;
+}
+
+.host {
+  margin-top: 16px;
+}
+
+.subheading {
+  margin-top: 64px;
+  font-size: var(--step-lead);
 }
 
 .amenities {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+  margin: 24px 0 0;
   padding: 0;
-  margin: 0;
   list-style: none;
 }
 
@@ -66,16 +120,69 @@
   gap: 12px;
 }
 
+/* A pair at different sizes. */
+.pictures {
+  grid-column: 7 / 13;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: end;
+}
+
+.pictureLarge {
+  grid-column: 1 / 7;
+}
+
+.pictureSmall {
+  grid-column: 3 / 7;
+  margin-top: var(--gutter);
+}
+
+.pictures img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.pictureLarge img {
+  aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 860px) {
+  .about {
+    display: block;
+  }
+  .pictures {
+    margin-top: 56px;
+  }
+}
+
+/* ============ Booking ============ */
+.booking {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding: var(--section-gap) var(--margin);
+  background: var(--surface);
+}
+
+.calendarSide {
+  grid-column: 1 / 8;
+}
+
+.hint {
+  margin-top: 16px;
+}
+
 .calendar {
-  margin-top: 12px;
+  margin-top: 40px;
 }
 
 .legend {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9rem;
-  color: var(--text-2);
+  margin-top: 24px;
 }
 
 .legend button {
@@ -86,58 +193,42 @@
   display: inline-grid;
   place-items: center;
   width: 32px;
-  height: 32px;
   text-decoration: line-through;
-  opacity: 0.6;
+  color: var(--muted);
 }
 
-.aside {
-  position: relative;
-}
-
-.bookingCard {
+.card {
+  grid-column: 9 / 13;
+  align-self: start;
   position: sticky;
-  top: 88px;
+  top: 24px;
+  padding: 28px;
+  background: var(--bg);
+}
+
+.cardInner {
   display: grid;
-  gap: 16px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
+  gap: 20px;
 }
 
-.price {
-  font-size: 1.1rem;
-}
-
-.price strong {
-  font-size: 1.45rem;
+.what {
+  max-width: 30ch;
 }
 
 .dates {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+  gap: 16px;
+  margin: 0;
 }
 
-.dates span {
-  display: grid;
-  padding: 10px 14px;
+.dates dt {
+  font-size: var(--step-small);
+  color: var(--muted);
 }
 
-.dates span + span {
-  border-inline-start: 1px solid var(--border);
-}
-
-.dates small {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-[dir="rtl"] .dates small {
-  letter-spacing: 0;
+.dates dd {
+  margin: 4px 0 0;
 }
 
 .guests {
@@ -155,23 +246,26 @@
 .stepper button {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border: 0;
   background: var(--surface);
+  color: var(--ink);
   cursor: pointer;
-  transition: transform 100ms ease-out;
+  transition: transform 120ms var(--ease-out), background-color 150ms;
+}
+
+.stepper button:hover {
+  background: var(--raised);
 }
 
 .stepper button:active {
-  transform: scale(0.88);
+  transform: scale(0.9);
 }
 
 .stepper output {
   min-width: 3ch;
   text-align: center;
-  font-variant-numeric: tabular-nums;
 }
 
 .breakdown {
@@ -183,6 +277,7 @@
 .breakdown div {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .breakdown dd {
@@ -191,11 +286,26 @@
 
 .total {
   padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-weight: 700;
+  font-weight: 600;
+  border-top: 2px solid var(--surface);
 }
 
 .note {
+  font-size: var(--step-small);
+  color: var(--muted);
   text-align: center;
-  font-size: 0.85rem;
+}
+
+.backRow {
+  padding-block: 48px 0;
+}
+
+@media (max-width: 960px) {
+  .booking {
+    display: block;
+  }
+  .card {
+    position: static;
+    margin-top: 48px;
+  }
 }
