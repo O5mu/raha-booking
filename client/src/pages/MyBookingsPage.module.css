@@ -1,37 +1,51 @@
 .title {
   margin-bottom: 20px;
+  font-family: var(--font-text);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
 }
 
+/* Underline tabs on a full-width 1px rule. */
 .tabs {
-  display: inline-flex;
-  padding: 4px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  margin-bottom: 24px;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line); /* taste-skill-ignore: tab rule on an app screen */
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .tab {
   position: relative;
-  min-height: 38px;
-  padding: 6px 18px;
+  flex: none;
+  padding: 10px 0 12px;
   border: 0;
-  border-radius: 999px;
-  background: transparent;
-  font-weight: 600;
-  color: var(--text-2);
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .tab[aria-selected="true"] {
-  color: var(--text);
+  color: var(--ink);
 }
 
+.count {
+  margin-inline-start: 6px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The 2px indicator slides between tabs. */
 .highlight {
   position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
 }
 
 .tabLabel {
@@ -40,43 +54,35 @@
 
 .list {
   display: grid;
-  gap: 16px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
+/* Two-line rows with media: 64px photo + 24px of padding. */
 .row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
   gap: 16px;
-  padding: 12px;
-  overflow: hidden;
-}
-
-@media (min-width: 640px) {
-  .row {
-    grid-template-columns: 200px 1fr;
-    gap: 20px;
-  }
+  align-items: center;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app list */
 }
 
 .thumb {
-  aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
 }
 
 .thumb img {
-  width: 100%;
-  height: 100%;
+  width: 96px;
+  height: 64px;
   object-fit: cover;
 }
 
 .info {
   display: grid;
-  align-content: start;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -87,28 +93,82 @@
   gap: 8px;
 }
 
+.top h3 {
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.top a {
+  text-decoration: none;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.end {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
 .price {
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .cancelBtn {
-  justify-self: start;
-  margin-inline-start: -12px;
+  min-height: 28px;
+  padding: 0;
   color: var(--danger);
+  font-size: 13px;
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background: none !important;
+  text-decoration: underline;
 }
 
 .confirm {
-  display: grid;
-  gap: 8px;
-  margin-top: 8px;
-  padding: 12px;
-  border-radius: var(--radius-sm);
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 10px 12px;
+  border-radius: 6px;
   background: var(--danger-soft);
-  font-size: 0.925rem;
+  font-size: 14px;
 }
 
 .confirm div {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
+}
+
+.confirm :global(.btn) {
+  min-height: 32px;
+}
+
+.empty {
+  padding: 24px 0;
+  border-bottom: 1px dashed var(--control); /* taste-skill-ignore: empty slot in an app list */
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+  .thumb img {
+    width: 72px;
+    height: 54px;
+  }
+  .end {
+    grid-column: 2;
+    justify-items: start;
+  }
 }

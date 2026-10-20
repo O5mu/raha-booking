@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "motion/react";
-import { CalendarX2 } from "lucide-react";
 import { api } from "../api/client";
 import type { Booking } from "../api/types";
 import { useFormat } from "../lib/format";
 import { nightsBetween, today } from "../lib/dates";
-import { EmptyState, ErrorState, PageLoader } from "../components/States";
+import { ErrorState, PageLoader } from "../components/States";
 import styles from "./MyBookingsPage.module.css";
 
 type Tab = "upcoming" | "past" | "cancelled";
@@ -30,7 +29,8 @@ export function MyBookingsPage() {
   if (query.isError) return <ErrorState onRetry={() => query.refetch()} />;
 
   const now = today();
-  const list = query.data.bookings.filter((b) => tabOf(b, now) === tab);
+  const all = query.data.bookings;
+  const list = all.filter((b) => tabOf(b, now) === tab);
   // Upcoming trips read best soonest-first; the API returns newest-first.
   if (tab === "upcoming") list.reverse();
 
@@ -38,22 +38,24 @@ export function MyBookingsPage() {
     <div className="container page">
       <h1 className={styles.title}>{t("bookings.title")}</h1>
 
-      {/* Segmented control: the highlight slides between tabs with a shared layout animation. */}
+      {/* Underline tabs; the 2px indicator slides to the chosen one. The counts come from the rows. */}
       <div className={styles.tabs} role="tablist">
         {(["upcoming", "past", "cancelled"] as const).map((key) => (
           <button key={key} role="tab" aria-selected={tab === key} className={styles.tab} onClick={() => setTab(key)}>
             {tab === key && <motion.span layoutId="tab-highlight" className={styles.highlight} />}
             <span className={styles.tabLabel}>{t(`bookings.${key}`)}</span>
+            <span className={styles.count}>{all.filter((b) => tabOf(b, now) === key).length}</span>
           </button>
         ))}
       </div>
 
       {list.length === 0 ? (
-        <EmptyState icon={<CalendarX2 size={28} />} title={t("bookings.empty")}>
-          <Link to="/search" className="btn btn-primary">
+        <div className={styles.empty}>
+          <p>{t("bookings.empty")}</p>
+          <Link to="/search" className="btn btn-primary" style={{ marginTop: 12 }}>
             {t("bookings.findPlace")}
           </Link>
-        </EmptyState>
+        </div>
       ) : (
         <ul className={styles.list}>
           <AnimatePresence initial={false}>
@@ -78,6 +80,7 @@ function BookingRow({ booking, canCancel }: { booking: Booking; canCancel: boole
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
       queryClient.invalidateQueries({ queryKey: ["istiraha", String(booking.istiraha_id)] });
+      queryClient.invalidateQueries({ queryKey: ["istirahas"] });
     },
   });
 
@@ -85,7 +88,7 @@ function BookingRow({ booking, canCancel }: { booking: Booking; canCancel: boole
   const nights = nightsBetween(booking.check_in, booking.check_out);
 
   return (
-    <motion.li layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.98 }} className={`card ${styles.row}`}>
+    <motion.li layout exit={{ opacity: 0 }} className={styles.row}>
       <Link to={`/istirahas/${booking.istiraha_id}`} className={styles.thumb}>
         <img src={booking.cover_photo} alt="" loading="lazy" />
       </Link>
@@ -96,32 +99,33 @@ function BookingRow({ booking, canCancel }: { booking: Booking; canCancel: boole
           </Link>
           {booking.status === "cancelled" && <span className="badge badge-danger">{t("bookings.cancelledBadge")}</span>}
         </div>
-        <p className="muted">
+        <p className={styles.meta}>
           {t(`cities.${booking.city}`)} · {fmt.range(booking.check_in, booking.check_out)} · {t("details.nights", { count: nights })} ·{" "}
           {t("bookings.guests", { count: booking.guests })}
         </p>
-        <p className={styles.price}>{fmt.money(booking.total_price)}</p>
-
-        {canCancel &&
-          (confirming ? (
-            <div className={styles.confirm} role="alertdialog" aria-label={t("bookings.confirmCancel")}>
-              <p>{t("bookings.confirmCancel")}</p>
-              <div>
-                <button className="btn btn-danger" onClick={() => cancel.mutate()} disabled={cancel.isPending}>
-                  {t("bookings.yesCancel")}
-                </button>
-                <button className="btn btn-ghost" onClick={() => setConfirming(false)}>
-                  {t("bookings.keep")}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button className={`btn btn-ghost ${styles.cancelBtn}`} onClick={() => setConfirming(true)}>
-              {t("bookings.cancel")}
-            </button>
-          ))}
-        {cancel.isError && <p className="form-error">{(cancel.error as Error).message}</p>}
       </div>
+      <div className={styles.end}>
+        <p className={styles.price}>{fmt.money(booking.total_price)}</p>
+        {canCancel && !confirming && (
+          <button className={`btn btn-ghost ${styles.cancelBtn}`} onClick={() => setConfirming(true)}>
+            {t("bookings.cancel")}
+          </button>
+        )}
+      </div>
+      {confirming && (
+        <div className={styles.confirm} role="alertdialog" aria-label={t("bookings.confirmCancel")}>
+          <p>{t("bookings.confirmCancel")}</p>
+          <div>
+            <button className="btn btn-danger" onClick={() => cancel.mutate()} disabled={cancel.isPending}>
+              {t("bookings.yesCancel")}
+            </button>
+            <button className="btn btn-ghost" onClick={() => setConfirming(false)}>
+              {t("bookings.keep")}
+            </button>
+          </div>
+        </div>
+      )}
+      {cancel.isError && <p className="form-error">{(cancel.error as Error).message}</p>}
     </motion.li>
   );
 }
