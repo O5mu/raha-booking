@@ -1,131 +1,447 @@
+/* ============ Hero: one photograph, the name along the bottom edge ============ */
 .hero {
   position: relative;
   isolation: isolate;
-  margin-top: -64px; /* slide under the translucent header */
-  padding-block: 128px 48px;
-  color: #fff;
-}
-
-@media (min-width: 860px) {
-  .hero {
-    padding-block: 180px 96px;
-  }
+  display: flex;
+  align-items: flex-end;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  color: #f1f0ec;
 }
 
 .heroImage {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
 }
 
-/* ::after comes after the <img> in paint order, so the tint sits on top of the photo. */
+.heroImage[data-shown="true"] {
+  opacity: 1;
+  animation: drift 14s ease-out both;
+}
+
+/* The picture moves too: a slow push-in while it is shown. */
+@keyframes drift {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* A neutral scrim under the bottom band only, where the words sit. */
 .hero::after {
   content: "";
   position: absolute;
+  inset: 55% 0 0;
+  z-index: -1;
+  background: linear-gradient(transparent, rgb(20 10 4 / 0.72)); /* taste-skill-ignore: neutral scrim under text on a photo */
+}
+
+.heroText {
+  width: 100%;
+  padding: 0 var(--margin) 28px;
+}
+
+.sentence {
+  max-width: 34ch;
+  font-size: var(--step-lead);
+  line-height: 1.3;
+}
+
+/* The name in both scripts, at the two ends of one baseline. */
+.name {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.14em;
+  font-size: var(--step-display);
+  line-height: 0.82;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.name span {
+  display: block;
+}
+
+/* Kufi glyphs are taller than Barlow Condensed at the same size; a tight box
+   keeps the word from reaching up into the line above. */
+.name [lang="ar"] {
+  font-family: "Noto Kufi Arabic", sans-serif;
+  font-size: 0.72em;
+  line-height: 0.82;
+}
+
+@media (max-width: 640px) {
+  .name {
+    font-size: 24vw;
+  }
+}
+
+/* ============ Rate sheet: a printed card on the wall of a fort ============ */
+.rates {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding: var(--section-gap) var(--margin);
+}
+
+.ratesPhoto {
+  position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgb(8 28 23 / 0.7) 0%, rgb(8 28 23 / 0.45) 45%, rgb(8 28 23 / 0.75) 100%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 30% 50%;
 }
 
-.heroContent {
-  display: grid;
-  gap: 32px;
-}
-
-.heroContent h1 {
-  max-width: 14ch;
-  text-shadow: 0 2px 24px rgb(0 0 0 / 0.25);
-}
-
-.subtitle {
-  max-width: 52ch;
-  margin-top: 12px;
-  font-size: 1.1rem;
-  opacity: 0.92;
-}
-
-.hero form {
-  color: var(--text);
-}
-
-.cities {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(160px, 1fr);
-  gap: 16px;
-  margin-top: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-  scrollbar-width: none;
-}
-
-.city {
+.sheet {
+  --paper: #e4e3de;
+  --paper-ink: #2b170a;
+  --paper-muted: #5e4a38;
   position: relative;
-  aspect-ratio: 3 / 4;
+  grid-column: 7 / 13;
+  justify-self: end;
+  width: min(640px, 100%);
+  padding: 64px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  text-align: center;
+}
+
+/* Scalloped top and bottom edges, like a printed card. */
+.sheet::before,
+.sheet::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23e4e3de'/%3E%3C/svg%3E") repeat-x;
+}
+
+.sheet::before {
+  top: -12px;
+}
+
+.sheet::after {
+  bottom: -12px;
+  transform: scaleY(-1);
+}
+
+.sheetTitle {
+  font-size: var(--step-head);
+}
+
+.sheetNote {
+  max-width: 44ch;
+  margin: 16px auto 0;
+  font-size: var(--step-body);
+}
+
+.nights {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.night {
+  display: grid;
+  min-width: 56px;
+  padding: 8px 6px;
+  border: 0;
+  background: transparent;
+  color: var(--paper-ink);
+  font-size: var(--step-small);
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, transform 120ms var(--ease-out);
+}
+
+.night:hover {
+  background: #d6d0ba;
+}
+
+.night:active {
+  transform: scale(0.95);
+}
+
+.night[aria-checked="true"] {
+  background: var(--paper-ink);
+  color: var(--paper);
+}
+
+.night span:last-child {
+  font-family: var(--font-display);
+  font-size: var(--step-lead);
+}
+
+.group {
+  margin-top: 56px;
+}
+
+.groupName {
+  font-size: var(--step-lead);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+html[lang="ar"] .groupName {
+  letter-spacing: 0;
+}
+
+.items {
+  display: grid;
+  gap: 16px;
+  max-width: 420px;
+  margin: 20px auto 0;
+  padding: 0;
+  list-style: none;
+  text-align: start;
+}
+
+.itemLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: var(--step-body);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.itemLine:hover .itemName {
+  text-decoration: underline;
+}
+
+.itemPrice {
+  flex: none;
+}
+
+.itemNote {
+  font-size: var(--step-body);
+  line-height: 1.4;
+}
+
+.item[data-booked="true"] .itemName {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.08em;
+}
+
+.item[data-booked="true"] .itemLine,
+.item[data-booked="true"] .itemNote {
+  color: var(--paper-muted);
+}
+
+.sheetEnd {
+  margin-top: 56px;
+  font-size: var(--step-small);
+  color: var(--paper-muted);
+}
+
+@media (max-width: 860px) {
+  .rates {
+    display: block;
+    padding: 96px 10px;
+  }
+  .sheet {
+    width: 100%;
+    padding: 40px 28px;
+  }
+}
+
+/* ============ Showcase: a close-up per screen, the card moving right ============ */
+.showcase {
+  display: grid;
+}
+
+.frame {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  height: 100svh;
+  min-height: 640px;
+  padding-inline: var(--margin);
   overflow: hidden;
-  border-radius: var(--radius);
-  scroll-snap-align: start;
-  color: #fff;
-  transition: transform 100ms ease-out;
 }
 
-.city:active {
-  transform: scale(0.97);
-}
-
-.city img {
+.frameImage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.city::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 0.65));
-}
-
-.cityText {
-  position: absolute;
-  inset-inline: 14px;
-  bottom: 12px;
-  z-index: 1;
+.frameCard {
+  grid-column: calc(2 + var(--step)) / span 1;
   display: grid;
-  font-size: 0.875rem;
+  justify-items: center;
+  align-content: center;
+  gap: 10px;
+  min-height: 52svh;
+  padding: 28px 24px;
+  background: var(--bg);
+  color: var(--ink);
+  text-align: center;
 }
 
-.cityText strong {
-  font-size: 1.1rem;
+.frameName {
+  font-size: var(--step-lead);
+  line-height: 1.05;
 }
 
-.why {
-  margin-block: 56px;
+.frameWhole {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin-block: 8px;
 }
 
-.whyGrid {
+/* Tablet: two columns, the card alternating sides. */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .frame {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .frame[data-step="0"] .frameCard,
+  .frame[data-step="2"] .frameCard {
+    grid-column: 1;
+    justify-self: start;
+    width: min(360px, 100%);
+  }
+  .frame[data-step="1"] .frameCard {
+    grid-column: 2;
+    justify-self: end;
+    width: min(360px, 100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .frame {
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+  }
+  .frameCard {
+    width: 100%;
+    min-height: 0;
+    justify-items: start;
+    text-align: start;
+    padding: 20px;
+  }
+  .frameWhole {
+    display: none;
+  }
+}
+
+/* ============ Proof: one ochre band, the names of every place ============ */
+.family {
   display: grid;
-  gap: 16px;
-  margin-top: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: center;
+  padding: var(--section-gap) var(--margin);
+  background: var(--field-1);
+  color: var(--field-1-ink);
 }
 
-.whyCard {
-  display: grid;
-  gap: 8px;
-  padding: 24px;
+.familyTitle {
+  font-size: var(--step-head);
 }
 
-.featuredTitle {
-  margin-bottom: 20px;
-}
-
-.more {
-  display: flex;
-  justify-content: center;
+.familyNames {
+  max-width: 62ch;
   margin-top: 40px;
+  font-family: var(--font-display);
+  font-size: var(--step-lead);
+  line-height: 1.15;
+}
+
+.familyNames span {
+  color: rgb(43 23 10 / 0.6);
+  transition: color 400ms ease-out;
+}
+
+.familyNames span[data-lit="true"] {
+  color: var(--field-1-ink);
+}
+
+.familyFact {
+  max-width: 52ch;
+  margin-top: 40px;
+  font-size: var(--step-lead);
+  line-height: 1.35;
+}
+
+.frameWholeWrap,
+.frameActionWrap {
+  width: 100%;
+}
+
+.familyText {
+  grid-column: 1 / 8;
+}
+
+.fire {
+  grid-column: 9 / 13;
+}
+
+/* A tall crop of the flames only. */
+.fire video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 60%;
+}
+
+@media (max-width: 640px) {
+  .family {
+    display: block;
+  }
+  .fire {
+    margin-top: 48px;
+    max-width: 360px;
+  }
+}
+
+/* Two short texts at the two ends of the line above the name. */
+.heroFacts {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  /* the Arabic letters rise well above their line box */
+  margin-bottom: calc(var(--step-display) * 0.28);
+}
+
+.fact {
+  max-width: 22ch;
+  font-size: var(--step-lead);
+  line-height: 1.3;
+  text-align: end;
+}
+
+@media (max-width: 640px) {
+  .heroFacts {
+    display: block;
+    margin-bottom: 0;
+  }
+  .fact {
+    display: none;
+  }
 }
