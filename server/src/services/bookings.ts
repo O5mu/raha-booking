@@ -4,9 +4,13 @@ import { nightsBetween, todayInRiyadh } from "../lib/dates.js";
 
 export const MAX_NIGHTS = 30;
 
-// Postgres error code for "exclusion constraint violated", i.e. the dates
-// overlap a confirmed booking (constraint no_double_booking in 001_init.sql).
+// Postgres error codes:
+// 23P01 = exclusion constraint violated: the dates overlap a confirmed booking
+//         (constraint no_double_booking in 001_init.sql).
+// 40P01 = deadlock detected: two transactions inserting overlapping rows at the
+//         same moment can each wait for the other; Postgres cancels one.
 const EXCLUSION_VIOLATION = "23P01";
+const DEADLOCK = "40P01";
 
 type NewBooking = {
   istirahaId: number;
@@ -24,18 +28,25 @@ export function validateStay(checkIn: string, checkOut: string) {
   return nights;
 }
 
-export function isOverlapError(err: unknown): boolean {
-  return (err as { code?: string }).code === EXCLUSION_VIOLATION;
+// Either way, the insert lost the race for these dates.
+export function isBookingConflict(err: unknown): boolean {
+  const code = (err as { code?: string }).code;
+  return code === EXCLUSION_VIOLATION || code === DEADLOCK;
 }
+
+// Locks the istiraha row until the transaction ends. Every booking and block for
+// the same istiraha takes this lock first, so they run one after another: the
+// second one only inserts after the first has committed, sees its row, and fails
+// cleanly with 23P01 instead of deadlocking. It also stops the owner changing the
+// price or hiding the listing halfway through a booking.
+export const LOCK_ISTIRAHA = "FOR UPDATE";
 
 export async function createBooking(input: NewBooking) {
   const nights = validateStay(input.checkIn, input.checkOut);
 
   return withTransaction(async (db) => {
-    // FOR SHARE locks this istiraha row until we commit, so an owner can't
-    // change the price or hide the listing halfway through this booking.
     const { rows } = await db.query(
-      "SELECT price_per_night, capacity FROM istirahas WHERE id = $1 AND status = 'approved' FOR SHARE",
+      `SELECT price_per_night, capacity FROM istirahas WHERE id = $1 AND status = 'approved' ${LOCK_ISTIRAHA}`,
       [input.istirahaId]
     );
     const istiraha = rows[0];
@@ -59,7 +70,7 @@ export async function createBooking(input: NewBooking) {
       // We don't check availability with a SELECT first: two requests could both
       // see "free" and both insert. Instead we just insert and let the database
       // constraint reject the loser atomically.
-      if (isOverlapError(err)) throw new HttpError(409, "Sorry, these dates were just booked. Please pick other dates.");
+      if (isBookingConflict(err)) throw new HttpError(409, "Sorry, these dates were just booked. Please pick other dates.");
       throw err;
     }
   });

@@ -123,7 +123,17 @@ describe("booking", () => {
         client.release();
       }
     };
-    expect((await Promise.all([insert(), insert()])).sort()).toEqual(["23P01", "ok"]);
+    const [first, second] = (await Promise.all([insert(), insert()])).sort();
+    // Without the API's row lock, the loser fails either with 23P01 (exclusion
+    // violation) or 40P01 (deadlock: both inserts waited on each other). Either
+    // way exactly one booking survives.
+    expect(second).toBe("ok");
+    expect(["23P01", "40P01"]).toContain(first);
+    const { rows } = await pool.query(
+      "SELECT count(*)::int AS n FROM bookings WHERE istiraha_id = $1 AND check_in = $2 AND status = 'confirmed'",
+      [ISTIRAHA, day(140)]
+    );
+    expect(rows[0].n).toBe(1);
   });
 });
 

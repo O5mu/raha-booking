@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { z } from "zod";
-import { pool } from "../db.js";
+import { pool, withTransaction } from "../db.js";
 import { HttpError } from "../middleware/errors.js";
 import { requireAuth, requireRole } from "../middleware/auth.js";
-import { isOverlapError, validateStay } from "../services/bookings.js";
+import { isBookingConflict, LOCK_ISTIRAHA, validateStay } from "../services/bookings.js";
 import { todayInRiyadh } from "../lib/dates.js";
 import { AMENITIES, CITIES, dateString, idParam } from "../lib/validation.js";
 
@@ -121,18 +121,26 @@ ownerRouter.post("/istirahas/:id/blocks", async (req, res) => {
   const id = idParam.parse(req.params.id);
   const { checkIn, checkOut } = z.object({ checkIn: dateString, checkOut: dateString }).parse(req.body);
   validateStay(checkIn, checkOut);
-  await findOwnListing(id, req.user!.id);
-  try {
-    const { rows } = await pool.query(
-      `INSERT INTO bookings (istiraha_id, user_id, kind, check_in, check_out)
-       VALUES ($1, $2, 'block', $3, $4) RETURNING id, kind, check_in, check_out, status`,
-      [id, req.user!.id, checkIn, checkOut]
-    );
-    res.status(201).json({ block: rows[0] });
-  } catch (err) {
-    if (isOverlapError(err)) throw new HttpError(409, "These dates overlap an existing booking");
-    throw err;
-  }
+  const block = await withTransaction(async (db) => {
+    // Same lock as a guest booking, so a block and a booking can't race each other.
+    const owned = await db.query(`SELECT id FROM istirahas WHERE id = $1 AND owner_id = $2 ${LOCK_ISTIRAHA}`, [
+      id,
+      req.user!.id,
+    ]);
+    if (!owned.rows[0]) throw new HttpError(404, "Istiraha not found");
+    try {
+      const { rows } = await db.query(
+        `INSERT INTO bookings (istiraha_id, user_id, kind, check_in, check_out)
+         VALUES ($1, $2, 'block', $3, $4) RETURNING id, kind, check_in, check_out, status`,
+        [id, req.user!.id, checkIn, checkOut]
+      );
+      return rows[0];
+    } catch (err) {
+      if (isBookingConflict(err)) throw new HttpError(409, "These dates overlap an existing booking");
+      throw err;
+    }
+  });
+  res.status(201).json({ block });
 });
 
 ownerRouter.delete("/blocks/:id", async (req, res) => {
