@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Lock, Trash2, UserRound } from "lucide-react";
+import { Lock, UserRound } from "lucide-react";
 import { api } from "../../api/client";
 import type { CalendarEntry, OwnerIstiraha } from "../../api/types";
 import { useFormat } from "../../lib/format";
@@ -50,7 +50,7 @@ export function ManageDatesDialog({ istiraha, onClose }: { istiraha: OwnerIstira
 
   return (
     <Dialog open={istiraha !== null} title={istiraha ? t("owner.datesTitle", { name: fmt.pick(istiraha, "name") }) : ""} onClose={close}>
-      <p className="muted">{t("owner.datesHint")}</p>
+      <p className={styles.hint}>{t("owner.datesHint")}</p>
 
       <div className={styles.calendar}>
         <DateRangeCalendar value={range} onChange={setRange} booked={taken} months={2} />
@@ -63,18 +63,17 @@ export function ManageDatesDialog({ istiraha, onClose }: { istiraha: OwnerIstira
       </button>
 
       <h3 className={styles.listTitle}>{t("owner.blocksList")}</h3>
-      {calendar.data?.entries.length === 0 && <p className="muted">{t("owner.noEntries")}</p>}
+      {calendar.data?.entries.length === 0 && <p className={styles.empty}>{t("owner.noEntries")}</p>}
       <ul className={styles.list}>
         {calendar.data?.entries.map((e) => (
-          <li key={e.id} className={e.kind === "block" ? styles.block : ""}>
+          <li key={e.id}>
             {e.kind === "block" ? <Lock size={16} /> : <UserRound size={16} />}
             <span className={styles.entryText}>
               <strong>{fmt.range(e.check_in, e.check_out)}</strong>
-              <span className="muted">{e.kind === "block" ? t("owner.blocked") : `${e.guest_name} · ${t("bookings.guests", { count: e.guests ?? 0 })}`}</span>
+              <span>{e.kind === "block" ? t("owner.blocked") : `${e.guest_name} · ${t("bookings.guests", { count: e.guests ?? 0 })}`}</span>
             </span>
             {e.kind === "block" && (
               <button className="btn btn-ghost" onClick={() => unblock.mutate(e.id)} disabled={unblock.isPending} aria-label={t("owner.remove")}>
-                <Trash2 size={16} />
                 {t("owner.remove")}
               </button>
             )}

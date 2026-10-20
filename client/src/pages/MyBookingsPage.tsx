@@ -49,23 +49,50 @@ export function MyBookingsPage() {
         ))}
       </div>
 
-      {list.length === 0 ? (
-        <div className={styles.empty}>
-          <p>{t("bookings.empty")}</p>
-          <Link to="/search" className="btn btn-primary" style={{ marginTop: 12 }}>
-            {t("bookings.findPlace")}
-          </Link>
+      <div className={styles.layout}>
+        <div>
+          {list.length === 0 ? (
+            <div className={styles.empty}>
+              <p>{t("bookings.empty")}</p>
+              <Link to="/search" className="btn btn-primary" style={{ marginTop: 12 }}>
+                {t("bookings.findPlace")}
+              </Link>
+            </div>
+          ) : (
+            <ul className={styles.list}>
+              <AnimatePresence initial={false}>
+                {list.map((b) => (
+                  <BookingRow key={b.id} booking={b} canCancel={tab === "upcoming" && b.check_in > now} />
+                ))}
+              </AnimatePresence>
+            </ul>
+          )}
         </div>
-      ) : (
-        <ul className={styles.list}>
-          <AnimatePresence initial={false}>
-            {list.map((b) => (
-              <BookingRow key={b.id} booking={b} canCancel={tab === "upcoming" && b.check_in > now} />
-            ))}
-          </AnimatePresence>
-        </ul>
-      )}
+        {tab === "upcoming" && list[0] && <NextStay booking={list[0]} now={now} />}
+      </div>
     </div>
+  );
+}
+
+// Beside the list: the soonest stay, with when it starts and the gate hours.
+function NextStay({ booking, now }: { booking: Booking; now: string }) {
+  const { t } = useTranslation();
+  const fmt = useFormat();
+  const days = Math.max(0, nightsBetween(now, booking.check_in));
+  return (
+    <aside className={styles.next} aria-labelledby="next-stay">
+      <img src={booking.cover_photo} alt="" />
+      <div className={styles.nextBody}>
+        <h2 id="next-stay">{t("bookings.nextStay")}</h2>
+        <p className={styles.nextWhen}>{t("bookings.when", { count: days })}</p>
+        <p>
+          {fmt.pick(booking, "name")}, {fmt.place(booking)}
+        </p>
+        <p className={styles.meta}>
+          {fmt.longDate(booking.check_in)}. {t("home.checkIn")}.
+        </p>
+      </div>
+    </aside>
   );
 }
 

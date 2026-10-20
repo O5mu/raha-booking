@@ -1,22 +1,27 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import styles from "./Dashboard.module.css";
 
-// One headline number: label, value, optional hint. A row of these is the
-// dashboard summary (no chart needed for single values).
-export function StatTile({ label, value, hint }: { label: string; value: string | number; hint?: string }) {
+// One headline number: grey label above, value below. A row of these is one
+// container split by 1px dividers (no card per number). `money` sets the
+// value in bold, the only figure that gets it.
+export function StatTile({ label, value, hint, money }: { label: string; value: string | number; hint?: string; money?: boolean }) {
   return (
-    <div className={`card ${styles.tile}`}>
+    <div className={styles.tile}>
       <span className={styles.tileLabel}>{label}</span>
-      <span className={styles.tileValue}>{value}</span>
+      <span className={`${styles.tileValue} ${money ? styles.money : ""}`}>{value}</span>
       {hint && <span className={styles.tileHint}>{hint}</span>}
     </div>
   );
 }
 
-export function StatRow({ children }: { children: ReactNode }) {
-  return <div className={styles.stats}>{children}</div>;
+export function StatRow({ children, count }: { children: ReactNode; count: number }) {
+  return (
+    <div className={styles.stats} style={{ "--count": count } as CSSProperties}>
+      {children}
+    </div>
+  );
 }
 
 const STATUS_BADGE = { approved: "badge-success", pending: "badge-warning", rejected: "badge-danger", hidden: "" };

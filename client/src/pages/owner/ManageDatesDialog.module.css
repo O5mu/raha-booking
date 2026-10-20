@@ -1,40 +1,67 @@
+.hint {
+  color: var(--muted);
+  font-size: 15px;
+}
+
 .calendar {
   margin-block: 20px 16px;
 }
 
 .listTitle {
-  margin-block: 28px 12px;
+  margin-block: 32px 4px;
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
+/* Bookings and blocks as two-line rows split by rules. */
 .list {
-  display: grid;
-  gap: 8px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .list li {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
   gap: 12px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  align-items: center;
+  min-height: 56px;
+  padding-block: 8px;
 }
 
-.block {
-  background: var(--surface-2);
+.list li + li {
+  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app list */
+}
+
+.list li > svg {
+  color: var(--muted);
 }
 
 .entryText {
   display: grid;
-  flex: 1;
-  font-size: 0.925rem;
+  gap: 2px;
+  font-size: 15px;
+}
+
+.entryText strong {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.entryText span {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .list :global(.btn) {
-  min-height: 36px;
-  padding: 4px 12px;
+  min-height: 32px;
+  padding: 0 10px;
   color: var(--danger);
+  font-size: 14px;
+}
+
+.empty {
+  color: var(--muted);
 }

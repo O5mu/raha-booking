@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { motion } from "motion/react";
-import { Check, CheckCircle2, EyeOff, RotateCcw, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { Check } from "lucide-react";
 import { api } from "../../api/client";
 import type { AdminBooking, AdminIstiraha, AdminStats, AdminUser, ListingStatus } from "../../api/types";
 import { useFormat } from "../../lib/format";
 import { StatRow, StatTile, StatusBadge } from "../../components/Dashboard";
-import { EmptyState, ErrorState, PageLoader } from "../../components/States";
+import { ErrorState, PageLoader } from "../../components/States";
 import styles from "../../components/Dashboard.module.css";
 import local from "./AdminPage.module.css";
 
@@ -44,62 +44,71 @@ export function AdminPage() {
   const all = listings.data.istirahas;
   const pending = all.filter((i) => i.status === "pending");
   const shown = filter === "all" ? all : all.filter((i) => i.status === filter);
+  // Tab counts appear once each list has loaded.
+  const counts = { listings: all.length, users: users.data?.users.length, bookings: bookings.data?.bookings.length };
 
   return (
     <div className="container page">
       <div className={styles.head}>
         <div>
           <h1>{t("admin.title")}</h1>
-          <p className="muted">{t("admin.subtitle")}</p>
+          <p>{t("admin.summary", { count: pending.length })}</p>
         </div>
       </div>
 
-      <StatRow>
+      <StatRow count={5}>
         <StatTile label={t("admin.users")} value={s.users} />
         <StatTile label={t("admin.liveListings")} value={s.live_listings} />
         <StatTile label={t("admin.pending")} value={s.pending_listings} />
         <StatTile label={t("admin.bookings")} value={s.confirmed_bookings} />
-        <StatTile label={t("admin.value")} value={fmt.compact(s.total_value)} />
+        <StatTile label={t("admin.value")} value={fmt.money(s.total_value)} money />
       </StatRow>
 
-      <section className={styles.section}>
-        <h2>{t("admin.queue")}</h2>
+      {/* The queue comes first: it is the work. */}
+      <section className={styles.panel} aria-labelledby="queue-title">
+        <div className={styles.panelHead}>
+          <h2 id="queue-title">{t("admin.queue")}</h2>
+          <span className={styles.panelNote}>{pending.length}</span>
+        </div>
         {pending.length === 0 ? (
-          <EmptyState icon={<CheckCircle2 size={28} />} title={t("admin.queueEmpty")} />
+          <p className={styles.empty}>{t("admin.queueEmpty")}</p>
         ) : (
-          <div className={styles.listings}>
-            {pending.map((i) => (
-              <motion.div layout key={i.id} className={`card ${styles.listing}`}>
-                <img src={i.cover_photo} alt="" loading="lazy" />
-                <div className={styles.listingInfo}>
-                  <h3>{fmt.pick(i, "name")}</h3>
-                  <p className="muted">
-                    {fmt.place(i)} · {fmt.money(i.price_per_night)} {t("search.perNight")}
-                  </p>
-                  <p className="muted">{t("admin.owner", { name: i.owner_name })}</p>
-                </div>
-                <div className={styles.actions}>
-                  <button className="btn btn-primary" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "approved" })}>
-                    <Check size={16} />
-                    {t("admin.approve")}
-                  </button>
-                  <button className="btn btn-danger" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "rejected" })}>
-                    <X size={16} />
-                    {t("admin.reject")}
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <ul className={`${styles.rows} ${styles.withActions}`}>
+            <AnimatePresence initial={false}>
+              {pending.map((i) => (
+                <motion.li layout exit={{ opacity: 0 }} key={i.id} className={styles.row}>
+                  <img src={i.cover_photo} alt="" loading="lazy" />
+                  <div className={styles.rowMain}>
+                    <span className={styles.rowTitle}>
+                      <span>{fmt.pick(i, "name")}</span>
+                    </span>
+                    <span className={styles.rowSub}>
+                      {fmt.place(i)} · {fmt.money(i.price_per_night)} {t("search.perNight")} · {t("admin.owner", { name: i.owner_name })}
+                    </span>
+                  </div>
+                  <div className={styles.rowActions}>
+                    <button className="btn btn-secondary" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "approved" })}>
+                      <Check size={16} />
+                      {t("admin.approve")}
+                    </button>
+                    <button className={`btn btn-ghost ${local.reject}`} disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "rejected" })}>
+                      {t("admin.reject")}
+                    </button>
+                  </div>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </ul>
         )}
       </section>
 
-      <section className={styles.section}>
-        <div className={local.tabs} role="tablist">
+      <section className={`${styles.panel} ${local.records}`}>
+        <div className={styles.tabs} role="tablist">
           {(["listings", "users", "bookings"] as const).map((key) => (
-            <button key={key} role="tab" aria-selected={tab === key} className={local.tab} onClick={() => setTab(key)}>
-              {tab === key && <motion.span layoutId="admin-tab" className={local.highlight} />}
-              <span className={local.tabLabel}>{t(`admin.tab${key[0].toUpperCase()}${key.slice(1)}`)}</span>
+            <button key={key} role="tab" aria-selected={tab === key} className={styles.tab} onClick={() => setTab(key)}>
+              {tab === key && <motion.span layoutId="admin-tab" className={styles.highlight} />}
+              <span>{t(`admin.tab${key[0].toUpperCase()}${key.slice(1)}`)}</span>
+              {counts[key] !== undefined && <span className={styles.count}>{counts[key]}</span>}
             </button>
           ))}
         </div>
@@ -120,7 +129,7 @@ export function AdminPage() {
                     <th>{t("owner.istiraha")}</th>
                     <th>{t("owner.city")}</th>
                     <th>{t("admin.colOwner")}</th>
-                    <th>{t("admin.colPrice")}</th>
+                    <th className={styles.num}>{t("admin.colPrice")}</th>
                     <th>{t("admin.colStatus")}</th>
                     <th />
                   </tr>
@@ -128,24 +137,21 @@ export function AdminPage() {
                 <tbody>
                   {shown.map((i) => (
                     <tr key={i.id}>
-                      <td>
-                        {i.status === "approved" ? <Link to={`/istirahas/${i.id}`}>{fmt.pick(i, "name")}</Link> : fmt.pick(i, "name")}
-                      </td>
+                      <td>{i.status === "approved" ? <Link to={`/istirahas/${i.id}`}>{fmt.pick(i, "name")}</Link> : fmt.pick(i, "name")}</td>
                       <td>{t(`cities.${i.city}`)}</td>
                       <td>{i.owner_name}</td>
                       <td className={styles.num}>{fmt.money(i.price_per_night)}</td>
                       <td>
-                        <StatusBadge status={i.status} label={t(`status.${i.status}`)} />
+                        {/* Live is the usual state, so it stays plain; only the exceptions get a pill. */}
+                        {i.status === "approved" ? <span className={local.live}>{t("status.approved")}</span> : <StatusBadge status={i.status} label={t(`status.${i.status}`)} />}
                       </td>
-                      <td>
+                      <td className={local.action}>
                         {i.status === "approved" ? (
                           <button className="btn btn-ghost" onClick={() => setStatus.mutate({ id: i.id, status: "hidden" })}>
-                            <EyeOff size={16} />
                             {t("admin.hideListing")}
                           </button>
                         ) : i.status !== "pending" ? (
                           <button className="btn btn-ghost" onClick={() => setStatus.mutate({ id: i.id, status: "approved" })}>
-                            <RotateCcw size={16} />
                             {t("admin.restore")}
                           </button>
                         ) : null}
@@ -169,7 +175,7 @@ export function AdminPage() {
                     <th>{t("admin.name")}</th>
                     <th>{t("admin.email")}</th>
                     <th>{t("admin.role")}</th>
-                    <th>{t("admin.joined")}</th>
+                    <th className={styles.num}>{t("admin.joined")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -178,7 +184,7 @@ export function AdminPage() {
                       <td>{u.name}</td>
                       <td dir="ltr">{u.email}</td>
                       <td>{t(`admin.roles.${u.role}`)}</td>
-                      <td>{fmt.shortDate(u.created_at.slice(0, 10))}</td>
+                      <td className={styles.num}>{u.created_at.slice(0, 10)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -194,11 +200,11 @@ export function AdminPage() {
               <table className={styles.table}>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th className={styles.num}>#</th>
                     <th>{t("owner.guest")}</th>
                     <th>{t("owner.istiraha")}</th>
                     <th>{t("owner.dates")}</th>
-                    <th>{t("owner.amount")}</th>
+                    <th className={styles.num}>{t("owner.amount")}</th>
                     <th />
                   </tr>
                 </thead>

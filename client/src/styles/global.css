@@ -74,22 +74,6 @@
   color-scheme: light;
 }
 
-/* Temporary aliases for components not yet moved to the new tokens. */
-:root,
-[data-surface="app"] {
-  --text: var(--ink);
-  --text-2: var(--muted);
-  --surface-2: var(--raised);
-  --border: var(--line);
-  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
-  --on-accent: var(--accent-ink);
-  --radius-sm: var(--radius);
-  --radius-lg: var(--radius);
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-}
-
 html[lang="ar"] {
   --font-display: "Noto Kufi Arabic", "Barlow Condensed", sans-serif;
   --font-text: "Noto Kufi Arabic", "Barlow", sans-serif;

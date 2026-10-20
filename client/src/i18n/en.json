@@ -165,7 +165,11 @@
     "confirmCancel": "Cancel this booking? The dates will be released for others.",
     "keep": "Keep it",
     "yesCancel": "Yes, cancel",
-    "cancelledBadge": "Cancelled"
+    "cancelledBadge": "Cancelled",
+    "nextStay": "Your next stay",
+    "when_zero": "Tonight",
+    "when_one": "Tomorrow night",
+    "when_other": "In {{count}} days"
   },
   "status": {
     "pending": "Pending review",
@@ -174,12 +178,10 @@
     "hidden": "Hidden"
   },
   "owner": {
-    "title": "Hello, {{name}}",
-    "subtitle": "Manage your istirahas and bookings.",
     "add": "Add istiraha",
     "liveListings": "Live listings",
     "upcomingBookings": "Upcoming bookings",
-    "upcomingRevenue": "Upcoming revenue (SAR)",
+    "upcomingRevenue": "Upcoming revenue",
     "pendingReview": "Waiting for approval",
     "yourListings": "Your istirahas",
     "noListings": "You haven't listed an istiraha yet.",
@@ -189,7 +191,6 @@
     "manageDates": "Manage dates",
     "hide": "Hide",
     "show": "Show",
-    "bookingsTitle": "Upcoming bookings",
     "noBookings": "No upcoming bookings yet.",
     "guest": "Guest",
     "istiraha": "Istiraha",
@@ -225,16 +226,32 @@
     "save": "Save changes",
     "create": "Submit for review",
     "cancel": "Cancel",
-    "saved": "Saved"
+    "saved": "Saved",
+    "overview": "Overview",
+    "summary": "{{sold}} of {{total}} nights are booked in the next two weeks.",
+    "nightsTitle": "Next {{count}} nights",
+    "tonight": "Tonight",
+    "blockedShort": "Blocked",
+    "legendBooked": "Booked",
+    "legendWeekend": "Weekend night",
+    "arrivals": "Next arrivals",
+    "moreLater_one": "1 more booking after these",
+    "moreLater_other": "{{count}} more bookings after these",
+    "basicsNote": "The name guests see in search, in both languages.",
+    "descriptionNote": "A few sentences on what the place is like and who it suits.",
+    "detailsNote": "Where it is, what a night costs and how many guests it holds.",
+    "amenitiesNote": "Pick everything guests can use. These become search filters.",
+    "photosNote": "The first photo is the cover in search.",
+    "preview": "How guests see it",
+    "previewName": "Your istiraha"
   },
   "admin": {
-    "title": "Admin",
-    "subtitle": "Moderate listings and keep an eye on the platform.",
+    "title": "Moderation",
     "users": "Users",
     "liveListings": "Live listings",
     "pending": "Waiting for approval",
     "bookings": "Confirmed bookings",
-    "value": "Booking value (SAR)",
+    "value": "Booking value",
     "queue": "Approval queue",
     "queueEmpty": "No listings waiting. All caught up.",
     "approve": "Approve",
@@ -260,7 +277,10 @@
     "tabBookings": "Bookings",
     "colOwner": "Owner",
     "colPrice": "Price / night",
-    "colStatus": "Status"
+    "colStatus": "Status",
+    "summary_zero": "Every listing has been reviewed.",
+    "summary_one": "1 listing is waiting for your review.",
+    "summary_other": "{{count}} listings are waiting for your review."
   },
   "common": {
     "loading": "Loading…",

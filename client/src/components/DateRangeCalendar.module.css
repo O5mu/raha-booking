@@ -36,7 +36,10 @@
 
 .title {
   text-align: center;
-  font-size: 1rem;
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 28px;
   margin-bottom: 12px;
 }
@@ -51,9 +54,9 @@
 
 .weekday {
   text-align: center;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
   padding-bottom: 6px;
 }
 
@@ -63,15 +66,16 @@
   max-height: 48px;
   border: 0;
   background: transparent;
-  border-radius: 999px;
-  font-size: 0.925rem;
+  border-radius: var(--radius); /* square on pages, 8px on app screens */
+  color: inherit;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
   cursor: pointer;
   transition: background-color 120ms ease-out, transform 100ms ease-out;
 }
 
 .day:hover:not(:disabled) {
-  background: var(--surface-2);
+  background: var(--active, var(--raised));
 }
 
 .day:active:not(:disabled) {
@@ -95,28 +99,28 @@
 }
 
 .disabled {
-  color: color-mix(in srgb, var(--text-2) 55%, transparent);
+  color: color-mix(in srgb, var(--muted) 55%, transparent);
   cursor: default;
 }
 
 .booked {
   text-decoration: line-through;
-  text-decoration-color: color-mix(in srgb, var(--text-2) 70%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--muted) 70%, transparent);
 }
 
 .inRange {
   border-radius: 0;
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .inRange:hover:not(:disabled) {
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .selected,
 .selected:hover:not(:disabled) {
   background: var(--accent);
-  color: var(--on-accent);
+  color: var(--accent-ink);
   font-weight: 700;
   text-decoration: none;
 }
@@ -134,5 +138,5 @@
 }
 
 .rangeStart.rangeEnd {
-  border-radius: 999px;
+  border-radius: var(--radius);
 }

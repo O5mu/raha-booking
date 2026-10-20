@@ -1,42 +1,24 @@
-.tabs {
-  display: inline-flex;
-  padding: 4px;
-  margin-bottom: 16px;
-  border-radius: 999px;
-  background: var(--surface-2);
-}
-
-.tab {
-  position: relative;
-  min-height: 38px;
-  padding: 6px 18px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
-}
-
-.tab[aria-selected="true"] {
-  color: var(--text);
-}
-
-.highlight {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-}
-
-.tabLabel {
-  position: relative;
+/* The records panel sits one gutter under the queue. */
+.records {
+  margin-top: 16px;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  padding: 16px 20px 8px;
+}
+
+.reject {
+  color: var(--danger);
+}
+
+/* The row action column ends on the table's right edge. */
+.action {
+  text-align: end;
+}
+
+.live {
+  color: var(--muted);
 }

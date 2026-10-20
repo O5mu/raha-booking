@@ -172,3 +172,56 @@
     justify-items: start;
   }
 }
+
+/* The list keeps to about 760px; the next stay sits beside it. */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: 16px 48px;
+  align-items: start;
+}
+
+.next {
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.next img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.nextBody {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px 20px;
+  font-size: 15px;
+}
+
+.nextBody h2 {
+  color: var(--muted);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.nextWhen {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .next {
+    order: -1;
+    margin-top: 8px;
+  }
+}

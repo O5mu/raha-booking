@@ -54,6 +54,17 @@
   transition: transform 220ms var(--ease-out), opacity 220ms ease-out;
 }
 
+/* Kufi letters reach far above and below the line, so Arabic needs the room. */
+html[lang="ar"] .menu a,
+html[lang="ar"] .menu button {
+  line-height: 1.45;
+  font-size: calc(var(--step-head) * 0.8);
+}
+
+html[lang="ar"] .menu {
+  gap: 4px;
+}
+
 /* On hover a row steps forward and the others recede. */
 .menu:hover a,
 .menu:hover button {

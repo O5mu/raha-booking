@@ -103,15 +103,14 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
   return (
     <div className="container page">
       <form className={styles.form} onSubmit={onSubmit} noValidate>
-        <header>
+        <header className={styles.head}>
           <h1>{existing ? t("owner.formEdit", { name: fmt.pick(existing, "name") }) : t("owner.formNew")}</h1>
-          {!existing && <p className="muted">{t("owner.formHint")}</p>}
+          {!existing && <p>{t("owner.formHint")}</p>}
         </header>
 
         {save.isError && !Object.keys(errors).length && <p className="form-error">{(save.error as Error).message}</p>}
 
-        <fieldset className={styles.section}>
-          <legend>{t("owner.sectionBasics")}</legend>
+        <Section title={t("owner.sectionBasics")} note={t("owner.basicsNote")}>
           <div className={styles.row}>
             <Field name="name_en" error={errors.name_en?.[0]} label={t("owner.nameEn")}>
               <input id="name_en" className="input" dir="ltr" value={form.name_en} onChange={set("name_en")} />
@@ -120,10 +119,9 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
               <input id="name_ar" className="input" dir="rtl" lang="ar" value={form.name_ar} onChange={set("name_ar")} />
             </Field>
           </div>
-        </fieldset>
+        </Section>
 
-        <fieldset className={styles.section}>
-          <legend>{t("owner.sectionDescription")}</legend>
+        <Section title={t("owner.sectionDescription")} note={t("owner.descriptionNote")}>
           <div className={styles.row}>
             <Field name="description_en" error={errors.description_en?.[0]} label={t("owner.descriptionEn")}>
               <textarea id="description_en" className="input" rows={4} dir="ltr" value={form.description_en} onChange={set("description_en")} />
@@ -132,10 +130,9 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
               <textarea id="description_ar" className="input" rows={4} dir="rtl" lang="ar" value={form.description_ar} onChange={set("description_ar")} />
             </Field>
           </div>
-        </fieldset>
+        </Section>
 
-        <fieldset className={styles.section}>
-          <legend>{t("owner.sectionDetails")}</legend>
+        <Section title={t("owner.sectionDetails")} note={t("owner.detailsNote")}>
           <div className={styles.row}>
             <Field name="city" error={errors.city?.[0]} label={t("owner.city")}>
               <select id="city" className="input" value={form.city} onChange={set("city")}>
@@ -161,10 +158,9 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
               <input id="capacity" className="input" type="number" inputMode="numeric" min={1} value={form.capacity} onChange={set("capacity")} />
             </Field>
           </div>
-        </fieldset>
+        </Section>
 
-        <fieldset className={styles.section}>
-          <legend>{t("owner.sectionAmenities")}</legend>
+        <Section title={t("owner.sectionAmenities")} note={t("owner.amenitiesNote")}>
           <div className={styles.chips}>
             {AMENITIES.map((a) => (
               <button type="button" key={a} className="chip" aria-pressed={form.amenities.includes(a)} onClick={() => toggleAmenity(a)}>
@@ -173,10 +169,9 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
               </button>
             ))}
           </div>
-        </fieldset>
+        </Section>
 
-        <fieldset className={styles.section}>
-          <legend>{t("owner.sectionPhotos")}</legend>
+        <Section title={t("owner.sectionPhotos")} note={t("owner.photosNote")} aside={<Preview form={form} />}>
           <Field name="photos" error={errors.photos?.[0]} label={t("owner.photosLabel")} hint={t("owner.photosHint")}>
             <textarea id="photos" className="input" rows={4} dir="ltr" value={form.photos} onChange={set("photos")} placeholder="https://images.unsplash.com/..." />
           </Field>
@@ -187,7 +182,7 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
               ))}
             </div>
           )}
-        </fieldset>
+        </Section>
 
         <div className={styles.footer}>
           <Link to="/owner" className="btn btn-ghost">
@@ -202,6 +197,44 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
   );
 }
 
+// One settings row: the section's name and a line about it on the start
+// side, its fields in a panel beside it. `aside` goes under the note.
+function Section({ title, note, aside, children }: { title: string; note: string; aside?: ReactNode; children: ReactNode }) {
+  return (
+    <section className={styles.section}>
+      <div className={styles.label}>
+        <h2>{title}</h2>
+        <p>{note}</p>
+        {aside}
+      </div>
+      <fieldset className={styles.panel}>
+        <legend className="visually-hidden">{title}</legend>
+        {children}
+      </fieldset>
+    </section>
+  );
+}
+
+// What the setting produces: the listing as a card in search, live as you type.
+function Preview({ form }: { form: FormState }) {
+  const { t, i18n } = useTranslation();
+  const fmt = useFormat();
+  const cover = form.photos.split("\n").map((p) => p.trim()).find((p) => p.startsWith("http"));
+  const name = (i18n.language === "ar" ? form.name_ar : form.name_en) || form.name_en || t("owner.previewName");
+  return (
+    <figure className={styles.preview}>
+      <figcaption>{t("owner.preview")}</figcaption>
+      <div className={styles.previewCard}>
+        {cover ? <img src={cover} alt="" /> : <div className={styles.previewEmpty} />}
+        <strong>{name}</strong>
+        <span>
+          {t(`cities.${form.city}`)} · {form.price_per_night ? `${fmt.money(Number(form.price_per_night))} ${t("search.perNight")}` : "-"}
+        </span>
+      </div>
+    </figure>
+  );
+}
+
 // Label + input + hint + server error. Defined outside ListingForm on purpose:
 // a component declared inside another one is a new type on every render, so
 // React would remount the input and it would lose focus after each keystroke.
@@ -210,7 +243,7 @@ function Field({ name, label, children, hint, error }: { name: string; label: st
     <div className="field">
       <label htmlFor={name}>{label}</label>
       {children}
-      {hint && <small className="muted">{hint}</small>}
+      {hint && <small className={styles.hint}>{hint}</small>}
       {error && <small className={styles.error}>{error}</small>}
     </div>
   );

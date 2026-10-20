@@ -1,47 +1,398 @@
+/* ============================================================
+   Shared pieces of the app screens (owner and admin).
+   One gutter (16px) between every block, one left edge from the
+   title to the last row.
+   ============================================================ */
+
+/* ---------- Title row ---------- */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.head h1 {
+  font-family: var(--font-text);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.head p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* ---------- KPIs: one container split by 1px dividers ---------- */
 .stats {
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  grid-template-columns: repeat(var(--count, 4), minmax(0, 1fr));
+  margin-bottom: 16px;
+  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .tile {
   display: grid;
-  gap: 4px;
+  align-content: start;
+  gap: 6px;
   min-width: 0;
-  padding: 18px 20px;
+  padding: 16px 20px;
+}
+
+.tile + .tile {
+  border-inline-start: 1px solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
 }
 
 .tileLabel {
-  font-size: 0.875rem;
-  color: var(--text-2);
+  color: var(--muted);
+  font-size: 14px;
 }
 
-/* Standalone numbers keep proportional digits; tabular digits are for columns. */
 .tileValue {
-  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.02em;
-  overflow-wrap: break-word; /* never push the page wider than the screen */
+  overflow-wrap: break-word;
 }
 
-[dir="rtl"] .tileValue {
-  letter-spacing: 0;
+/* Bold for money only. */
+.money {
+  font-weight: 600;
 }
 
 .tileHint {
-  font-size: 0.8rem;
-  color: var(--text-2);
+  color: var(--muted);
+  font-size: 13px;
 }
 
+/* Tablets: five figures share 736px, so they shrink before they stack. */
+@media (max-width: 1100px) {
+  .tile {
+    padding: 14px 12px;
+  }
+  .tileValue {
+    font-size: clamp(18px, 2.4vw, 24px);
+  }
+}
+
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tile:nth-child(odd) {
+    border-inline-start: 0;
+  }
+  .tile:nth-child(n + 3) {
+    border-top: 1px solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
+  }
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  min-width: 0;
+  container-type: inline-size;
+  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px 20px 8px;
+}
+
+.panelHead h2 {
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.panelNote {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Two panels in a row share a top edge and keep their own height. */
+.pair {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 16px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+@media (max-width: 1000px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Two-line rows with media (48px + 24px) ---------- */
+.rows {
+  margin: 0;
+  padding: 0 20px 8px;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding-block: 12px;
+}
+
+.row + .row {
+  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app list */
+}
+
+/* Rows with actions share one column grid, so every row's buttons start
+   on the same line even when a row has fewer of them. */
+.withActions {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  column-gap: 12px;
+}
+
+.withActions > .row {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+/* Rows without media start on the text edge. */
+.row.plain {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.row img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.rowMain {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rowTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.rowTitle > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowSub {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The trailing column: figures right-aligned on one edge, two lines stacked. */
+.rowEnd {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.rowEnd > :first-child {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.rowEnd > :nth-child(2) {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.rowActions {
+  display: flex;
+  gap: 4px;
+}
+
+.rowActions :global(.btn) {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+/* In a narrow panel the actions drop under the text, on its edge. */
+@container (max-width: 560px) {
+  .withActions {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+  .withActions > .row {
+    align-items: start;
+  }
+  .rowExtra {
+    display: none;
+  }
+  .rowActions {
+    grid-column: 2;
+    margin-inline-start: -10px;
+    margin-top: -4px;
+  }
+}
+
+.more {
+  padding: 4px 20px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.empty {
+  padding: 8px 20px 20px;
+  color: var(--muted);
+}
+
+/* ---------- Tables ---------- */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th,
+.table td {
+  padding: 0 12px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+.table th:first-child,
+.table td:first-child {
+  padding-inline-start: 20px;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-inline-end: 20px;
+}
+
+/* Grey sentence-case header, no fill band; its rule is the strongest line. */
+.table th {
+  height: 40px;
+  border-bottom: 1px solid var(--line); /* taste-skill-ignore: table header rule */
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.table td {
+  height: 48px;
+}
+
+.table tbody tr + tr td {
+  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app table */
+}
+
+.table td:first-child {
+  font-weight: 500;
+}
+
+.table a {
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+/* Numbers right-aligned in tabular figures, headers flush with them. */
+.table .num {
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.table :global(.btn) {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+/* ---------- Underline tabs on a full-width rule ---------- */
+.tabs {
+  display: flex;
+  gap: 24px;
+  padding-inline: 20px;
+  border-bottom: 1px solid var(--line); /* taste-skill-ignore: tab rule on an app screen */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab {
+  position: relative;
+  flex: none;
+  padding: 14px 0 12px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--ink);
+}
+
+.tab span {
+  position: relative;
+}
+
+.count {
+  margin-inline-start: 6px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.highlight {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+}
+
+/* ---------- Dialog: the one thing that floats, so the only lift ---------- */
 .scrim {
   position: fixed;
   inset: 0;
   z-index: 100;
   display: grid;
   place-items: end center;
-  padding: 0;
-  background: rgb(10 10 9 / 0.45);
+  background: rgb(20 16 12 / 0.45); /* taste-skill-ignore: neutral scrim under a dialog */
 }
 
 @media (min-width: 720px) {
@@ -57,15 +408,15 @@
   width: 100%;
   max-width: 760px;
   max-height: 92dvh;
+  border-radius: 12px 12px 0 0;
   background: var(--surface);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 24px 64px rgb(20 16 12 / 0.24); /* taste-skill-ignore: a dialog floats */
   outline: none;
 }
 
 @media (min-width: 720px) {
   .dialog {
-    border-radius: var(--radius-lg);
+    border-radius: 12px;
   }
 }
 
@@ -74,135 +425,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px 16px 8px 24px;
-}
-
-[dir="rtl"] .dialogHeader {
-  padding: 16px 24px 8px 16px;
+  padding-block: 16px 8px;
+  padding-inline: 24px 12px;
 }
 
 .dialogHeader h2 {
-  font-size: 1.2rem;
+  font-family: var(--font-text);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .dialogBody {
   overflow-y: auto;
   padding: 8px 24px 24px;
-}
-
-/* ---------- Shared dashboard layout ---------- */
-.head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.head p {
-  margin-top: 6px;
-}
-
-.section {
-  margin-top: 40px;
-}
-
-.section > h2 {
-  margin-bottom: 16px;
-}
-
-.tableWrap {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.925rem;
-}
-
-.table th,
-.table td {
-  padding: 12px 16px;
-  text-align: start;
-  white-space: nowrap;
-}
-
-.table th {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-2);
-  background: var(--surface-2);
-}
-
-.table tbody tr + tr td {
-  border-top: 1px solid var(--border);
-}
-
-/* Numbers in columns line up with tabular digits. */
-.num {
-  font-variant-numeric: tabular-nums;
-}
-
-.listings {
-  display: grid;
-  gap: 12px;
-}
-
-.listing {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 16px;
-  align-items: center;
-  padding: 12px;
-}
-
-@media (min-width: 720px) {
-  .listing {
-    grid-template-columns: 140px 1fr auto;
-  }
-}
-
-.listing img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-}
-
-.listingInfo {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-
-.listingTitle {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 720px) {
-  .actions {
-    grid-column: auto;
-    justify-content: flex-end;
-  }
-}
-
-.actions :global(.btn) {
-  min-height: 38px;
-  padding: 6px 14px;
-  font-size: 0.9rem;
 }
