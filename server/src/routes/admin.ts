@@ -25,7 +25,7 @@ adminRouter.get("/istirahas", async (req, res) => {
     .object({ status: z.enum(["pending", "approved", "rejected", "hidden"]).optional() })
     .parse(req.query);
   const { rows } = await pool.query(
-    `SELECT i.id, i.name_en, i.name_ar, i.city, i.district, i.price_per_night, i.capacity,
+    `SELECT i.id, i.name_en, i.name_ar, i.city, i.district_en, i.district_ar, i.price_per_night, i.capacity,
             i.photos[1] AS cover_photo, i.status, i.created_at, u.name AS owner_name
      FROM istirahas i JOIN users u ON u.id = i.owner_id
      WHERE ($1::text IS NULL OR i.status = $1)

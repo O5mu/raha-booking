@@ -60,7 +60,7 @@ istirahasRouter.get("/", async (req, res) => {
   }
 
   const { rows } = await pool.query(
-    `SELECT i.id, i.name_en, i.name_ar, i.city, i.district, i.price_per_night, i.capacity,
+    `SELECT i.id, i.name_en, i.name_ar, i.city, i.district_en, i.district_ar, i.price_per_night, i.capacity,
             i.amenities, i.photos[1] AS cover_photo, count(*) OVER () AS total
      FROM istirahas i
      WHERE ${where.join(" AND ")}
@@ -87,7 +87,7 @@ istirahasRouter.get("/cities", async (_req, res) => {
 istirahasRouter.get("/:id", async (req, res) => {
   const id = idParam.parse(req.params.id);
   const { rows } = await pool.query(
-    `SELECT i.id, i.name_en, i.name_ar, i.description_en, i.description_ar, i.city, i.district,
+    `SELECT i.id, i.name_en, i.name_ar, i.description_en, i.description_ar, i.city, i.district_en, i.district_ar,
             i.price_per_night, i.capacity, i.amenities, i.photos, u.name AS owner_name
      FROM istirahas i JOIN users u ON u.id = i.owner_id
      WHERE i.id = $1 AND i.status = 'approved'`,

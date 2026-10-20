@@ -49,7 +49,8 @@ type Listing = {
   description_en: string;
   description_ar: string;
   city: string;
-  district: string;
+  district_en: string;
+  district_ar: string;
   price: number;
   capacity: number;
   amenities: string[];
@@ -60,35 +61,35 @@ type Listing = {
 const listings: Listing[] = [
   // Riyadh
   {
-    owner: "owner", city: "riyadh", district: "Al Ammariyah", price: 1200, capacity: 40,
+    owner: "owner", city: "riyadh", district_en: "Al Ammariyah", district_ar: "العمارية", price: 1200, capacity: 40,
     name_en: "Al Nakheel Istiraha", name_ar: "استراحة النخيل",
     description_en: "A family istiraha among palm trees with a heated pool, a large majlis and a football pitch.",
     description_ar: "استراحة عائلية بين النخيل فيها مسبح مدفأ ومجلس كبير وملعب كورة.",
     amenities: ["pool", "majlis", "football", "bbq", "kitchen", "parking", "wifi"],
   },
   {
-    owner: "owner", city: "riyadh", district: "Al Thumamah", price: 2200, capacity: 60,
+    owner: "owner", city: "riyadh", district_en: "Al Thumamah", district_ar: "الثمامة", price: 2200, capacity: 60,
     name_en: "Thumamah Desert Camp", name_ar: "مخيم الثمامة",
     description_en: "Traditional tents on the red sand dunes, a firepit for winter nights and space for big gatherings.",
     description_ar: "خيام تراثية على الرمل الأحمر، وشبة نار لليالي الشتاء، ومساحة للجمعات الكبيرة.",
     amenities: ["tent", "firepit", "majlis", "bbq", "parking", "sound_system"], camp: true,
   },
   {
-    owner: "owner2", city: "riyadh", district: "Al Malqa", price: 1800, capacity: 30,
+    owner: "owner2", city: "riyadh", district_en: "Al Malqa", district_ar: "الملقا", price: 1800, capacity: 30,
     name_en: "Malqa Modern Chalet", name_ar: "شاليه الملقا الحديث",
     description_en: "A modern chalet in north Riyadh with an infinity pool, a kids' pool and a smart sound system.",
     description_ar: "شاليه حديث شمال الرياض فيه مسبح إنفينتي ومسبح أطفال ونظام صوت ذكي.",
     amenities: ["pool", "kids_pool", "sound_system", "ac", "wifi", "kitchen", "parking"],
   },
   {
-    owner: "owner3", city: "riyadh", district: "Diriyah", price: 950, capacity: 25,
+    owner: "owner3", city: "riyadh", district_en: "Diriyah", district_ar: "الدرعية", price: 950, capacity: 25,
     name_en: "Diriyah Garden Rest", name_ar: "استراحة حدائق الدرعية",
     description_en: "A quiet garden istiraha near historic Diriyah, ideal for small family weekends.",
     description_ar: "استراحة هادية بحديقة قريبة من الدرعية التاريخية، مناسبة لويكند العايلة.",
     amenities: ["garden", "majlis", "bbq", "kids_area", "parking"],
   },
   {
-    owner: "owner2", city: "riyadh", district: "Al Arid", price: 1500, capacity: 50,
+    owner: "owner2", city: "riyadh", district_en: "Al Arid", district_ar: "العارض", price: 1500, capacity: 50,
     name_en: "Al Arid Sports Istiraha", name_ar: "استراحة العارض الرياضية",
     description_en: "Built for friends' nights: football and volleyball courts, a pool and a big outdoor majlis.",
     description_ar: "مصممة لطلعات الشباب: ملعب كورة وطايرة ومسبح ومجلس خارجي كبير.",
@@ -96,28 +97,28 @@ const listings: Listing[] = [
   },
   // Al Ahsa
   {
-    owner: "owner", city: "alahsa", district: "Al Mubarraz", price: 700, capacity: 30,
+    owner: "owner", city: "alahsa", district_en: "Al Mubarraz", district_ar: "المبرز", price: 700, capacity: 30,
     name_en: "Oasis Farm Istiraha", name_ar: "استراحة مزرعة الواحة",
     description_en: "A farm istiraha in the heart of the Al Ahsa oasis, surrounded by date palms.",
     description_ar: "استراحة مزرعة في قلب واحة الأحساء، محاطة بنخيل التمر.",
     amenities: ["pool", "garden", "majlis", "bbq", "kids_area", "parking"],
   },
   {
-    owner: "owner3", city: "alahsa", district: "Al Hofuf", price: 850, capacity: 35,
+    owner: "owner3", city: "alahsa", district_en: "Al Hofuf", district_ar: "الهفوف", price: 850, capacity: 35,
     name_en: "Hofuf Family Chalet", name_ar: "شاليه الهفوف العائلي",
     description_en: "A private family chalet with a covered pool, so it is usable all year round.",
     description_ar: "شاليه عائلي خاص بمسبح مغطى، ينفع طول السنة.",
     amenities: ["pool", "kids_pool", "ac", "kitchen", "wifi", "parking"],
   },
   {
-    owner: "owner2", city: "alahsa", district: "Al Uyun", price: 550, capacity: 20,
+    owner: "owner2", city: "alahsa", district_en: "Al Uyun", district_ar: "العيون", price: 550, capacity: 20,
     name_en: "Al Uyun Spring Rest", name_ar: "استراحة العيون",
     description_en: "A simple, affordable istiraha with a garden and a traditional majlis.",
     description_ar: "استراحة بسيطة وسعرها مناسب، فيها حديقة ومجلس شعبي.",
     amenities: ["garden", "majlis", "bbq", "parking"],
   },
   {
-    owner: "owner", city: "alahsa", district: "Al Qarah", price: 1100, capacity: 45,
+    owner: "owner", city: "alahsa", district_en: "Al Qarah", district_ar: "القارة", price: 1100, capacity: 45,
     name_en: "Al Qarah Mountain View", name_ar: "استراحة إطلالة القارة",
     description_en: "Views of Al Qarah mountain, a large pool, a firepit and a kids' play area.",
     description_ar: "إطلالة على جبل القارة، مسبح كبير، شبة نار، وألعاب للأطفال.",
@@ -125,21 +126,21 @@ const listings: Listing[] = [
   },
   // Jeddah
   {
-    owner: "owner2", city: "jeddah", district: "Obhur", price: 2800, capacity: 40,
+    owner: "owner2", city: "jeddah", district_en: "Obhur", district_ar: "أبحر", price: 2800, capacity: 40,
     name_en: "Obhur Sea Chalet", name_ar: "شاليه أبحر البحري",
     description_en: "A chalet minutes from the Obhur corniche with a large pool and a rooftop lounge.",
     description_ar: "شاليه على بعد دقايق من كورنيش أبحر، فيه مسبح كبير وجلسة على السطح.",
     amenities: ["pool", "ac", "wifi", "kitchen", "sound_system", "parking"],
   },
   {
-    owner: "owner3", city: "jeddah", district: "Al Shati", price: 1900, capacity: 25,
+    owner: "owner3", city: "jeddah", district_en: "Al Shati", district_ar: "الشاطئ", price: 1900, capacity: 25,
     name_en: "Shati Breeze Villa", name_ar: "فيلا نسيم الشاطئ",
     description_en: "A bright villa with sea breeze, a private pool and a modern kitchen.",
     description_ar: "فيلا مشمسة مع نسيم البحر، مسبح خاص ومطبخ حديث.",
     amenities: ["pool", "ac", "kitchen", "wifi", "parking"],
   },
   {
-    owner: "owner", city: "jeddah", district: "Al Hamdaniyah", price: 900, capacity: 35,
+    owner: "owner", city: "jeddah", district_en: "Al Hamdaniyah", district_ar: "الحمدانية", price: 900, capacity: 35,
     name_en: "Hamdaniyah Family Rest", name_ar: "استراحة الحمدانية",
     description_en: "Spacious and affordable, with separate majlis areas and a kids' pool.",
     description_ar: "واسعة وسعرها حلو، فيها مجالس منفصلة ومسبح أطفال.",
@@ -147,14 +148,14 @@ const listings: Listing[] = [
   },
   // Dammam
   {
-    owner: "owner3", city: "dammam", district: "Al Shati Al Sharqi", price: 1300, capacity: 30,
+    owner: "owner3", city: "dammam", district_en: "Al Shati Al Sharqi", district_ar: "الشاطئ الشرقي", price: 1300, capacity: 30,
     name_en: "Gulf Corniche Chalet", name_ar: "شاليه كورنيش الخليج",
     description_en: "Close to the Dammam corniche, with a pool, BBQ area and a large screen.",
     description_ar: "قريب من كورنيش الدمام، فيه مسبح وجلسة شوي وشاشة كبيرة.",
     amenities: ["pool", "bbq", "sound_system", "ac", "wifi", "parking"],
   },
   {
-    owner: "owner", city: "dammam", district: "Al Faisaliyah", price: 750, capacity: 25,
+    owner: "owner", city: "dammam", district_en: "Al Faisaliyah", district_ar: "الفيصلية", price: 750, capacity: 25,
     name_en: "Faisaliyah Garden Istiraha", name_ar: "استراحة حديقة الفيصلية",
     description_en: "Green lawns, a volleyball court and a cosy majlis for family evenings.",
     description_ar: "مسطحات خضراء وملعب طايرة ومجلس مريح لسهرات العايلة.",
@@ -162,14 +163,14 @@ const listings: Listing[] = [
   },
   // Khobar
   {
-    owner: "owner2", city: "khobar", district: "Half Moon Bay", price: 3200, capacity: 50,
+    owner: "owner2", city: "khobar", district_en: "Half Moon Bay", district_ar: "نصف القمر", price: 3200, capacity: 50,
     name_en: "Half Moon Bay Resort Chalet", name_ar: "شاليه نصف القمر",
     description_en: "A premium chalet at Half Moon Bay with two pools and a private beach path.",
     description_ar: "شاليه فاخر في نصف القمر، فيه مسبحين وممر خاص للبحر.",
     amenities: ["pool", "kids_pool", "ac", "wifi", "kitchen", "sound_system", "parking"],
   },
   {
-    owner: "owner3", city: "khobar", district: "Al Aziziyah", price: 1400, capacity: 30,
+    owner: "owner3", city: "khobar", district_en: "Al Aziziyah", district_ar: "العزيزية", price: 1400, capacity: 30,
     name_en: "Aziziyah Palm Chalet", name_ar: "شاليه نخيل العزيزية",
     description_en: "Palm-shaded pool deck, a family majlis and a play area for children.",
     description_ar: "مسبح مظلل بالنخيل، مجلس عائلي، ومنطقة ألعاب للأطفال.",
@@ -177,14 +178,14 @@ const listings: Listing[] = [
   },
   // Abha
   {
-    owner: "owner", city: "abha", district: "Al Soudah", price: 1600, capacity: 20,
+    owner: "owner", city: "abha", district_en: "Al Soudah", district_ar: "السودة", price: 1600, capacity: 20,
     name_en: "Soudah Mountain Lodge", name_ar: "نُزل جبال السودة",
     description_en: "Cool mountain air above the clouds, a firepit and a heated indoor majlis.",
     description_ar: "جو جبلي بارد فوق السحاب، شبة نار، ومجلس داخلي مدفأ.",
     amenities: ["firepit", "majlis", "garden", "kitchen", "wifi", "parking"],
   },
   {
-    owner: "owner2", city: "abha", district: "Al Muftaha", price: 1000, capacity: 25,
+    owner: "owner2", city: "abha", district_en: "Al Muftaha", district_ar: "المفتاحة", price: 1000, capacity: 25,
     name_en: "Asir Garden Rest", name_ar: "استراحة حدائق عسير",
     description_en: "A garden istiraha with a covered pool and views of the Asir mountains.",
     description_ar: "استراحة بحديقة ومسبح مغطى وإطلالة على جبال عسير.",
@@ -192,14 +193,14 @@ const listings: Listing[] = [
   },
   // Taif
   {
-    owner: "owner3", city: "taif", district: "Al Hada", price: 1250, capacity: 30,
+    owner: "owner3", city: "taif", district_en: "Al Hada", district_ar: "الهدا", price: 1250, capacity: 30,
     name_en: "Al Hada Rose Farm", name_ar: "مزرعة ورد الهدا",
     description_en: "A farm stay among Taif rose fields, with a pool and outdoor seating.",
     description_ar: "إقامة في مزرعة بين حقول الورد الطائفي، فيها مسبح وجلسات خارجية.",
     amenities: ["pool", "garden", "majlis", "bbq", "kids_area", "parking"],
   },
   {
-    owner: "owner", city: "taif", district: "Al Shafa", price: 800, capacity: 20,
+    owner: "owner", city: "taif", district_en: "Al Shafa", district_ar: "الشفا", price: 800, capacity: 20,
     name_en: "Shafa Highland Istiraha", name_ar: "استراحة مرتفعات الشفا",
     description_en: "A cosy highland istiraha with a firepit and a small family pool.",
     description_ar: "استراحة دافية في المرتفعات، فيها شبة نار ومسبح عائلي صغير.",
@@ -207,14 +208,14 @@ const listings: Listing[] = [
   },
   // Waiting for admin approval
   {
-    owner: "owner", city: "riyadh", district: "Al Rimal", price: 1350, capacity: 35, status: "pending",
+    owner: "owner", city: "riyadh", district_en: "Al Rimal", district_ar: "الرمال", price: 1350, capacity: 35, status: "pending",
     name_en: "Al Rimal New Chalet", name_ar: "شاليه الرمال الجديد",
     description_en: "A newly built chalet with a pool and a padel court.",
     description_ar: "شاليه جديد فيه مسبح وملعب بادل.",
     amenities: ["pool", "majlis", "bbq", "parking", "wifi"],
   },
   {
-    owner: "owner3", city: "alahsa", district: "Al Jafr", price: 600, capacity: 20, status: "pending",
+    owner: "owner3", city: "alahsa", district_en: "Al Jafr", district_ar: "الجفر", price: 600, capacity: 20, status: "pending",
     name_en: "Al Jafr Farm Rest", name_ar: "استراحة مزرعة الجفر",
     description_en: "A small farm istiraha, good for quiet weekends.",
     description_ar: "استراحة مزرعة صغيرة، حلوة للويكند الهادي.",

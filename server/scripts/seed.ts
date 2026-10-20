@@ -45,10 +45,10 @@ export async function seed() {
 
     for (const [index, l] of istirahas.entries()) {
       const { rows } = await db.query(
-        `INSERT INTO istirahas (owner_id, name_en, name_ar, description_en, description_ar, city, district,
+        `INSERT INTO istirahas (owner_id, name_en, name_ar, description_en, description_ar, city, district_en, district_ar,
                                 price_per_night, capacity, amenities, photos, status)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
-        [userIds[l.owner], l.name_en, l.name_ar, l.description_en, l.description_ar, l.city, l.district,
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
+        [userIds[l.owner], l.name_en, l.name_ar, l.description_en, l.description_ar, l.city, l.district_en, l.district_ar,
          l.price, l.capacity, l.amenities, l.photos, l.status]
       );
       if (l.status !== "approved") continue;

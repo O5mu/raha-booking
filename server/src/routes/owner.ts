@@ -16,7 +16,8 @@ const listingSchema = z.object({
   description_en: z.string().trim().max(1000).default(""),
   description_ar: z.string().trim().max(1000).default(""),
   city: z.enum(CITIES),
-  district: z.string().trim().max(100).default(""),
+  district_en: z.string().trim().max(100).default(""),
+  district_ar: z.string().trim().max(100).default(""),
   price_per_night: z.number().int().min(100).max(50_000),
   capacity: z.number().int().min(1).max(500),
   amenities: z.array(z.enum(AMENITIES)).default([]),
@@ -24,7 +25,7 @@ const listingSchema = z.object({
 });
 
 const COLUMNS = [
-  "name_en", "name_ar", "description_en", "description_ar", "city", "district",
+  "name_en", "name_ar", "description_en", "description_ar", "city", "district_en", "district_ar",
   "price_per_night", "capacity", "amenities", "photos",
 ] as const;
 
@@ -97,6 +98,21 @@ ownerRouter.get("/bookings", async (req, res) => {
     [req.user!.id]
   );
   res.json({ bookings: rows });
+});
+
+// Everything that occupies an istiraha from today on: guest bookings and the
+// owner's own blocks. Works for pending/hidden listings too (unlike the public page).
+ownerRouter.get("/istirahas/:id/calendar", async (req, res) => {
+  const id = idParam.parse(req.params.id);
+  await findOwnListing(id, req.user!.id);
+  const { rows } = await pool.query(
+    `SELECT b.id, b.kind, b.check_in, b.check_out, b.guests, u.name AS guest_name
+     FROM bookings b JOIN users u ON u.id = b.user_id
+     WHERE b.istiraha_id = $1 AND b.status = 'confirmed' AND b.check_out > $2
+     ORDER BY b.check_in`,
+    [id, todayInRiyadh()]
+  );
+  res.json({ entries: rows });
 });
 
 // Blocking dates (e.g. for maintenance or a family event) is just a 'block' row

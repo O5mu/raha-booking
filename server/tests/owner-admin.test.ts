@@ -78,6 +78,10 @@ describe("owner", () => {
       .send({ istirahaId: 1, checkIn: day(162), checkOut: day(163), guests: 5 });
     expect(booking.status).toBe(409);
 
+    const calendar = await request(app).get("/api/owner/istirahas/1/calendar").set(bearer(owner));
+    const entry = calendar.body.entries.find((e: { id: number }) => e.id === block.body.block.id);
+    expect(entry).toMatchObject({ kind: "block", check_in: day(160), check_out: day(165) });
+
     // Removing the block frees the dates.
     expect((await request(app).delete(`/api/owner/blocks/${block.body.block.id}`).set(bearer(owner))).status).toBe(204);
     const retry = await request(app)
