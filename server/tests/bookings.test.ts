@@ -42,6 +42,13 @@ describe("search", () => {
     expect(res.body.total).toBeGreaterThan(0);
   });
 
+  it("returns more results per page when asked, up to 50", async () => {
+    const all = await request(app).get("/api/istirahas?pageSize=50");
+    expect(all.body.results.length).toBe(20);
+    expect(all.body.pageSize).toBe(50);
+    expect((await request(app).get("/api/istirahas?pageSize=500")).status).toBe(400);
+  });
+
   it("rejects bad search input", async () => {
     expect((await request(app).get("/api/istirahas?city=paris")).status).toBe(400);
     expect((await request(app).get(`/api/istirahas?checkIn=${day(5)}`)).status).toBe(400);

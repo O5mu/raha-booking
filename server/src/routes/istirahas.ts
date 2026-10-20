@@ -22,11 +22,11 @@ const searchSchema = z
       .optional(),
     sort: z.enum(["recommended", "price_asc", "price_desc"]).default("recommended"),
     page: z.coerce.number().int().positive().default(1),
+    // The home page rate sheet lists every place at once; capped so nobody can ask for thousands.
+    pageSize: z.coerce.number().int().min(1).max(50).default(12),
   })
   .refine((q) => !q.checkIn === !q.checkOut, "Send both checkIn and checkOut, or neither")
   .refine((q) => !q.checkIn || q.checkOut! > q.checkIn, "checkOut must be after checkIn");
-
-const PAGE_SIZE = 12;
 
 const ORDER_BY = {
   recommended: "i.id",
@@ -65,14 +65,14 @@ istirahasRouter.get("/", async (req, res) => {
      FROM istirahas i
      WHERE ${where.join(" AND ")}
      ORDER BY ${ORDER_BY[q.sort]}
-     LIMIT ${PAGE_SIZE} OFFSET ${add((q.page - 1) * PAGE_SIZE)}`,
+     LIMIT ${add(q.pageSize)} OFFSET ${add((q.page - 1) * q.pageSize)}`,
     params
   );
 
   res.json({
     total: Number(rows[0]?.total ?? 0),
     page: q.page,
-    pageSize: PAGE_SIZE,
+    pageSize: q.pageSize,
     results: rows.map(({ total: _, ...r }) => r),
   });
 });
