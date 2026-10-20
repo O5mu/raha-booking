@@ -1,0 +1,113 @@
+/* Photograph half, menu half. */
+.footer {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  min-height: 92svh;
+  background: var(--field-2);
+  color: var(--field-2-ink);
+}
+
+.photo {
+  grid-column: 1 / 7;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+
+.side {
+  grid-column: 8 / 13;
+  display: flex;
+  flex-direction: column;
+  padding-block: 80px 32px;
+  padding-inline-end: var(--margin);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.menu {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  margin-top: 56px;
+}
+
+.menu a,
+.menu button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-display);
+  font-size: var(--step-head);
+  line-height: 0.95;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out), opacity 220ms ease-out;
+}
+
+/* On hover a row steps forward and the others recede. */
+.menu:hover a,
+.menu:hover button {
+  opacity: 0.55;
+}
+
+.menu a:hover,
+.menu button:hover {
+  opacity: 1;
+  transform: translateX(12px);
+}
+
+[dir="rtl"] .menu a:hover,
+[dir="rtl"] .menu button:hover {
+  transform: translateX(-12px);
+}
+
+.blocks {
+  max-width: 62ch;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 64px;
+  font-size: var(--step-body);
+}
+
+.blocks a {
+  font-weight: 600;
+}
+
+.legal {
+  max-width: 62ch;
+  margin-top: auto;
+  padding-top: 48px;
+  font-size: var(--step-body);
+}
+
+@media (max-width: 640px) {
+  .footer {
+    display: block;
+    min-height: 0;
+  }
+  .photo {
+    height: 50svh;
+    min-height: 0;
+  }
+  .side {
+    padding: 48px var(--margin) 32px;
+  }
+  .menu a,
+  .menu button {
+    font-size: 11vw;
+  }
+  .blocks {
+    grid-template-columns: 1fr;
+  }
+}

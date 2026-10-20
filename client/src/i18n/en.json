@@ -11,7 +11,11 @@
     "admin": "Admin",
     "login": "Log in",
     "logout": "Log out",
-    "switchLanguage": "العربية"
+    "switchLanguage": "العربية",
+    "places": "Places",
+    "main": "Main",
+    "menu": "Menu",
+    "close": "Close"
   },
   "cities": {
     "riyadh": "Riyadh",
@@ -68,18 +72,24 @@
     "page": "Page {{page}} of {{pages}}"
   },
   "home": {
-    "heroTitle": "Your weekend escape, a few taps away",
-    "heroSubtitle": "Book private istirahas, farms and chalets with pools, majlis and space for the whole family.",
-    "browseByCity": "Browse by city",
-    "listingsCount_one": "1 place",
-    "listingsCount_other": "{{count}} places",
-    "whyTitle": "Why Raha",
-    "why1Title": "Never double booked",
-    "why1Text": "Dates are locked the moment you book, so two families can never get the same night.",
-    "why2Title": "Clear prices",
-    "why2Text": "See the full total before you confirm. No hidden fees.",
-    "why3Title": "Arabic and English",
-    "why3Text": "The whole app works in both languages."
+    "heroAlt": "A white house lit up at night beside its round pool",
+    "sentence": "A whole private istiraha for the night: the pool, the majlis and the firepit to yourselves, in seven Saudi cities.",
+    "cta": "Find a night",
+    "fortAlt": "The mud-brick wall and wooden door of Mihayris Fort in Al Ahsa, under strings of lights",
+    "ratesTitle": "Rates for one night",
+    "ratesNote": "{{date}}: {{free}} of {{total}} places are still free. The ones already taken are struck out.",
+    "pickNight": "Pick the night",
+    "tonight": "Tonight",
+    "booked": "Booked",
+    "aNight": "a night",
+    "checkIn": "Check-in from 4 pm",
+    "checkOut": "Check-out by 11 am the next day",
+    "showcaseLabel": "Three places to start with",
+    "seePlace": "See this place",
+    "familyTitle": "One family a night",
+    "comma": ",",
+    "familyFact": "Each of these goes to one group a night. When two families press Book for the same night at the same second, one gets it and the other is told at once. Raha's tests try it with ten.",
+    "fact": "From {{price}} a night, in {{cities}} cities."
   },
   "details": {
     "back": "Back to results",
@@ -251,5 +261,18 @@
     "retry": "Try again",
     "notFound": "Page not found",
     "goHome": "Go home"
+  },
+  "footer": {
+    "menu": "Footer",
+    "places": "Places",
+    "rates": "Tonight's rates",
+    "yours": "Your bookings",
+    "owners": "List your istiraha",
+    "photoAlt": "Two Arabic coffee pots steaming on a table",
+    "about": "A demo project by Osama Al-Bassam.",
+    "source": "Source code",
+    "hours": "Check-in from 4 pm. Check-out by 11 am the next day.",
+    "legal": "Sample data only: no real bookings or payments.",
+    "credits": "Photos: listings from Unsplash; Mihayris Fort by Richard Mortel (CC BY 2.0), the palms of Diriyah by Matti&Keti (CC0), the dallah by Bluehillies (CC0) and the fire by Mostafameraji (CC0), via Wikimedia Commons."
   }
 }

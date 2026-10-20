@@ -1,54 +1,87 @@
-/* ---------- Design tokens ---------- */
+/* ============================================================
+   Tokens
+   Two surfaces share one palette and one typeface:
+   - page (default): the public pages, tobacco ground and bone ink
+   - app  ([data-surface="app"]): screens people work in, a stone
+     ground with white panels and the olive only on data
+   ============================================================ */
 :root {
-  --bg: #faf7f2;
-  --surface: #ffffff;
-  --surface-2: #f3eee5;
-  --text: #1c1a17;
-  --text-2: #6b645a;
-  --border: #e7e0d4;
-  --accent: #0f5c4d;
-  --accent-hover: #0b4a3e;
-  --accent-soft: #e2efe9;
-  --on-accent: #ffffff;
-  --danger: #b42318;
-  --danger-soft: #fdecea;
-  --gold: #b7791f;
-  --header-bg: rgb(250 247 242 / 0.72);
-  --shadow-sm: 0 1px 2px rgb(28 26 23 / 0.06);
-  --shadow-md: 0 8px 24px rgb(28 26 23 / 0.08), 0 2px 6px rgb(28 26 23 / 0.05);
-  --shadow-lg: 0 24px 60px rgb(28 26 23 / 0.16);
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 24px;
-  --font-latin: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-arabic: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --bg: #472913;
+  --surface: #55321a;
+  --raised: #5e3920;
+  --ink: #e4e0cf;
+  --muted: #c2b19a;
+  --accent: #525e1b;
+  --accent-ink: #e4e0cf;
+  --field-1: #c79a3e;
+  --field-1-ink: #2b170a;
+  --field-2: #525e1b;
+  --field-2-ink: #e4e0cf;
+  --primary: var(--accent);
+  --primary-ink: var(--accent-ink);
+  --line: transparent; /* pages separate by tone, not lines */
+  --danger: #f0a08a;
+  --danger-soft: #5c2a1a;
+  --positive: #c9d68a;
+  --scrim: rgb(20 10 4 / 0.55);
+
+  --font-display: "Barlow Condensed", "Noto Kufi Arabic", "Arial Narrow", sans-serif;
+  --font-text: "Barlow", "Noto Kufi Arabic", Arial, sans-serif;
+
+  /* Five sizes, far apart. */
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
+  --step-display: clamp(5.5rem, 1rem + 17vw, 17.5rem);
+
+  --margin: clamp(1rem, 2.2vw, 2rem);
+  --gutter: clamp(0.75rem, 1.4vw, 1.5rem);
+  --section-gap: clamp(4.5rem, 3rem + 7vw, 12rem);
+  --radius: 0px; /* square on pages, decided once */
+  --control-h: 48px;
+
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+
+[data-surface="app"] {
+  --bg: #f4f3f1; /* desert stone, the ground from the product's world */
+  --surface: #ffffff;
+  --raised: #f9f8f6;
+  --active: #ebe9e5;
+  --ink: #1f1a16;
+  --muted: #5f5850;
+  --accent: #525e1b; /* the one data hue */
+  --accent-ink: #ffffff;
+  --primary: #1f1a16; /* near-black primary, no brand colour in the chrome */
+  --primary-ink: #ffffff;
+  --line: #e6e3de;
+  --rule: #efede9;
+  --control: #d3cfc8;
+  --danger: #c4242a;
+  --danger-soft: #ffedea;
+  --positive: #247b50;
+  --pill-positive-bg: #dcfae5;
+  --pill-positive-ink: #04250e;
+  --pill-negative-bg: #ffedea;
+  --pill-negative-ink: #831c1e;
+  --pill-warning-bg: #fffbeb;
+  --pill-warning-ink: #92400e;
+  --radius: 8px;
+  --radius-control: 6px;
+  --control-h: 36px;
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121110;
-    --surface: #1b1a18;
-    --surface-2: #25231f;
-    --text: #f3efe8;
-    --text-2: #a8a095;
-    --border: #34302a;
-    --accent: #43b89c;
-    --accent-hover: #5ccbb0;
-    --accent-soft: #163029;
-    --on-accent: #08201a;
-    --danger: #f97066;
-    --danger-soft: #3a1714;
-    --gold: #e3a84a;
-    --header-bg: rgb(18 17 16 / 0.7);
-    --shadow-md: 0 8px 24px rgb(0 0 0 / 0.35);
-    --shadow-lg: 0 24px 60px rgb(0 0 0 / 0.5);
-    color-scheme: dark;
-  }
+html[lang="ar"] {
+  --font-display: "Noto Kufi Arabic", "Barlow Condensed", sans-serif;
+  --font-text: "Noto Kufi Arabic", "Barlow", sans-serif;
 }
 
-/* ---------- Base ---------- */
+/* ============================================================
+   Base
+   ============================================================ */
 *,
 *::before,
 *::after {
@@ -57,30 +90,35 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
-  font: 100%/1.55 var(--font-latin);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--step-body);
+  line-height: 1.55;
+  font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
 html[lang="ar"] body {
-  font-family: var(--font-arabic);
-  line-height: 1.7; /* Arabic needs more room for ascenders and dots */
+  line-height: 1.75; /* Arabic needs room for its dots and descenders */
 }
 
 img {
   display: block;
   max-width: 100%;
+  height: auto; /* so the width/height attributes only reserve the aspect ratio */
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.18em;
 }
 
 button,
@@ -91,57 +129,68 @@ textarea {
   color: inherit;
 }
 
-/* Large text gets tighter tracking and leading; body text stays near 0. */
 h1,
 h2,
 h3 {
   margin: 0;
-  line-height: 1.15;
+  font-family: var(--font-display);
   font-weight: 700;
-}
-h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  letter-spacing: -0.025em;
-}
-h2 {
-  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 0.95;
   letter-spacing: -0.02em;
+  text-wrap: balance;
+  hyphens: none;
 }
+
 h3 {
-  font-size: 1.1rem;
-  letter-spacing: -0.01em;
-}
-/* Letter-spacing breaks the joined letters of Arabic script. */
-[dir="rtl"] h1,
-[dir="rtl"] h2,
-[dir="rtl"] h3 {
+  font-size: var(--step-lead);
+  line-height: 1.1;
   letter-spacing: 0;
-  line-height: 1.35;
+}
+
+/* Arabic letters join, so they never get negative tracking. */
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  letter-spacing: 0;
+  line-height: 1.25;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--field-1);
   outline-offset: 2px;
+}
+
+[data-surface="app"] :focus-visible {
+  outline-color: var(--accent);
+}
+
+.wrap {
+  padding-inline: var(--margin);
 }
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin-inline: auto;
-  padding-inline: 16px;
-}
-@media (min-width: 768px) {
-  .container {
-    padding-inline: 24px;
-  }
+  padding-inline: var(--margin);
 }
 
 .muted {
-  color: var(--text-2);
+  color: var(--muted);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
 .visually-hidden {
@@ -153,180 +202,241 @@ p {
   white-space: nowrap;
 }
 
-/* ---------- Buttons: feedback on press, not on release ---------- */
+/* ============================================================
+   Buttons: one fill, square on pages, tight radius on app screens.
+   Feedback on press.
+   ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 44px;
-  padding: 10px 20px;
-  border: 1px solid transparent;
-  border-radius: 999px;
+  min-height: var(--control-h);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-control, 0);
+  font-family: var(--font-text);
+  font-size: var(--step-small);
   font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   user-select: none;
   transition:
-    transform 100ms ease-out,
+    transform 120ms var(--ease-out),
     background-color 150ms ease-out,
-    border-color 150ms ease-out;
+    color 150ms ease-out;
 }
+
 .btn:active:not(:disabled) {
   transform: scale(0.97);
 }
+
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: not-allowed;
 }
+
 .btn-primary {
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--primary);
+  color: var(--primary-ink);
 }
+
 .btn-primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+  filter: brightness(1.12);
 }
+
 .btn-secondary {
   background: var(--surface);
-  border-color: var(--border);
+  color: var(--ink);
 }
+
+[data-surface="app"] .btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--control); /* taste-skill-ignore: app control border */
+}
+
 .btn-secondary:hover:not(:disabled) {
-  background: var(--surface-2);
+  background: var(--raised);
 }
+
 .btn-ghost {
   background: transparent;
+  color: inherit;
+  padding-inline: 12px;
 }
+
 .btn-ghost:hover:not(:disabled) {
-  background: var(--surface-2);
+  background: var(--surface);
 }
+
+[data-surface="app"] .btn-ghost:hover:not(:disabled) {
+  background: var(--active);
+}
+
 .btn-danger {
   background: var(--danger-soft);
   color: var(--danger);
 }
+
 .btn-block {
   width: 100%;
 }
+
 .btn-lg {
-  min-height: 52px;
-  font-size: 1.05rem;
+  min-height: 56px;
+  font-size: var(--step-body);
 }
 
-/* ---------- Forms ---------- */
+/* ============================================================
+   Forms: filled fields with a clear focus state.
+   ============================================================ */
 .field {
   display: grid;
-  gap: 6px;
-}
-.field label {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-.input {
-  width: 100%;
-  min-height: 46px;
-  padding: 10px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
-}
-.input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-.form-error {
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--danger-soft);
-  color: var(--danger);
-  font-size: 0.925rem;
+  gap: 8px;
 }
 
-/* ---------- Bits ---------- */
+.field label {
+  font-size: var(--step-small);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 0;
+  border-radius: var(--radius-control, 0);
+  font-size: 1rem;
+}
+
+[data-surface="app"] .input {
+  min-height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--line); /* taste-skill-ignore: app field border */
+}
+
+.input:focus {
+  outline: 2px solid var(--field-1);
+  outline-offset: 0;
+}
+
+[data-surface="app"] .input:focus {
+  outline-color: var(--accent);
+}
+
+.form-error {
+  padding: 10px 14px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: var(--step-small);
+}
+
+/* ============================================================
+   Small pieces
+   ============================================================ */
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
+}
+
+[data-surface="app"] .card {
+  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
 }
 
 .chip {
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
   border-radius: 999px;
   background: var(--surface);
-  font-size: 0.875rem;
+  color: var(--ink);
+  font-size: var(--step-small);
+  white-space: nowrap;
   cursor: pointer;
-  transition: transform 100ms ease-out, background-color 150ms ease-out, border-color 150ms;
+  transition: transform 120ms var(--ease-out), background-color 150ms;
 }
+
+[data-surface="app"] .chip {
+  border: 1px solid var(--control); /* taste-skill-ignore: app control border */
+}
+
 .chip:active {
   transform: scale(0.96);
 }
+
 .chip[aria-pressed="true"] {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
-  font-weight: 600;
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
 }
 
+/* Status pills: a pale tint with dark text of the same hue. */
 .badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  background: var(--surface-2);
-  color: var(--text-2);
-}
-.badge-success {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.badge-danger {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-.badge-warning {
-  background: color-mix(in srgb, var(--gold) 16%, transparent);
-  color: var(--gold);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--active, var(--surface));
+  color: var(--muted);
 }
 
-.skeleton {
-  background: linear-gradient(90deg, var(--surface-2), var(--border), var(--surface-2));
-  background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
-  border-radius: var(--radius-sm);
+.badge-success {
+  background: var(--pill-positive-bg, var(--surface));
+  color: var(--pill-positive-ink, var(--positive));
 }
-@keyframes shimmer {
-  to {
-    background-position: -200% 0;
-  }
+
+.badge-danger {
+  background: var(--pill-negative-bg, var(--danger-soft));
+  color: var(--pill-negative-ink, var(--danger));
+}
+
+.badge-warning {
+  background: var(--pill-warning-bg, var(--surface));
+  color: var(--pill-warning-ink, var(--field-1));
+}
+
+/* Loading: flat bars at the real size, no shimmer. */
+.skeleton {
+  background: var(--raised);
+  border-radius: 4px;
+}
+
+[data-surface="app"] .skeleton {
+  background: var(--active);
 }
 
 .page {
-  padding-block: 24px 64px;
-}
-@media (min-width: 768px) {
-  .page {
-    padding-block: 40px 96px;
-  }
+  padding-block: 32px 96px;
 }
 
 .empty-state {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: 12px;
-  padding: 56px 16px;
-  text-align: center;
+  padding: 32px 0;
 }
 
-/* ---------- Accessibility preferences ---------- */
+/* ============================================================
+   Reduced motion and transparency
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
