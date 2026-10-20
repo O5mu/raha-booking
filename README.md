@@ -76,9 +76,15 @@ In plain words: no two confirmed rows for the same istiraha (`=`) may have overl
 - **`'[)'` (half-open range):** check-in day is included, check-out day is not, so one guest can check out on the morning the next guest checks in.
 - **`WHERE status = 'confirmed'`:** cancelling a booking frees its dates automatically.
 - **One table for bookings and owner blocks:** the same constraint stops a guest booking a blocked night and stops an owner blocking a booked one.
-- **Concurrency:** if two transactions insert overlapping rows at the same time, PostgreSQL makes the second one wait for the first and then rejects it with error `23P01`. The API turns that into `409 Conflict` and the page refreshes the calendar.
+- **Concurrency:** if two transactions insert overlapping rows, one of them is rejected. The API turns that into `409 Conflict` and the page refreshes the calendar.
 
-The booking itself runs in a transaction (`server/src/services/bookings.ts`): it locks the istiraha row with `SELECT ... FOR SHARE` so the price can't change mid-booking, calculates the total on the server (the client's price is never trusted), and inserts.
+The booking itself runs in a transaction (`server/src/services/bookings.ts`):
+
+1. `SELECT ... FOR UPDATE` locks the istiraha row, so bookings (and owner blocks) for the same place queue up one behind the other. This also stops the owner changing the price mid-booking.
+2. The total is calculated on the server; the price the browser sends is never trusted.
+3. The booking is inserted. If the dates are taken, the constraint fails with `23P01` and the API returns 409.
+
+**A bug CI caught:** the first version locked the row with `FOR SHARE`, which lets several transactions hold the lock at once. On GitHub's runners, two overlapping inserts sometimes each waited for the other's uncommitted row, and PostgreSQL cancelled one with a deadlock error (`40P01`) instead of `23P01`. Only one booking still got through, but the loser would have seen a 500 error instead of a clear 409. Switching to `FOR UPDATE` makes the second transaction wait until the first commits, so it always fails cleanly. The API also treats `40P01` as a conflict, as a safety net.
 
 ```mermaid
 sequenceDiagram
@@ -88,15 +94,16 @@ sequenceDiagram
     participant DB as PostgreSQL
     A->>API: POST /api/bookings (Nov 14 to 17)
     B->>API: POST /api/bookings (Nov 15 to 16)
-    API->>DB: Transaction A: INSERT booking
-    API->>DB: Transaction B: INSERT booking (waits for A)
+    API->>DB: Transaction A: lock istiraha row, INSERT booking
+    API->>DB: Transaction B: lock istiraha row (waits for A)
     DB-->>API: A commits
+    API->>DB: Transaction B: INSERT booking
     DB-->>API: B fails: 23P01 exclusion violation
     API-->>A: 201 Created
     API-->>B: 409 Conflict (dates just booked)
 ```
 
-**Proof:** `server/tests/bookings.test.ts` sends 10 identical booking requests at once and asserts exactly one `201` and nine `409`s. A second test skips the API entirely and runs two raw SQL inserts in parallel to show the database itself holds the line. The same 10-request check was run against the live deployment with the same result.
+**Proof:** `server/tests/bookings.test.ts` sends 10 identical booking requests at once and asserts exactly one `201` and nine `409`s. A second test skips the API (and its lock) entirely and runs two raw SQL inserts in parallel: whichever error the loser gets, exactly one row survives, so the database holds the line even if some future code path forgets the lock. The same 10-request check was run against the live deployment with the same result.
 
 ## Architecture
 
@@ -171,6 +178,7 @@ erDiagram
 |---|---|
 | Raw SQL with `pg` instead of an ORM | The key feature is a PostgreSQL exclusion constraint, which ORMs don't model. Writing the SQL keeps every transaction and lock visible. |
 | Constraint in the database, not a check in code | A check-then-insert in application code has a race condition. The database applies the rule atomically, for every code path. |
+| Row lock (`FOR UPDATE`) before inserting a booking | Concurrent inserts checked by an exclusion constraint can deadlock. Queuing bookings per istiraha keeps the error a clean 409; the constraint stays the real guarantee. |
 | Dates kept as `YYYY-MM-DD` strings | Converting `DATE` columns to JavaScript `Date` objects shifts them by the server's timezone, which can move a booking by a day. |
 | Prices computed on the server | Anything the browser sends can be changed in DevTools. |
 | Same error for wrong email and wrong password, plus a dummy bcrypt check | Prevents attackers from discovering which emails are registered (including through response timing). |
