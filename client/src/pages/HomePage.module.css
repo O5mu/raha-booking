@@ -1,0 +1,131 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  margin-top: -64px; /* slide under the translucent header */
+  padding-block: 128px 48px;
+  color: #fff;
+}
+
+@media (min-width: 860px) {
+  .hero {
+    padding-block: 180px 96px;
+  }
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ::after comes after the <img> in paint order, so the tint sits on top of the photo. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgb(8 28 23 / 0.7) 0%, rgb(8 28 23 / 0.45) 45%, rgb(8 28 23 / 0.75) 100%);
+}
+
+.heroContent {
+  display: grid;
+  gap: 32px;
+}
+
+.heroContent h1 {
+  max-width: 14ch;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.25);
+}
+
+.subtitle {
+  max-width: 52ch;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  opacity: 0.92;
+}
+
+.hero form {
+  color: var(--text);
+}
+
+.cities {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.city {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius);
+  scroll-snap-align: start;
+  color: #fff;
+  transition: transform 100ms ease-out;
+}
+
+.city:active {
+  transform: scale(0.97);
+}
+
+.city img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.city::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 0.65));
+}
+
+.cityText {
+  position: absolute;
+  inset-inline: 14px;
+  bottom: 12px;
+  z-index: 1;
+  display: grid;
+  font-size: 0.875rem;
+}
+
+.cityText strong {
+  font-size: 1.1rem;
+}
+
+.why {
+  margin-block: 56px;
+}
+
+.whyGrid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.whyCard {
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+}
+
+.featuredTitle {
+  margin-bottom: 20px;
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

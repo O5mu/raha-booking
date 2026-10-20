@@ -1,0 +1,109 @@
+.page {
+  display: grid;
+  place-items: center;
+}
+
+.panel {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 480px) {
+  .panel {
+    padding: 40px;
+  }
+}
+
+.title {
+  margin-top: 8px;
+  font-size: 1.75rem;
+}
+
+.demo {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-size: 0.85rem;
+}
+
+.demoTitle {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.demoButtons {
+  display: grid;
+  gap: 8px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  margin-top: 20px;
+  text-align: start;
+}
+
+.switch {
+  margin-top: 16px;
+  font-size: 0.925rem;
+}
+
+.switch a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.roles legend {
+  margin-bottom: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.roles label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.925rem;
+  transition: border-color 150ms, background-color 150ms, transform 100ms;
+}
+
+.roles label:active {
+  transform: scale(0.97);
+}
+
+.roles input {
+  accent-color: var(--accent);
+}
+
+.roleActive {
+  border-color: var(--accent) !important;
+  background: var(--accent-soft);
+  font-weight: 600;
+}

@@ -1,0 +1,56 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 2px;
+  margin-inline: -16px;
+  padding-inline: 16px;
+}
+
+@media (min-width: 768px) {
+  .chips {
+    flex-wrap: wrap;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+
+.chips :global(.chip) {
+  flex-shrink: 0;
+}
+
+.selects {
+  display: flex;
+  gap: 8px;
+}
+
+.selects select {
+  min-height: 40px;
+  padding-block: 6px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.heading {
+  margin-block: 28px 20px;
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+  letter-spacing: -0.015em;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}

@@ -1,0 +1,71 @@
+.page {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  max-width: 640px;
+  text-align: center;
+}
+
+.check {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.summary {
+  display: grid;
+  width: 100%;
+  margin-top: 20px;
+  overflow: hidden;
+  text-align: start;
+}
+
+.summary img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+}
+
+.details {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  padding: 20px 24px 24px;
+}
+
+.details dl {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 12px 0 0;
+}
+
+.details dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.details dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.total {
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
