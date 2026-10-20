@@ -1,33 +1,24 @@
+/* One row of controls on an app screen: a white panel with a 1px edge. */
 .bar {
   display: grid;
-  gap: 4px;
-  padding: 8px;
+  gap: 0;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  border-radius: var(--radius);
 }
 
 @media (min-width: 860px) {
   .bar {
     grid-template-columns: 1.1fr 1.4fr 1fr auto;
     align-items: center;
-    border-radius: 999px;
-    padding: 6px;
-    padding-inline-start: 10px;
   }
-  .segment + .segment::before {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0;
-    top: 25%;
-    height: 50%;
-    border-inline-start: 1px solid var(--border);
+  .segment + .segment {
+    border-inline-start: 1px solid var(--line); /* taste-skill-ignore: divider inside one app control */
   }
 }
 
 .compact {
-  box-shadow: var(--shadow-sm);
+  margin-bottom: 4px;
 }
 
 .segment {
@@ -36,13 +27,12 @@
   align-items: center;
   gap: 10px;
   min-height: 56px;
-  padding: 6px 14px;
-  border-radius: 999px;
+  padding: 6px 16px;
 }
 
 .icon {
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .text {
@@ -57,9 +47,9 @@
 }
 
 .label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .control {
@@ -67,8 +57,8 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--text-2);
-  font-size: 0.95rem;
+  color: var(--ink);
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,30 +70,30 @@
 }
 
 .placeholder {
-  color: var(--text-2);
+  color: var(--muted);
 }
 
 .stepper {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--text-2);
+  font-size: 15px;
 }
 
 .stepper button {
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--control); /* taste-skill-ignore: app control border */
+  border-radius: var(--radius-control);
   background: var(--surface);
   cursor: pointer;
-  transition: transform 100ms ease-out;
+  transition: transform 120ms var(--ease-out);
 }
 
 .stepper button:active {
-  transform: scale(0.88);
+  transform: scale(0.9);
 }
 
 .stepper output {
@@ -113,22 +103,19 @@
 }
 
 .submit {
-  min-height: 52px;
+  margin: 10px;
 }
 
-@media (min-width: 860px) {
-  .submit span {
-    display: none;
-  }
-  .submit {
-    width: 52px;
-    padding: 0;
+@media (max-width: 859px) {
+  .segment + .segment {
+    border-top: 1px solid var(--line); /* taste-skill-ignore: divider inside one app control */
   }
 }
 
+/* The date picker really floats, so it is the one thing with a shadow. */
 .popover {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 8px);
   inset-inline-start: 50%;
   z-index: 40;
   display: grid;
@@ -137,9 +124,9 @@
   width: min(720px, calc(100vw - 32px));
   padding: 20px;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line); /* taste-skill-ignore: floating menu edge */
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgb(31 26 22 / 0.14); /* taste-skill-ignore: a popover floats */
   transform-origin: top center;
   translate: -50% 0;
 }
@@ -155,11 +142,11 @@
 @media (max-width: 859px) {
   .popover {
     position: fixed;
-    top: 80px;
+    top: 72px;
     inset-inline-start: 16px;
     translate: none;
     width: calc(100vw - 32px);
-    max-height: calc(100dvh - 100px);
+    max-height: calc(100dvh - 96px);
     overflow-y: auto;
   }
   [dir="rtl"] .popover {

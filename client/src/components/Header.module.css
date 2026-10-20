@@ -31,6 +31,8 @@
 .app {
   height: 52px;
   background: var(--bg);
+  /* One left edge with the 1240px content column below. */
+  padding-inline: max(var(--margin), calc((100% - 1240px) / 2 + var(--margin)));
 }
 
 .brand {

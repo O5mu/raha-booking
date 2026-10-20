@@ -59,6 +59,15 @@ export function SearchPage() {
 
   return (
     <div className="container page">
+      <div className={styles.titleRow}>
+        <h1 className={styles.title}>{t("search.title")}</h1>
+        <p className={styles.count}>
+          {query.data ? t("search.results", { count: query.data.total }) : " "}
+          {city && <> {t("search.resultsIn", { city: t(`cities.${city}`) })}</>}
+          {checkIn && checkOut && <> · {t("search.available", { dates: fmt.range(checkIn, checkOut) })}</>}
+        </p>
+      </div>
+
       <SearchBar key={params.toString()} initial={{ city, checkIn, checkOut, guests }} compact />
 
       <div className={styles.filters}>
@@ -94,12 +103,6 @@ export function SearchPage() {
           </label>
         </div>
       </div>
-
-      <h1 className={styles.heading}>
-        {query.data ? t("search.results", { count: query.data.total }) : " "}
-        {city && <span> {t("search.resultsIn", { city: t(`cities.${city}`) })}</span>}
-        {checkIn && checkOut && <span className="muted"> · {t("search.available", { dates: fmt.range(checkIn, checkOut) })}</span>}
-      </h1>
 
       {query.isError ? (
         <ErrorState message={(query.error as Error).message} onRetry={() => query.refetch()} />

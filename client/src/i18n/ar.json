@@ -72,7 +72,8 @@
     "upToGuests": "حتى {{count}} ضيف",
     "previous": "السابق",
     "next": "التالي",
-    "page": "صفحة {{page}} من {{pages}}"
+    "page": "صفحة {{page}} من {{pages}}",
+    "title": "الاستراحات"
   },
   "home": {
     "heroAlt": "بيت أبيض مضاء في الليل بجانب مسبحه الدائري",

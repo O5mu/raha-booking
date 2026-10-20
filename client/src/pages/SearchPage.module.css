@@ -1,32 +1,38 @@
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin-bottom: 20px;
+}
+
+/* App screens take a 24px noun title, not display type. */
+.title {
+  font-family: var(--font-text);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.count {
+  font-size: 15px;
+  color: var(--muted);
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-block: 16px 28px;
 }
 
 .chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-block: 2px;
-  margin-inline: -16px;
-  padding-inline: 16px;
-}
-
-@media (min-width: 768px) {
-  .chips {
-    flex-wrap: wrap;
-    margin-inline: 0;
-    padding-inline: 0;
-  }
-}
-
-.chips :global(.chip) {
-  flex-shrink: 0;
 }
 
 .selects {
@@ -35,16 +41,9 @@
 }
 
 .selects select {
-  min-height: 40px;
-  padding-block: 6px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-}
-
-.heading {
-  margin-block: 28px 20px;
-  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
-  letter-spacing: -0.015em;
+  min-height: 36px;
+  padding-block: 4px;
+  font-size: 14px;
 }
 
 .pagination {
@@ -53,4 +52,16 @@
   justify-content: center;
   gap: 16px;
   margin-top: 40px;
+  font-size: 14px;
+}
+
+/* Filters scroll in their own row on a phone; the page never scrolls sideways. */
+@media (max-width: 640px) {
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--margin) * -1);
+    padding-inline: var(--margin);
+    scrollbar-width: none;
+  }
 }
