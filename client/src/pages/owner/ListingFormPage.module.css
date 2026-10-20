@@ -1,0 +1,68 @@
+.form {
+  display: grid;
+  gap: 24px;
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+.form header p {
+  margin-top: 6px;
+}
+
+.section {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.section legend {
+  padding-inline: 6px;
+  margin-inline-start: -6px;
+  font-weight: 700;
+}
+
+.row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+textarea.input,
+.section textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.5;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.previews {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.previews img {
+  flex: 0 0 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

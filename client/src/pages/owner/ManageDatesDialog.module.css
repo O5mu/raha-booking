@@ -1,0 +1,40 @@
+.calendar {
+  margin-block: 20px 16px;
+}
+
+.listTitle {
+  margin-block: 28px 12px;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.block {
+  background: var(--surface-2);
+}
+
+.entryText {
+  display: grid;
+  flex: 1;
+  font-size: 0.925rem;
+}
+
+.list :global(.btn) {
+  min-height: 36px;
+  padding: 4px 12px;
+  color: var(--danger);
+}
