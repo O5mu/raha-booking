@@ -1,0 +1,115 @@
+/* Translucent material: content scrolls underneath a blurred layer instead
+   of an opaque bar. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--header-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .header {
+    background: var(--bg);
+    backdrop-filter: none;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-inline-end: 8px;
+}
+
+[dir="rtl"] .brand {
+  letter-spacing: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--text-2);
+  font-weight: 500;
+  transition: background-color 150ms ease-out, color 150ms ease-out, transform 100ms ease-out;
+}
+
+.link:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.link:active {
+  transform: scale(0.97);
+}
+
+.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang {
+  padding-inline: 12px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+/* The logout arrow should point "out" in both directions. */
+[dir="rtl"] .flip {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 640px) {
+  .linkLabel,
+  .lang span {
+    display: none;
+  }
+  .brand span {
+    display: none;
+  }
+  .link {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,138 @@
+.calendar {
+  position: relative;
+}
+
+.nav {
+  position: absolute;
+  inset-inline: 0;
+  top: -6px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.navBtn {
+  pointer-events: auto;
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+
+/* Arrows point the reading direction: in Arabic "next" points left. */
+[dir="rtl"] .flip {
+  transform: scaleX(-1);
+}
+
+.months {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 900px) {
+  .months[data-count="2"] {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 28px;
+  margin-bottom: 12px;
+}
+
+/* In RTL the grid flows right to left, so Sunday sits on the right, like an
+   Arabic calendar, with no extra code. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 2px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-2);
+  padding-bottom: 6px;
+}
+
+.day {
+  position: relative;
+  aspect-ratio: 1;
+  max-height: 48px;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  font-size: 0.925rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 120ms ease-out, transform 100ms ease-out;
+}
+
+.day:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.day:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.today {
+  font-weight: 700;
+}
+
+.today::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  inset-inline-start: 50%;
+  width: 4px;
+  height: 4px;
+  margin-inline-start: -2px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.disabled {
+  color: color-mix(in srgb, var(--text-2) 55%, transparent);
+  cursor: default;
+}
+
+.booked {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--text-2) 70%, transparent);
+}
+
+.inRange {
+  border-radius: 0;
+  background: var(--accent-soft);
+}
+
+.inRange:hover:not(:disabled) {
+  background: var(--accent-soft);
+}
+
+.selected,
+.selected:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Square off the inner side of the start/end caps so the range looks joined.
+   start-start / end-start are logical corners, so this mirrors in RTL. */
+.rangeStart {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.rangeEnd {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.rangeStart.rangeEnd {
+  border-radius: 999px;
+}

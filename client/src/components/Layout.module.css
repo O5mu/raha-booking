@@ -1,0 +1,19 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1;
+}
+
+.footer {
+  padding-block: 28px;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.footer p + p {
+  margin-top: 4px;
+}
