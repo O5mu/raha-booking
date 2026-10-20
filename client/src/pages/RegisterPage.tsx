@@ -2,7 +2,6 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
-import { Logo } from "../components/Logo";
 import { homeFor } from "./LoginPage";
 import styles from "./AuthPages.module.css";
 
@@ -34,9 +33,11 @@ export function RegisterPage() {
   const set = (key: keyof typeof form) => (e: { target: { value: string } }) => setForm({ ...form, [key]: e.target.value });
 
   return (
-    <div className={`container page ${styles.page}`}>
-      <div className={`card ${styles.panel}`}>
-        <Logo size={44} />
+    <div className={styles.page}>
+      <div className={styles.photo}>
+        <img src="/photos/palms-diriyah.jpg" width={1920} height={1920} alt={t("auth.photoAlt")} />
+      </div>
+      <div className={styles.panel}>
         <h1 className={styles.title}>{t("auth.registerTitle")}</h1>
 
         <form className={styles.form} onSubmit={onSubmit}>

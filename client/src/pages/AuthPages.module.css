@@ -1,45 +1,52 @@
+/* Photograph half, form half. */
 .page {
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  min-height: calc(100svh - 72px);
+}
+
+.photo {
+  grid-column: 1 / 7;
+  overflow: hidden;
+}
+
+/* Only the palm crowns: the lower part of this photo is an excavation. */
+.photo img {
+  width: 100%;
+  height: 215%;
+  object-fit: cover;
+  object-position: 50% 0;
 }
 
 .panel {
+  grid-column: 8 / 12;
+  align-self: center;
   display: grid;
-  justify-items: center;
   gap: 8px;
-  width: 100%;
-  max-width: 440px;
-  padding: 32px 24px;
-  text-align: center;
-  box-shadow: var(--shadow-md);
-}
-
-@media (min-width: 480px) {
-  .panel {
-    padding: 40px;
-  }
+  padding-block: 64px;
 }
 
 .title {
-  margin-top: 8px;
-  font-size: 1.75rem;
+  font-size: var(--step-head);
+}
+
+.panel > p {
+  max-width: 40ch;
 }
 
 .demo {
   display: grid;
-  gap: 10px;
-  width: 100%;
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: var(--radius);
-  background: var(--accent-soft);
-  font-size: 0.85rem;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--surface);
 }
 
 .demoTitle {
-  font-weight: 700;
-  color: var(--accent);
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: var(--step-lead);
+  line-height: 1.1;
 }
 
 .demoButtons {
@@ -47,21 +54,26 @@
   gap: 8px;
 }
 
+.demoButtons :global(.btn) {
+  justify-content: flex-start;
+  background: var(--raised);
+}
+
+.demoButtons :global(.btn):hover:not(:disabled) {
+  background: var(--bg);
+}
+
 .form {
   display: grid;
   gap: 16px;
-  width: 100%;
-  margin-top: 20px;
-  text-align: start;
+  margin-top: 32px;
 }
 
 .switch {
-  margin-top: 16px;
-  font-size: 0.925rem;
+  margin-top: 24px;
 }
 
 .switch a {
-  color: var(--accent);
   font-weight: 600;
 }
 
@@ -75,27 +87,24 @@
 }
 
 .roles legend {
-  margin-bottom: 6px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: var(--step-small);
+  font-weight: 500;
 }
 
 .roles label {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  min-height: 46px;
-  padding: 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  min-height: 48px;
+  padding: 8px 12px;
+  background: var(--surface);
   cursor: pointer;
-  font-size: 0.925rem;
-  transition: border-color 150ms, background-color 150ms, transform 100ms;
+  transition: transform 120ms var(--ease-out), background-color 150ms;
 }
 
 .roles label:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .roles input {
@@ -103,7 +112,18 @@
 }
 
 .roleActive {
-  border-color: var(--accent) !important;
-  background: var(--accent-soft);
-  font-weight: 600;
+  background: var(--accent) !important;
+  color: var(--accent-ink);
+}
+
+@media (max-width: 860px) {
+  .page {
+    display: block;
+  }
+  .photo {
+    height: 34svh;
+  }
+  .panel {
+    padding: 40px var(--margin) 64px;
+  }
 }

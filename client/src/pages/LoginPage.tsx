@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Building2, ShieldCheck, UserRound } from "lucide-react";
 import { useAuth } from "../auth/AuthContext";
 import type { Role, User } from "../api/types";
-import { Logo } from "../components/Logo";
 import styles from "./AuthPages.module.css";
 
 // Where each role lands after logging in (unless a "next" page was requested).
@@ -50,11 +49,13 @@ export function LoginPage() {
   ];
 
   return (
-    <div className={`container page ${styles.page}`}>
-      <div className={`card ${styles.panel}`}>
-        <Logo size={44} />
+    <div className={styles.page}>
+      <div className={styles.photo}>
+        <img src="/photos/palms-diriyah.jpg" width={1920} height={1920} alt={t("auth.photoAlt")} />
+      </div>
+      <div className={styles.panel}>
         <h1 className={styles.title}>{t("auth.loginTitle")}</h1>
-        <p className="muted">{t("auth.loginSubtitle")}</p>
+        <p>{t("auth.loginSubtitle")}</p>
 
         <div className={styles.demo}>
           <p className={styles.demoTitle}>{t("auth.orTryDemo")}</p>

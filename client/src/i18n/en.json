@@ -149,7 +149,8 @@
     "demoGuest": "Try as guest",
     "demoOwner": "Try as owner",
     "demoAdmin": "Try as admin",
-    "demoHint": "One click, no sign-up. Demo data resets regularly."
+    "demoHint": "One click, no sign-up. Demo data resets regularly.",
+    "photoAlt": "Date palms in the gardens of Diriyah"
   },
   "bookings": {
     "title": "My bookings",
