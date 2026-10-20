@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -6,5 +7,10 @@ export default defineConfig({
   server: {
     // In development the API runs on :4000; the browser only talks to :5173.
     proxy: { "/api": "http://localhost:4000" },
+  },
+  test: {
+    environment: "jsdom", // a fake browser DOM so components can render in Node
+    setupFiles: "./src/test/setup.ts",
+    css: { modules: { classNameStrategy: "non-scoped" } },
   },
 });
