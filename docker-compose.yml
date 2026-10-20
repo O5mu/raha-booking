@@ -16,5 +16,20 @@ services:
       timeout: 3s
       retries: 10
 
+  # The whole app (API + React build) in one container, like the live deployment.
+  # Run with: docker compose up --build   then open http://localhost:8080
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgres://raha:raha@db:5432/raha
+      JWT_SECRET: local-docker-secret-not-for-production
+      DEMO_MODE: "true"
+      SEED_ON_START: "true"
+    ports:
+      - "8080:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   pgdata:
