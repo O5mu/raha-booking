@@ -35,7 +35,8 @@
   --step-head: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
   --step-display: clamp(5.5rem, 1rem + 17vw, 17.5rem);
 
-  --margin: clamp(1rem, 2.2vw, 2rem);
+  /* On an iPhone held sideways the notch eats into one side, so the margin grows to clear it. */
+  --margin: max(clamp(1rem, 2.2vw, 2rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --gutter: clamp(0.75rem, 1.4vw, 1.5rem);
   --section-gap: clamp(4.5rem, 3rem + 7vw, 12rem);
   --radius: 0px; /* square on pages, decided once */

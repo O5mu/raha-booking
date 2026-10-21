@@ -12,7 +12,10 @@ export function Reveal({ children, order = 0, className, as = "div" }: { childre
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      // Starts once the top edge is 10% up the screen. (A share of the element,
+      // like amount: 0.2, never comes true for a part taller than five screens,
+      // such as the rate sheet on a phone.)
+      viewport={{ once: true, amount: 0, margin: "0px 0px -10% 0px" }}
       transition={{ type: "spring", bounce: 0, duration: 0.7, delay: order * 0.08 }}
     >
       {children}

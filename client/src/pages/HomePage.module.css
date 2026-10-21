@@ -74,6 +74,10 @@
 
 /* Kufi glyphs are taller than Barlow Condensed at the same size; a tight box
    keeps the word from reaching up into the line above. */
+.name [lang="en"] {
+  font-family: "Barlow Condensed", sans-serif; /* even on an Arabic page, where Kufi leads the stack */
+}
+
 .name [lang="ar"] {
   font-family: "Noto Kufi Arabic", sans-serif;
   font-size: 0.72em;
@@ -275,6 +279,26 @@ html[lang="ar"] .groupName {
     width: 100%;
     margin-block: 0;
     padding: 40px 28px;
+  }
+  /* A week of nights in one even row, even on the narrowest iPhone. */
+  .nights {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 2px;
+  }
+  .night {
+    min-width: 0;
+    padding-inline: 0;
+  }
+  /* Arabic weekdays are whole words, too wide for seven across: two centred rows. */
+  html[lang="ar"] .nights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+  html[lang="ar"] .night {
+    flex: 0 0 calc(25% - 3px);
   }
 }
 

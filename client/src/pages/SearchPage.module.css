@@ -65,3 +65,10 @@
     scrollbar-width: none;
   }
 }
+
+/* iPhone Safari zooms into any field under 16px when it's tapped. */
+@media (pointer: coarse) {
+  .selects select {
+    font-size: 16px;
+  }
+}
