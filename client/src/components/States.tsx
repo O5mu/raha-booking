@@ -7,7 +7,7 @@ export function PageLoader() {
   const { t } = useTranslation();
   return (
     <div className={styles.center} role="status">
-      <Loader2 className={styles.spin} size={28} />
+      <Loader2 className={styles.spin} size="1.75rem" />
       <span className="visually-hidden">{t("common.loading")}</span>
     </div>
   );
@@ -17,7 +17,7 @@ export function ErrorState({ message, onRetry }: { message?: string; onRetry?: (
   const { t } = useTranslation();
   return (
     <div className="empty-state" role="alert">
-      <AlertCircle size={32} color="var(--danger)" />
+      <AlertCircle size="2rem" color="var(--danger)" />
       <p>{message ?? t("common.error")}</p>
       {onRetry && (
         <button className="btn btn-secondary" onClick={onRetry}>

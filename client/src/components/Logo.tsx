@@ -1,5 +1,5 @@
 // The gate of a walled istiraha: the mark is drawn from the thing itself.
-export function Logo({ size = 28 }: { size?: number }) {
+export function Logo({ size = "1.75rem" }: { size?: number | string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
       <rect width="64" height="64" fill="currentColor" />

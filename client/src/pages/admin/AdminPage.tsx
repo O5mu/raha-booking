@@ -88,7 +88,7 @@ export function AdminPage() {
                   </div>
                   <div className={styles.rowActions}>
                     <button className="btn btn-secondary" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "approved" })}>
-                      <Check size={16} />
+                      <Check size="1rem" />
                       {t("admin.approve")}
                     </button>
                     <button className={`btn btn-ghost ${local.reject}`} disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: i.id, status: "rejected" })}>

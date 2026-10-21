@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { motion } from "motion/react";
 
-// The entrance for the parts of a section: each part rises 24px and fades in
+// The entrance for the parts of a section: each part rises 1.5rem and fades in
 // once, when it scrolls into view. Pass `order` to stagger the parts of one
 // section (heading 0, text 1, picture 2...), 80ms apart. Motion's
 // reducedMotion="user" (in main.tsx) turns the travel off for people who ask.
@@ -10,8 +10,8 @@ export function Reveal({ children, order = 0, className, as = "div" }: { childre
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: "1.5rem" }}
+      whileInView={{ opacity: 1, y: "0rem" }}
       // Starts once the top edge is 10% up the screen. (A share of the element,
       // like amount: 0.2, never comes true for a part taller than five screens,
       // such as the rate sheet on a phone.)

@@ -21,7 +21,7 @@ const ICONS: Record<string, LucideIcon> = {
   parking: Car,
 };
 
-export function AmenityIcon({ name, size = 18 }: { name: string; size?: number }) {
+export function AmenityIcon({ name, size = "1.125rem" }: { name: string; size?: number | string }) {
   const Icon = ICONS[name] ?? Sofa;
   return <Icon size={size} aria-hidden="true" />;
 }

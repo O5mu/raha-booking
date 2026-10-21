@@ -69,7 +69,7 @@ export function OwnerDashboardPage() {
           <p>{t("owner.summary", { sold, total: onCalendar.length * NIGHTS })}</p>
         </div>
         <Link to="/owner/istirahas/new" className="btn btn-primary">
-          <Plus size={16} />
+          <Plus size="1rem" />
           {t("owner.add")}
         </Link>
       </div>
@@ -102,7 +102,7 @@ export function OwnerDashboardPage() {
           {items.length === 0 ? (
             <div className={styles.empty}>
               <p>{t("owner.noListings")}</p>
-              <Link to="/owner/istirahas/new" className="btn btn-secondary" style={{ marginTop: 12 }}>
+              <Link to="/owner/istirahas/new" className="btn btn-secondary" style={{ marginTop: "0.75rem" }}>
                 {t("owner.add")}
               </Link>
             </div>

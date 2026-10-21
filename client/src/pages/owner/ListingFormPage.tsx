@@ -164,7 +164,7 @@ function ListingForm({ initial, existing }: { initial: FormState; existing?: Own
           <div className={styles.chips}>
             {AMENITIES.map((a) => (
               <button type="button" key={a} className="chip" aria-pressed={form.amenities.includes(a)} onClick={() => toggleAmenity(a)}>
-                <AmenityIcon name={a} size={15} />
+                <AmenityIcon name={a} size="0.9375rem" />
                 {t(`amenities.${a}`)}
               </button>
             ))}

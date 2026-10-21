@@ -74,7 +74,7 @@ export function SearchPage() {
         <div className={styles.chips}>
           {FILTER_AMENITIES.map((a) => (
             <button key={a} className="chip" aria-pressed={amenities.includes(a)} onClick={() => toggleAmenity(a)}>
-              <AmenityIcon name={a} size={15} />
+              <AmenityIcon name={a} size="0.9375rem" />
               {t(`amenities.${a}`)}
             </button>
           ))}
@@ -107,7 +107,7 @@ export function SearchPage() {
       {query.isError ? (
         <ErrorState message={(query.error as Error).message} onRetry={() => query.refetch()} />
       ) : query.data?.total === 0 ? (
-        <EmptyState icon={<SearchX size={28} />} title={t("search.results", { count: 0 })}>
+        <EmptyState icon={<SearchX size="1.75rem" />} title={t("search.results", { count: 0 })}>
           <p className="muted">{t("search.noResultsHint")}</p>
           <button className="btn btn-secondary" onClick={() => setParams({})}>
             {t("search.clearFilters")}

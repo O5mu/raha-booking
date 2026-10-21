@@ -2,57 +2,57 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px 16px;
-  margin-bottom: 20px;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
 }
 
 /* App screens take a 24px noun title, not display type. */
 .title {
   font-family: var(--font-text);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
 }
 
 .count {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--muted);
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 0.75rem;
   align-items: center;
   justify-content: space-between;
-  margin-block: 16px 28px;
+  margin-block: 1rem 1.75rem;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .selects {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .selects select {
-  min-height: 36px;
-  padding-block: 4px;
-  font-size: 14px;
+  min-height: 2.25rem;
+  padding-block: 0.25rem;
+  font-size: 0.875rem;
 }
 
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-top: 40px;
-  font-size: 14px;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  font-size: 0.875rem;
 }
 
 /* Filters scroll in their own row on a phone; the page never scrolls sideways. */
@@ -69,6 +69,6 @@
 /* iPhone Safari zooms into any field under 16px when it's tapped. */
 @media (pointer: coarse) {
   .selects select {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }

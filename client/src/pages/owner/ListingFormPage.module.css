@@ -5,59 +5,59 @@
 }
 
 .head {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .head h1 {
   font-family: var(--font-text);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
 }
 
 .head p {
-  margin-top: 4px;
+  margin-top: 0.25rem;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .section {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  gap: 16px 48px;
-  padding-block: 32px;
+  gap: 1rem 3rem;
+  padding-block: 2rem;
 }
 
 .section + .section {
-  border-top: 1px solid var(--line); /* taste-skill-ignore: rule between settings sections */
+  border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: rule between settings sections */
 }
 
 /* The name's cap height lines up with the panel's first label. */
 .label {
-  padding-top: 18px;
+  padding-top: 1.125rem;
 }
 
 .label h2 {
   font-family: var(--font-text);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0;
 }
 
 .label p {
   max-width: 36ch;
-  margin-top: 4px;
+  margin-top: 0.25rem;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .panel {
   display: grid;
-  gap: 16px;
+  gap: 1rem;
   min-width: 0;
   margin: 0;
-  padding: 16px;
+  padding: 1rem;
   border: 0;
   border-radius: var(--radius);
   background: var(--surface);
@@ -65,69 +65,69 @@
 
 .row {
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
 }
 
 textarea.input,
 .panel textarea {
   resize: vertical;
-  min-height: 96px;
+  min-height: 6rem;
   line-height: 1.5;
 }
 
 .hint {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .error {
   color: var(--danger);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .previews {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   overflow-x: auto;
 }
 
 .previews img {
-  flex: 0 0 120px;
-  height: 90px;
+  flex: 0 0 7.5rem;
+  height: 5.625rem;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 0.375rem;
 }
 
 /* The card preview under the Photos note. */
 .preview {
-  max-width: 280px;
-  margin: 20px 0 0;
+  max-width: 17.5rem;
+  margin: 1.25rem 0 0;
 }
 
 .preview figcaption {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .previewCard {
   display: grid;
-  gap: 2px;
-  font-size: 15px;
+  gap: 0.125rem;
+  font-size: 0.9375rem;
 }
 
 .previewCard img,
 .previewEmpty {
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   object-fit: cover;
   border-radius: var(--radius);
   background: var(--active);
@@ -135,21 +135,21 @@ textarea.input,
 
 .previewCard span {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .footer {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line); /* taste-skill-ignore: rule above the save row */
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: rule above the save row */
 }
 
 @media (max-width: 860px) {
   .section {
     grid-template-columns: 1fr;
-    padding-block: 24px;
+    padding-block: 1.5rem;
   }
   .label {
     padding-top: 0;

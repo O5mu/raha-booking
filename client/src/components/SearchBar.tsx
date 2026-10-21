@@ -54,7 +54,7 @@ export function SearchBar({ initial = {}, compact = false }: { initial?: SearchV
   return (
     <form className={`${styles.bar} ${compact ? styles.compact : ""}`} onSubmit={submit} role="search">
       <label className={styles.segment}>
-        <MapPin size={18} className={styles.icon} />
+        <MapPin size="1.125rem" className={styles.icon} />
         <span className={styles.text}>
           <span className={styles.label}>{t("search.where")}</span>
           <select className={styles.control} value={city} onChange={(e) => setCity(e.target.value)}>
@@ -69,7 +69,7 @@ export function SearchBar({ initial = {}, compact = false }: { initial?: SearchV
       </label>
 
       <div className={styles.segment} ref={datesRef}>
-        <CalendarDays size={18} className={styles.icon} />
+        <CalendarDays size="1.125rem" className={styles.icon} />
         <button type="button" className={styles.text} onClick={() => setDatesOpen((o) => !o)} aria-expanded={datesOpen}>
           <span className={styles.label}>{t("search.dates")}</span>
           <span className={`${styles.control} ${!range.checkIn ? styles.placeholder : ""}`}>{datesLabel}</span>
@@ -83,9 +83,9 @@ export function SearchBar({ initial = {}, compact = false }: { initial?: SearchV
                 // If the popover opens below the fold, bring it into view.
                 el?.scrollIntoView({ block: "nearest", behavior: "smooth" });
               }}
-              initial={{ opacity: 0, scale: 0.96, y: -6 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -6 }}
+              initial={{ opacity: 0, scale: 0.96, y: "-0.375rem" }}
+              animate={{ opacity: 1, scale: 1, y: "0rem" }}
+              exit={{ opacity: 0, scale: 0.96, y: "-0.375rem" }}
               transition={{ type: "spring", bounce: 0, duration: 0.3 }}
             >
               <DateRangeCalendar
@@ -107,23 +107,23 @@ export function SearchBar({ initial = {}, compact = false }: { initial?: SearchV
       </div>
 
       <div className={styles.segment}>
-        <Users size={18} className={styles.icon} />
+        <Users size="1.125rem" className={styles.icon} />
         <span className={styles.text}>
           <span className={styles.label}>{t("search.guests")}</span>
           <span className={styles.stepper}>
             <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 5))} aria-label="−5">
-              <Minus size={14} />
+              <Minus size="0.875rem" />
             </button>
             <output aria-live="polite">{guests}</output>
             <button type="button" onClick={() => setGuests((g) => Math.min(200, g + 5))} aria-label="+5">
-              <Plus size={14} />
+              <Plus size="0.875rem" />
             </button>
           </span>
         </span>
       </div>
 
       <button type="submit" className={`btn btn-primary ${styles.submit}`}>
-        <Search size={18} />
+        <Search size="1.125rem" />
         <span>{t("search.search")}</span>
       </button>
     </form>

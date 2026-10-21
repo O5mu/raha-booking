@@ -1,6 +1,6 @@
 /* ============================================================
    Shared pieces of the app screens (owner and admin).
-   One gutter (16px) between every block, one left edge from the
+   One gutter (1rem) between every block, one left edge from the
    title to the last row.
    ============================================================ */
 
@@ -10,30 +10,30 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .head h1 {
   font-family: var(--font-text);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
 }
 
 .head p {
-  margin-top: 4px;
+  margin-top: 0.25rem;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 /* ---------- KPIs: one container split by 1px dividers ---------- */
 .stats {
   display: grid;
   grid-template-columns: repeat(var(--count, 4), minmax(0, 1fr));
-  margin-bottom: 16px;
-  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  margin-bottom: 1rem;
+  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -41,22 +41,22 @@
 .tile {
   display: grid;
   align-content: start;
-  gap: 6px;
+  gap: 0.375rem;
   min-width: 0;
-  padding: 16px 20px;
+  padding: 1rem 1.25rem;
 }
 
 .tile + .tile {
-  border-inline-start: 1px solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
+  border-inline-start: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
 }
 
 .tileLabel {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .tileValue {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.2;
   overflow-wrap: break-word;
@@ -69,16 +69,16 @@
 
 .tileHint {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 /* Tablets: five figures share 736px, so they shrink before they stack. */
 @media (max-width: 1100px) {
   .tile {
-    padding: 14px 12px;
+    padding: 0.875rem 0.75rem;
   }
   .tileValue {
-    font-size: clamp(18px, 2.4vw, 24px);
+    font-size: clamp(1.125rem, 2.4vw, 1.5rem);
   }
 }
 
@@ -90,7 +90,7 @@
     border-inline-start: 0;
   }
   .tile:nth-child(n + 3) {
-    border-top: 1px solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
+    border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
   }
 }
 
@@ -98,7 +98,7 @@
 .panel {
   min-width: 0;
   container-type: inline-size;
-  border: 1px solid var(--line); /* taste-skill-ignore: app panel border */
+  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -108,29 +108,29 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px 16px;
-  padding: 16px 20px 8px;
+  gap: 0.5rem 1rem;
+  padding: 1rem 1.25rem 0.5rem;
 }
 
 .panelHead h2 {
   font-family: var(--font-text);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0;
 }
 
 .panelNote {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 /* Two panels in a row share a top edge and keep their own height. */
 .pair {
   display: grid;
   grid-template-columns: 7fr 5fr;
-  gap: 16px;
+  gap: 1rem;
   align-items: start;
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 @media (max-width: 1000px) {
@@ -142,29 +142,29 @@
 /* ---------- Two-line rows with media (48px + 24px) ---------- */
 .rows {
   margin: 0;
-  padding: 0 20px 8px;
+  padding: 0 1.25rem 0.5rem;
   list-style: none;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
-  gap: 12px;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
   align-items: center;
-  min-height: 72px;
-  padding-block: 12px;
+  min-height: 4.5rem;
+  padding-block: 0.75rem;
 }
 
 .row + .row {
-  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app list */
+  border-top: 0.0625rem solid var(--rule); /* taste-skill-ignore: row rule in an app list */
 }
 
 /* Rows with actions share one column grid, so every row's buttons start
    on the same line even when a row has fewer of them. */
 .withActions {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
-  column-gap: 12px;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  column-gap: 0.75rem;
 }
 
 .withActions > .row {
@@ -178,24 +178,24 @@
 }
 
 .row img {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 0.375rem;
 }
 
 .rowMain {
   display: grid;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 
 .rowTitle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   min-width: 0;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 
@@ -208,7 +208,7 @@
 .rowSub {
   overflow: hidden;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -217,36 +217,36 @@
 .rowEnd {
   display: grid;
   justify-items: end;
-  gap: 2px;
+  gap: 0.125rem;
   font-variant-numeric: tabular-nums;
   text-align: end;
 }
 
 .rowEnd > :first-child {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 500;
 }
 
 .rowEnd > :nth-child(2) {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .rowActions {
   display: flex;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .rowActions :global(.btn) {
-  min-height: 32px;
-  padding: 0 10px;
-  font-size: 14px;
+  min-height: 2rem;
+  padding: 0 0.625rem;
+  font-size: 0.875rem;
 }
 
 /* In a narrow panel the actions drop under the text, on its edge. */
-@container (max-width: 560px) {
+@container (max-width: 35rem) {
   .withActions {
-    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-columns: 3rem minmax(0, 1fr);
   }
   .withActions > .row {
     align-items: start;
@@ -260,19 +260,19 @@
   }
   .rowActions {
     grid-column: 2;
-    margin-inline-start: -10px;
-    margin-top: -4px;
+    margin-inline-start: -0.625rem;
+    margin-top: -0.25rem;
   }
 }
 
 .more {
-  padding: 4px 20px 16px;
+  padding: 0.25rem 1.25rem 1rem;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .empty {
-  padding: 8px 20px 20px;
+  padding: 0.5rem 1.25rem 1.25rem;
   color: var(--muted);
 }
 
@@ -284,41 +284,41 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .table th,
 .table td {
-  padding: 0 12px;
+  padding: 0 0.75rem;
   text-align: start;
   white-space: nowrap;
 }
 
 .table th:first-child,
 .table td:first-child {
-  padding-inline-start: 20px;
+  padding-inline-start: 1.25rem;
 }
 
 .table th:last-child,
 .table td:last-child {
-  padding-inline-end: 20px;
+  padding-inline-end: 1.25rem;
 }
 
 /* Grey sentence-case header, no fill band; its rule is the strongest line. */
 .table th {
-  height: 40px;
-  border-bottom: 1px solid var(--line); /* taste-skill-ignore: table header rule */
+  height: 2.5rem;
+  border-bottom: 0.0625rem solid var(--line); /* taste-skill-ignore: table header rule */
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 400;
 }
 
 .table td {
-  height: 48px;
+  height: 3rem;
 }
 
 .table tbody tr + tr td {
-  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app table */
+  border-top: 0.0625rem solid var(--rule); /* taste-skill-ignore: row rule in an app table */
 }
 
 .table td:first-child {
@@ -340,17 +340,17 @@
 }
 
 .table :global(.btn) {
-  min-height: 30px;
-  padding: 0 10px;
-  font-size: 14px;
+  min-height: 1.875rem;
+  padding: 0 0.625rem;
+  font-size: 0.875rem;
 }
 
 /* ---------- Underline tabs on a full-width rule ---------- */
 .tabs {
   display: flex;
-  gap: 24px;
-  padding-inline: 20px;
-  border-bottom: 1px solid var(--line); /* taste-skill-ignore: tab rule on an app screen */
+  gap: 1.5rem;
+  padding-inline: 1.25rem;
+  border-bottom: 0.0625rem solid var(--line); /* taste-skill-ignore: tab rule on an app screen */
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -358,11 +358,11 @@
 .tab {
   position: relative;
   flex: none;
-  padding: 14px 0 12px;
+  padding: 0.875rem 0 0.75rem;
   border: 0;
   background: none;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
 }
@@ -376,7 +376,7 @@
 }
 
 .count {
-  margin-inline-start: 6px;
+  margin-inline-start: 0.375rem;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -384,8 +384,8 @@
 .highlight {
   position: absolute;
   inset-inline: 0;
-  bottom: -1px;
-  height: 2px;
+  bottom: -0.0625rem;
+  height: 0.125rem;
   background: var(--ink);
 }
 
@@ -402,7 +402,7 @@
 @media (min-width: 720px) {
   .scrim {
     place-items: center;
-    padding: 24px;
+    padding: 1.5rem;
   }
 }
 
@@ -410,17 +410,17 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 760px;
+  max-width: 47.5rem;
   max-height: 92dvh;
-  border-radius: 12px 12px 0 0;
+  border-radius: 0.75rem 0.75rem 0 0;
   background: var(--surface);
-  box-shadow: 0 24px 64px rgb(20 16 12 / 0.24); /* taste-skill-ignore: a dialog floats */
+  box-shadow: 0 1.5rem 4rem rgb(20 16 12 / 0.24); /* taste-skill-ignore: a dialog floats */
   outline: none;
 }
 
 @media (min-width: 720px) {
   .dialog {
-    border-radius: 12px;
+    border-radius: 0.75rem;
   }
 }
 
@@ -428,14 +428,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-block: 16px 8px;
-  padding-inline: 24px 12px;
+  gap: 0.75rem;
+  padding-block: 1rem 0.5rem;
+  padding-inline: 1.5rem 0.75rem;
 }
 
 .dialogHeader h2 {
   font-family: var(--font-text);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -443,5 +443,5 @@
 /* On a phone the dialog is a bottom sheet, so it clears the home bar. */
 .dialogBody {
   overflow-y: auto;
-  padding: 8px 24px max(24px, env(safe-area-inset-bottom));
+  padding: 0.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom));
 }

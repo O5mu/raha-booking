@@ -1,16 +1,16 @@
 .hint {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .calendar {
-  margin-block: 20px 16px;
+  margin-block: 1.25rem 1rem;
 }
 
 .listTitle {
-  margin-block: 32px 4px;
+  margin-block: 2rem 0.25rem;
   font-family: var(--font-text);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -24,15 +24,15 @@
 
 .list li {
   display: grid;
-  grid-template-columns: 16px minmax(0, 1fr) auto;
-  gap: 12px;
+  grid-template-columns: 1rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
   align-items: center;
-  min-height: 56px;
-  padding-block: 8px;
+  min-height: 3.5rem;
+  padding-block: 0.5rem;
 }
 
 .list li + li {
-  border-top: 1px solid var(--rule); /* taste-skill-ignore: row rule in an app list */
+  border-top: 0.0625rem solid var(--rule); /* taste-skill-ignore: row rule in an app list */
 }
 
 .list li > svg {
@@ -41,8 +41,8 @@
 
 .entryText {
   display: grid;
-  gap: 2px;
-  font-size: 15px;
+  gap: 0.125rem;
+  font-size: 0.9375rem;
 }
 
 .entryText strong {
@@ -52,14 +52,14 @@
 
 .entryText span {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .list :global(.btn) {
-  min-height: 32px;
-  padding: 0 10px;
+  min-height: 2rem;
+  padding: 0 0.625rem;
   color: var(--danger);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .empty {

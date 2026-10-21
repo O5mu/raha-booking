@@ -1,7 +1,7 @@
 /* Peer objects on an app screen: equal widths, one gap, no icon on top. */
 .card {
   display: grid;
-  gap: 10px;
+  gap: 0.625rem;
   text-decoration: none;
   transition: transform 160ms var(--ease-out);
 }
@@ -33,24 +33,24 @@
 
 .city {
   position: absolute;
-  top: 10px;
-  inset-inline-start: 10px;
-  padding: 2px 8px;
-  border-radius: 4px;
+  top: 0.625rem;
+  inset-inline-start: 0.625rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
   background: var(--surface);
   color: var(--ink);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
 }
 
 .body {
   display: grid;
-  gap: 2px;
+  gap: 0.125rem;
 }
 
 .name {
   font-family: var(--font-text);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.3;
@@ -59,30 +59,30 @@
 .meta {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  font-size: 14px;
+  gap: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .capacity {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .amenities {
   display: flex;
-  gap: 10px;
-  margin-top: 4px;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
   color: var(--muted);
 }
 
 .price {
-  margin-top: 4px;
-  font-size: 15px;
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
 }
 
 .grid {
   display: grid;
-  gap: 32px var(--gutter);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 2rem var(--gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.25rem), 1fr));
 }

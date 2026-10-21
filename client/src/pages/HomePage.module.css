@@ -5,7 +5,7 @@
   display: flex;
   align-items: flex-end;
   height: 100svh;
-  min-height: 560px;
+  min-height: 35rem;
   overflow: hidden;
   color: #f1f0ec;
 }
@@ -47,7 +47,7 @@
 
 .heroText {
   width: 100%;
-  padding: 0 var(--margin) 28px;
+  padding: 0 var(--margin) 1.75rem;
 }
 
 .sentence {
@@ -126,8 +126,8 @@
   grid-column: 7 / 13;
   justify-self: end;
   margin-block: var(--section-gap);
-  width: min(640px, 100%);
-  padding: 64px;
+  width: min(40rem, 100%);
+  padding: 4rem;
   background: var(--paper);
   color: var(--paper-ink);
   text-align: center;
@@ -139,16 +139,16 @@
   content: "";
   position: absolute;
   inset-inline: 0;
-  height: 12px;
+  height: 0.75rem;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23e4e3de'/%3E%3C/svg%3E") repeat-x;
 }
 
 .sheet::before {
-  top: -12px;
+  top: -0.75rem;
 }
 
 .sheet::after {
-  bottom: -12px;
+  bottom: -0.75rem;
   transform: scaleY(-1);
 }
 
@@ -158,7 +158,7 @@
 
 .sheetNote {
   max-width: 44ch;
-  margin: 16px auto 0;
+  margin: 1rem auto 0;
   font-size: var(--step-body);
 }
 
@@ -166,14 +166,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 6px;
-  margin-top: 24px;
+  gap: 0.375rem;
+  margin-top: 1.5rem;
 }
 
 .night {
   display: grid;
-  min-width: 56px;
-  padding: 8px 6px;
+  min-width: 3.5rem;
+  padding: 0.5rem 0.375rem;
   border: 0;
   background: transparent;
   color: var(--paper-ink);
@@ -196,13 +196,18 @@
   color: var(--paper);
 }
 
+/* Kufi letters need a taller line than Barlow, or the weekday runs into the date. */
+html[lang="ar"] .night {
+  line-height: 1.7;
+}
+
 .night span:last-child {
   font-family: var(--font-display);
   font-size: var(--step-lead);
 }
 
 .group {
-  margin-top: 56px;
+  margin-top: 3.5rem;
 }
 
 .groupName {
@@ -217,9 +222,9 @@ html[lang="ar"] .groupName {
 
 .items {
   display: grid;
-  gap: 16px;
-  max-width: 420px;
-  margin: 20px auto 0;
+  gap: 1rem;
+  max-width: 26.25rem;
+  margin: 1.25rem auto 0;
   padding: 0;
   list-style: none;
   text-align: start;
@@ -228,7 +233,7 @@ html[lang="ar"] .groupName {
 .itemLine {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 1rem;
   font-size: var(--step-body);
   font-weight: 500;
   text-decoration: none;
@@ -258,7 +263,7 @@ html[lang="ar"] .groupName {
 }
 
 .sheetEnd {
-  margin-top: 56px;
+  margin-top: 3.5rem;
   font-size: var(--step-small);
   color: var(--paper-muted);
 }
@@ -266,7 +271,7 @@ html[lang="ar"] .groupName {
 @media (max-width: 860px) {
   .rates {
     display: block;
-    padding: 96px 10px;
+    padding: 6rem 0.625rem;
   }
   .ratesPhoto {
     position: absolute;
@@ -278,13 +283,13 @@ html[lang="ar"] .groupName {
   .sheet {
     width: 100%;
     margin-block: 0;
-    padding: 40px 28px;
+    padding: 2.5rem 1.75rem;
   }
   /* A week of nights in one even row, even on the narrowest iPhone. */
   .nights {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 2px;
+    gap: 0.125rem;
   }
   .night {
     min-width: 0;
@@ -295,10 +300,10 @@ html[lang="ar"] .groupName {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 4px;
+    gap: 0.25rem;
   }
   html[lang="ar"] .night {
-    flex: 0 0 calc(25% - 3px);
+    flex: 0 0 calc(25% - 0.1875rem);
   }
 }
 
@@ -314,7 +319,7 @@ html[lang="ar"] .groupName {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   height: 100svh;
-  min-height: 640px;
+  min-height: 40rem;
   padding-inline: var(--margin);
   overflow: hidden;
 }
@@ -333,9 +338,9 @@ html[lang="ar"] .groupName {
   display: grid;
   justify-items: center;
   align-content: center;
-  gap: 10px;
+  gap: 0.625rem;
   min-height: 52svh;
-  padding: 28px 24px;
+  padding: 1.75rem 1.5rem;
   background: var(--bg);
   color: var(--ink);
   text-align: center;
@@ -350,7 +355,7 @@ html[lang="ar"] .groupName {
   width: 100%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  margin-block: 8px;
+  margin-block: 0.5rem;
 }
 
 /* Tablet: two columns, the card alternating sides. */
@@ -362,12 +367,12 @@ html[lang="ar"] .groupName {
   .frame[data-step="2"] .frameCard {
     grid-column: 1;
     justify-self: start;
-    width: min(360px, 100%);
+    width: min(22.5rem, 100%);
   }
   .frame[data-step="1"] .frameCard {
     grid-column: 2;
     justify-self: end;
-    width: min(360px, 100%);
+    width: min(22.5rem, 100%);
   }
 }
 
@@ -382,7 +387,7 @@ html[lang="ar"] .groupName {
     min-height: 0;
     justify-items: start;
     text-align: start;
-    padding: 20px;
+    padding: 1.25rem;
   }
   .frameWhole {
     display: none;
@@ -406,7 +411,7 @@ html[lang="ar"] .groupName {
 
 .familyNames {
   max-width: 62ch;
-  margin-top: 40px;
+  margin-top: 2.5rem;
   font-family: var(--font-display);
   font-size: var(--step-lead);
   line-height: 1.15;
@@ -423,7 +428,7 @@ html[lang="ar"] .groupName {
 
 .familyFact {
   max-width: 52ch;
-  margin-top: 40px;
+  margin-top: 2.5rem;
   font-size: var(--step-lead);
   line-height: 1.35;
 }
@@ -455,8 +460,8 @@ html[lang="ar"] .groupName {
     display: block;
   }
   .fire {
-    margin-top: 48px;
-    max-width: 360px;
+    margin-top: 3rem;
+    max-width: 22.5rem;
   }
 }
 
@@ -465,7 +470,7 @@ html[lang="ar"] .groupName {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 32px;
+  gap: 2rem;
   /* the Arabic letters rise well above their line box */
   margin-bottom: calc(var(--step-display) * 0.28);
 }

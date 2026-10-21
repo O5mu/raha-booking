@@ -23,13 +23,13 @@ export function IstirahaCard({ istiraha, query = "" }: { istiraha: Card; query?:
         <p className={`muted ${styles.meta}`}>
           <span>{fmt.pick(istiraha, "district")}</span>
           <span className={styles.capacity}>
-            <Users size={14} /> {istiraha.capacity}
+            <Users size="0.875rem" /> {istiraha.capacity}
           </span>
         </p>
         <div className={styles.amenities}>
           {istiraha.amenities.slice(0, 4).map((a) => (
             <span key={a} title={t(`amenities.${a}`)}>
-              <AmenityIcon name={a} size={16} />
+              <AmenityIcon name={a} size="1rem" />
             </span>
           ))}
         </div>
@@ -46,9 +46,9 @@ export function IstirahaCardSkeleton() {
     <div className={styles.card} aria-hidden="true">
       <div className={`${styles.media} skeleton`} />
       <div className={styles.body}>
-        <div className="skeleton" style={{ height: 20, width: "70%" }} />
-        <div className="skeleton" style={{ height: 14, width: "40%" }} />
-        <div className="skeleton" style={{ height: 18, width: "35%", marginTop: 8 }} />
+        <div className="skeleton" style={{ height: "1.25rem", width: "70%" }} />
+        <div className="skeleton" style={{ height: "0.875rem", width: "40%" }} />
+        <div className="skeleton" style={{ height: "1.125rem", width: "35%", marginTop: "0.5rem" }} />
       </div>
     </div>
   );

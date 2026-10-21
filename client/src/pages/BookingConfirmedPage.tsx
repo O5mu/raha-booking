@@ -13,8 +13,8 @@ import styles from "./BookingConfirmedPage.module.css";
 
 // Each part of the panel rises in after the one before it, 80ms apart.
 const rise = (order: number) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
+  initial: { opacity: 0, y: "1.5rem" },
+  animate: { opacity: 1, y: "0rem" },
   transition: { type: "spring" as const, bounce: 0, duration: 0.7, delay: 0.1 + order * 0.08 },
 });
 

@@ -127,7 +127,7 @@ export function IstirahaPage() {
             <ul className={styles.amenities}>
               {istiraha.amenities.map((a) => (
                 <li key={a}>
-                  <AmenityIcon name={a} size={20} />
+                  <AmenityIcon name={a} size="1.25rem" />
                   {t(`amenities.${a}`)}
                 </li>
               ))}
@@ -193,11 +193,11 @@ export function IstirahaPage() {
             <span>{t("search.guests")}</span>
             <span className={styles.stepper}>
               <button onClick={() => setGuests((g) => Math.max(1, g - 1))} aria-label={t("details.fewerGuests")}>
-                <Minus size={16} />
+                <Minus size="1rem" />
               </button>
               <output className="num">{guests}</output>
               <button onClick={() => setGuests((g) => g + 1)} aria-label={t("details.moreGuests")}>
-                <Plus size={16} />
+                <Plus size="1rem" />
               </button>
             </span>
           </div>

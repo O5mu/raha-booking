@@ -31,7 +31,7 @@ export function SiteFooter() {
       />
       <div className={styles.side}>
         <Link to="/" className={styles.brand}>
-          <Logo size={24} />
+          <Logo size="1.5rem" />
           {t("app.name")}
         </Link>
         <nav className={styles.menu} aria-label={t("footer.menu")}>

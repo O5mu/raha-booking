@@ -1,16 +1,16 @@
 /* The ticket: a panel one tone up, facts on the start side, values on the end. */
 .ticket {
   display: grid;
-  margin: 32px 0 0;
-  padding: 8px 24px;
+  margin: 2rem 0 0;
+  padding: 0.5rem 1.5rem;
   background: var(--surface);
 }
 
 .ticket div {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  padding-block: 12px;
+  gap: 1rem;
+  padding-block: 0.75rem;
 }
 
 .ticket dt {
@@ -26,8 +26,8 @@
 
 /* The total sits on the darker ground, so it reads as the last line. */
 .total {
-  margin: 8px -24px -8px;
-  padding: 16px 24px !important;
+  margin: 0.5rem -1.5rem -0.5rem;
+  padding: 1rem 1.5rem !important;
   background: var(--raised);
   font-size: var(--step-lead);
 }
@@ -37,6 +37,6 @@
 }
 
 .hours {
-  margin-top: 16px;
+  margin-top: 1rem;
   color: var(--muted);
 }

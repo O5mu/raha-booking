@@ -59,15 +59,15 @@ export function Dialog({ open, title, onClose, children }: { open: boolean; titl
             aria-label={title}
             tabIndex={-1}
             onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.98 }}
+            initial={{ opacity: 0, y: "1.5rem", scale: 0.98 }}
+            animate={{ opacity: 1, y: "0rem", scale: 1 }}
+            exit={{ opacity: 0, y: "1.5rem", scale: 0.98 }}
             transition={{ type: "spring", bounce: 0, duration: 0.35 }}
           >
             <header className={styles.dialogHeader}>
               <h2>{title}</h2>
               <button className="btn btn-ghost" onClick={onClose} aria-label="Close">
-                <X size={20} />
+                <X size="1.25rem" />
               </button>
             </header>
             <div className={styles.dialogBody}>{children}</div>

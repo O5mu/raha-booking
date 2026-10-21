@@ -51,7 +51,7 @@ export function Header({ surface, overlay }: Props) {
   return (
     <header className={className}>
       <Link to="/" className={styles.brand}>
-        <Logo size={surface === "app" ? 24 : 28} />
+        <Logo size={surface === "app" ? "1.5rem" : "1.75rem"} />
         <span>{t("app.name")}</span>
       </Link>
 

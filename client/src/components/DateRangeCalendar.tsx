@@ -83,7 +83,7 @@ export function DateRangeCalendar({ value, onChange, booked = new Set(), months 
           disabled={!canGoBack}
           aria-label={t("details.prevMonth")}
         >
-          <ChevronLeft size={20} className={styles.flip} />
+          <ChevronLeft size="1.25rem" className={styles.flip} />
         </button>
         <button
           type="button"
@@ -91,7 +91,7 @@ export function DateRangeCalendar({ value, onChange, booked = new Set(), months 
           onClick={() => setFirstMonth(shiftMonth(firstMonth, 1))}
           aria-label={t("details.nextMonth")}
         >
-          <ChevronRight size={20} className={styles.flip} />
+          <ChevronRight size="1.25rem" className={styles.flip} />
         </button>
       </div>
 

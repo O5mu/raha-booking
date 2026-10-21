@@ -1,13 +1,13 @@
 /* The records panel sits one gutter under the queue. */
 .records {
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 16px 20px 8px;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem 0.5rem;
 }
 
 .reject {

@@ -54,7 +54,7 @@ export function MyBookingsPage() {
           {list.length === 0 ? (
             <div className={styles.empty}>
               <p>{t("bookings.empty")}</p>
-              <Link to="/search" className="btn btn-primary" style={{ marginTop: 12 }}>
+              <Link to="/search" className="btn btn-primary" style={{ marginTop: "0.75rem" }}>
                 {t("bookings.findPlace")}
               </Link>
             </div>

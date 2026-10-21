@@ -58,7 +58,7 @@ export function ManageDatesDialog({ istiraha, onClose }: { istiraha: OwnerIstira
 
       {block.isError && <p className="form-error">{(block.error as Error).message}</p>}
       <button className="btn btn-primary" disabled={!range.checkOut || block.isPending} onClick={() => block.mutate()}>
-        <Lock size={16} />
+        <Lock size="1rem" />
         {range.checkIn && range.checkOut ? t("owner.blockDates", { dates: fmt.range(range.checkIn, range.checkOut) }) : t("details.pickCheckIn")}
       </button>
 
@@ -67,7 +67,7 @@ export function ManageDatesDialog({ istiraha, onClose }: { istiraha: OwnerIstira
       <ul className={styles.list}>
         {calendar.data?.entries.map((e) => (
           <li key={e.id}>
-            {e.kind === "block" ? <Lock size={16} /> : <UserRound size={16} />}
+            {e.kind === "block" ? <Lock size="1rem" /> : <UserRound size="1rem" />}
             <span className={styles.entryText}>
               <strong>{fmt.range(e.check_in, e.check_out)}</strong>
               <span>{e.kind === "block" ? t("owner.blocked") : `${e.guest_name} · ${t("bookings.guests", { count: e.guests ?? 0 })}`}</span>

@@ -59,7 +59,7 @@ export function LoginPage() {
         <div className={styles.demoButtons}>
           {demos.map(({ role, label, icon: Icon }) => (
             <button key={role} className="btn btn-secondary" disabled={busy !== null} onClick={() => run(role, () => demoLogin(role))}>
-              <Icon size={18} />
+              <Icon size="1.125rem" />
               {label}
             </button>
           ))}
