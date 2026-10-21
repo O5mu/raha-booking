@@ -159,7 +159,7 @@ export function IstirahaPage() {
                   : t("details.pickCheckIn")}</p>
           </Reveal>
           <Reveal order={2} className={styles.calendar}>
-            <div data-ui>
+            <div>
               <DateRangeCalendar value={range} onChange={setRange} booked={booked} months={2} />
             </div>
           </Reveal>
@@ -176,7 +176,7 @@ export function IstirahaPage() {
           </div>
         </div>
 
-        <aside className={styles.card} data-ui aria-label={t("details.book")}>
+        <aside className={styles.card} aria-label={t("details.book")}>
           <Reveal order={1} className={styles.cardInner}>
           <dl className={styles.dates}>
             <div>

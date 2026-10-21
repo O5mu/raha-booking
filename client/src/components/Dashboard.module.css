@@ -33,7 +33,7 @@
   display: grid;
   grid-template-columns: repeat(var(--count, 4), minmax(0, 1fr));
   margin-bottom: 1rem;
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
+  border: 0.0625rem solid var(--line); /* App panel border */
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -47,7 +47,7 @@
 }
 
 .tile + .tile {
-  border-inline-start: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
+  border-inline-start: 0.0625rem solid var(--line); /* Divider inside the KPI strip */
 }
 
 .tileLabel {
@@ -90,7 +90,7 @@
     border-inline-start: 0;
   }
   .tile:nth-child(n + 3) {
-    border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside the KPI strip */
+    border-top: 0.0625rem solid var(--line); /* Divider inside the KPI strip */
   }
 }
 
@@ -98,7 +98,7 @@
 .panel {
   min-width: 0;
   container-type: inline-size;
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
+  border: 0.0625rem solid var(--line); /* App panel border */
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -156,7 +156,7 @@
 }
 
 .row + .row {
-  border-top: 0.0625rem solid var(--rule); /* taste-skill-ignore: row rule in an app list */
+  border-top: 0.0625rem solid var(--rule); /* Row rule in an app list */
 }
 
 /* Rows with actions share one column grid, so every row's buttons start
@@ -307,7 +307,7 @@
 /* Grey sentence-case header, no fill band; its rule is the strongest line. */
 .table th {
   height: 2.5rem;
-  border-bottom: 0.0625rem solid var(--line); /* taste-skill-ignore: table header rule */
+  border-bottom: 0.0625rem solid var(--line); /* Table header rule */
   color: var(--muted);
   font-size: 0.8125rem;
   font-weight: 400;
@@ -318,7 +318,7 @@
 }
 
 .table tbody tr + tr td {
-  border-top: 0.0625rem solid var(--rule); /* taste-skill-ignore: row rule in an app table */
+  border-top: 0.0625rem solid var(--rule); /* Row rule in an app table */
 }
 
 .table td:first-child {
@@ -350,7 +350,7 @@
   display: flex;
   gap: 1.5rem;
   padding-inline: 1.25rem;
-  border-bottom: 0.0625rem solid var(--line); /* taste-skill-ignore: tab rule on an app screen */
+  border-bottom: 0.0625rem solid var(--line); /* Tab rule on an app screen */
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -396,7 +396,7 @@
   z-index: 100;
   display: grid;
   place-items: end center;
-  background: rgb(20 16 12 / 0.45); /* taste-skill-ignore: neutral scrim under a dialog */
+  background: rgb(20 16 12 / 0.45); /* Neutral scrim under a dialog */
 }
 
 @media (min-width: 720px) {
@@ -414,7 +414,7 @@
   max-height: 92dvh;
   border-radius: 0.75rem 0.75rem 0 0;
   background: var(--surface);
-  box-shadow: 0 1.5rem 4rem rgb(20 16 12 / 0.24); /* taste-skill-ignore: a dialog floats */
+  box-shadow: 0 1.5rem 4rem rgb(20 16 12 / 0.24); /* A dialog floats */
   outline: none;
 }
 

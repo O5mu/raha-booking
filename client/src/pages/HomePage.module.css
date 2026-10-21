@@ -42,7 +42,7 @@
   position: absolute;
   inset: 55% 0 0;
   z-index: -1;
-  background: linear-gradient(transparent, rgb(20 10 4 / 0.72)); /* taste-skill-ignore: neutral scrim under text on a photo */
+  background: linear-gradient(transparent, rgb(20 10 4 / 0.72)); /* Neutral scrim under text on a photo */
 }
 
 .heroText {

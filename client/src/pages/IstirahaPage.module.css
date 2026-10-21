@@ -34,7 +34,7 @@
   position: absolute;
   inset: 50% 0 0;
   z-index: -1;
-  background: linear-gradient(transparent, rgb(20 10 4 / 0.75)); /* taste-skill-ignore: neutral scrim under text on a photo */
+  background: linear-gradient(transparent, rgb(20 10 4 / 0.75)); /* Neutral scrim under text on a photo */
 }
 
 .heroText {

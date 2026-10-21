@@ -55,7 +55,7 @@ The core engineering problem is the one every booking system has: **two people m
 
 **Everywhere**
 - Full Arabic and English support with a one-click switch; Arabic flips the entire layout to right-to-left
-- Works on phones and respects "reduce motion"
+- Looks the same on every screen, from an iPhone SE to a 4K monitor, and respects "reduce motion"
 - Role-based access: guest, owner and admin, enforced on the server
 
 ## Preventing double bookings
@@ -194,6 +194,8 @@ erDiagram
 | Two surfaces: dark "page" screens for guests, light "app" screens for work | Browsing a place should feel like the place (big photos, a condensed display face, tobacco and olive colours). Managing bookings needs calm, dense screens: a stone ground, white panels, near-black buttons and one data colour. Both share one typeface and one set of CSS tokens, switched by a `data-surface` attribute. |
 | Tonight's rates on the home page come from the live API | The home page shows the real availability for a chosen night, with booked places struck out, so the double-booking work is visible before anyone logs in. |
 | A nights timeline on the owner overview | An owner's question is "which nights are still free?". One row per istiraha and one column per night answers it at a glance; owner blocks are hatched so they never read as bookings. A phone draws one week instead of two. |
+| Every size in `rem`, with the root size growing above 1920px | The layout is drawn for a 1920px screen. On wider screens the root font size grows with the width (16px at 1920, 32px at 3840, capped by height on ultrawide monitors), so a 4K monitor shows exactly the 1080p layout at twice the size instead of a small island in the middle. Phones and laptops are unchanged. |
+| Built for the iPhone's quirks | Form fields are 16px on touch screens so Safari doesn't zoom in when one is tapped, margins clear the notch in landscape (`env(safe-area-inset-*)`), and the menu and dialog sheets stay above the home bar. |
 | Motion only where it explains something | Sections rise in once as they scroll into view, timeline bars grow from their check-in night, and tabs slide their underline. Everything respects `prefers-reduced-motion`. |
 | Tests run against a real PostgreSQL in CI | The double-booking guarantee depends on PostgreSQL itself, so it can't be mocked. |
 
@@ -234,7 +236,7 @@ Demo accounts (password `demo1234`): `guest@raha.demo`, `owner@raha.demo`, `admi
 ## Tests and CI
 
 ```bash
-cd server && npm test   # 33 API tests against the raha_test database
+cd server && npm test   # 34 API tests against the raha_test database
 cd client && npm test   # 13 web app tests
 ```
 
@@ -250,7 +252,7 @@ raha-booking/
 │   └── src/
 │       ├── api/            fetch wrapper and response types
 │       ├── auth/           auth context (JWT, demo login)
-│       ├── components/     calendar, gallery, search bar, header, dialogs
+│       ├── components/     calendar, nights timeline, search bar, header, dialogs
 │       ├── i18n/           en.json, ar.json and RTL switching
 │       ├── lib/            date math and Intl formatting
 │       └── pages/          guest pages, owner/ and admin/ dashboards

@@ -135,7 +135,7 @@ function RateSheet() {
           {free.data ? t("home.ratesNote", { date: fmt.longDate(night), free: freeCount, total }) : " "}
         </p>
 
-        {/* The live thing: pick the night and the sheet strikes out what is taken. */}
+        {/* Pick a night and the sheet strikes out the places already taken that night. */}
         <div className={styles.nights} role="radiogroup" aria-label={t("home.pickNight")}>
           {nights.map((d, i) => (
             <button key={d} role="radio" aria-checked={d === night} className={styles.night} onClick={() => setNight(d)}>

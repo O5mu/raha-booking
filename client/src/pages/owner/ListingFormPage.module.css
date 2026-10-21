@@ -30,7 +30,7 @@
 }
 
 .section + .section {
-  border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: rule between settings sections */
+  border-top: 0.0625rem solid var(--line); /* Rule between settings sections */
 }
 
 /* The name's cap height lines up with the panel's first label. */
@@ -143,7 +143,7 @@ textarea.input,
   justify-content: flex-end;
   gap: 0.75rem;
   padding-top: 1.5rem;
-  border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: rule above the save row */
+  border-top: 0.0625rem solid var(--line); /* Rule above the save row */
 }
 
 @media (max-width: 860px) {

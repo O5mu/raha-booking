@@ -25,7 +25,7 @@
   position: absolute;
   inset: 0 0 -2.5rem;
   z-index: -1;
-  background: linear-gradient(rgb(20 10 4 / 0.5), transparent); /* taste-skill-ignore: neutral scrim under text on a photo */
+  background: linear-gradient(rgb(20 10 4 / 0.5), transparent); /* Neutral scrim under text on a photo */
 }
 
 .app {

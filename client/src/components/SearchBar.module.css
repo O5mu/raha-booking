@@ -3,7 +3,7 @@
   display: grid;
   gap: 0;
   background: var(--surface);
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
+  border: 0.0625rem solid var(--line); /* App panel border */
   border-radius: var(--radius);
 }
 
@@ -13,7 +13,7 @@
     align-items: center;
   }
   .segment + .segment {
-    border-inline-start: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside one app control */
+    border-inline-start: 0.0625rem solid var(--line); /* Divider inside one app control */
   }
 }
 
@@ -85,7 +85,7 @@
   place-items: center;
   width: 1.75rem;
   height: 1.75rem;
-  border: 0.0625rem solid var(--control); /* taste-skill-ignore: app control border */
+  border: 0.0625rem solid var(--control); /* App control border */
   border-radius: var(--radius-control);
   background: var(--surface);
   cursor: pointer;
@@ -108,7 +108,7 @@
 
 @media (max-width: 859px) {
   .segment + .segment {
-    border-top: 0.0625rem solid var(--line); /* taste-skill-ignore: divider inside one app control */
+    border-top: 0.0625rem solid var(--line); /* Divider inside one app control */
   }
 }
 
@@ -124,9 +124,9 @@
   width: min(45rem, calc(100vw - 2rem));
   padding: 1.25rem;
   background: var(--surface);
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: floating menu edge */
+  border: 0.0625rem solid var(--line); /* Floating menu edge */
   border-radius: 0.75rem;
-  box-shadow: 0 0.75rem 2rem rgb(31 26 22 / 0.14); /* taste-skill-ignore: a popover floats */
+  box-shadow: 0 0.75rem 2rem rgb(31 26 22 / 0.14); /* A popover floats */
   transform-origin: top center;
   translate: -50% 0;
 }

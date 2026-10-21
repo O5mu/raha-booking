@@ -260,7 +260,7 @@ p {
 
 [data-surface="app"] .btn-secondary {
   background: var(--surface);
-  border: 0.0625rem solid var(--control); /* taste-skill-ignore: app control border */
+  border: 0.0625rem solid var(--control); /* App control border */
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -322,7 +322,7 @@ p {
 [data-surface="app"] .input {
   min-height: 2.5rem;
   border-radius: 0.625rem;
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app field border */
+  border: 0.0625rem solid var(--line); /* App field border */
 }
 
 .input:focus {
@@ -350,7 +350,7 @@ p {
 }
 
 [data-surface="app"] .card {
-  border: 0.0625rem solid var(--line); /* taste-skill-ignore: app panel border */
+  border: 0.0625rem solid var(--line); /* App panel border */
 }
 
 .chip {
@@ -371,7 +371,7 @@ p {
 }
 
 [data-surface="app"] .chip {
-  border: 0.0625rem solid var(--control); /* taste-skill-ignore: app control border */
+  border: 0.0625rem solid var(--control); /* App control border */
 }
 
 .chip:active {
